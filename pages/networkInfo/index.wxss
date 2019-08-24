@@ -61,6 +61,9 @@ page {
     transform: translateY(-90%);
     border: 2rpx solid #F08300;
 }
+.form .License{
+    transform: translateY(-120%);
+}
 .form .helpUp:after{
     content: '';
     left: 55rpx;
@@ -72,6 +75,10 @@ page {
     position: absolute;
     background: url('https://i.ibb.co/2ZDwvWH/icon-down.png') center center no-repeat;
     background-size: 20rpx 15rpx;
+}
+.form .License:after{
+    left: 110rpx;
+    bottom: -8%;
 }
 .form .label image{
     width: 24rpx;

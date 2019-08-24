@@ -130,14 +130,7 @@ Page({
     bankIdx: 0,
     helpIdx: -1,
     help: [
-      '公司法人身份证就是指法人本人的居民身份证。',
-      '公司法人身份证就是指法人本人的居民身份证。',
-      '公司法人身份证就是指法人本人的居民身份证。',
-      '公司法人身份证就是指法人本人的居民身份证。',
-      '公司法人身份证就是指法人本人的居民身份证。',
-      '公司法人身份证就是指法人本人的居民身份证。',
-      '公司法人身份证就是指法人本人的居民身份证。',
-      '公司法人身份证就是指法人本人的居民身份证。'
+      '营业执照是工商行政管理机关发给工商企业、个体经营者的准许从事某项生产经营活动的凭证。其格式由国家工商行政管理局统一规定。'
     ],
     popupTitle: '',
     navTitle: '网商通道',
@@ -464,6 +457,9 @@ Page({
       ...info,
       ...value
     };
+    wx.navigateTo({
+      url: `/pages/applyResult/index?status=1&type=network&id=${this.data.id}`
+    });
     console.log(data);
     // api
     post('v1_entry/Wsentry', data).then(res => {

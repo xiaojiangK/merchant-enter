@@ -18,7 +18,7 @@ Page({
               navTitle: '审核驳回'
             });
         }
-        if (opts.applyId) {
+        if (opts.applyId && opts.status == 2) {
           this.setData({
             applyId: opts.applyId
           });
@@ -49,25 +49,14 @@ Page({
     },
     // 监听返回
     goBack() {
-      wx.showModal({
-        title: '通知',
-        content: '是否要返回首页？（你所填写的资料将会被保存）',
-        cancelText: '取消',
-        confirmText: '确定',
-        success: (result) => {
-          if(result.confirm){
-            var type = this.data.type;
-            if (type == 'official' || type == 'network') {
-              wx.redirectTo({
-                url: `/pages/selectApply/index?id=${this.data.id}&applyId=${this.data.applyId}`
-              });
-            } else {
-              wx.navigateBack({
-                delta: 1
-              });
-            }
-          }
-        }
-      });
+      if (this.data.applyId) {
+        wx.navigateBack({
+          delta: 1
+        });
+      } else {
+        wx.navigateBack({
+          delta: 2
+        });
+      }
     },
 });

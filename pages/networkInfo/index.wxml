@@ -34,10 +34,7 @@
                     <view class="title">商户信息</view>
                     <view class="main">
                         <view class="item required">
-                            <view class="label">
-                                <view class="helpUp" wx:if="{{helpIdx == 0}}">{{help[helpIdx]}}</view>
-                                商户类型：<image src="/assets/icon-help.png" data-idx="0" bindtap="helpUp" />
-                            </view>
+                            <view class="label">商户类型：</view>
                             <checkbox-group name="MerchantType">
                                 <label class="checkbox" wx:for="{{MerchantType}}" wx:key="index" data-val="{{item.value}}" data-type="MerchantType" bindtap="singleChange">
                                     <checkbox color="#F08300" value="{{item.value}}" checked="{{item.checked}}" />{{item.title}}
@@ -51,10 +48,7 @@
                             </view>
                         </block>
                         <view class="item required">
-                            <view class="label">
-                                <view class="helpUp" wx:if="{{helpIdx == 1}}">{{help[helpIdx]}}</view>
-                                商户简称：<image src="/assets/icon-help.png" data-idx="1" bindtap="helpUp" />
-                            </view>
+                            <view class="label">商户简称：</view>
                             <input type="text" name="Alias" bindblur="inputBlur" data-id="Alias" value="{{basicInfo.Alias}}" placeholder="请填写商户简称" />
                         </view>
                         <view class="item required">
@@ -90,8 +84,8 @@
                         <block wx:if="{{basicInfo.MerchantType != '01'}}">
                             <view class="upload required">
                                 <view class="label">
-                                    <view class="helpUp" wx:if="{{helpIdx == 2}}">{{help[helpIdx]}}</view>
-                                    上传营业执照：<image src="/assets/icon-help.png" data-idx="2" bindtap="helpUp" />
+                                    <view class="helpUp License" wx:if="{{helpIdx == 0}}">{{help[helpIdx]}}</view>
+                                    上传营业执照：<image src="/assets/icon-help.png" data-idx="0" bindtap="helpUp" />
                                 </view>
                                 <view class="picture" data-type="0" bindtap="uploadLicence">
                                     <view class="box">
