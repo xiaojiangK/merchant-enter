@@ -1,0 +1,60 @@
+.wrap{
+    padding: 30rpx;
+}
+.list{
+    margin: 0 0 160rpx;
+    padding: 0 30rpx 0;
+    background:#fff;
+    border-radius: 10rpx;
+    box-shadow: 0 2rpx 6rpx 0 rgba(0, 0, 0, 0.1);
+}
+.list .item{
+    padding: 25rpx 0;
+    overflow: hidden;
+    position: relative;
+    border-bottom: 2rpx solid #ccc;
+}
+.list .item:last-child{
+    border: none;
+}
+.list .item .left{
+    float: left;
+}
+.list .item .right{
+    float: right;
+    margin: 15rpx 0 0;
+}
+.list .item .right text{
+    color: #F08300;
+    font-size: 24rpx;
+}
+.list .item image{
+    width: 80rpx;
+    height: 80rpx;
+    margin: 0 20rpx 0 0;
+    vertical-align: middle;
+}
+.list .item text{
+    color: #222;
+    font-size: 30rpx;
+    vertical-align: middle;
+}
+.list .item .icon{
+    top: -45rpx;
+    right: 115rpx;
+    width: 89rpx;
+    height: 90rpx;
+    color: #eee;
+    position: absolute;
+    font-size: 75rpx;
+    line-height: 90rpx;
+    border-radius: 50%;
+    text-align: center;
+    transform: rotate(-45deg);
+    border: 6rpx solid #eee;
+}
+.list .item:nth-of-type(2n) .icon{
+    top: auto;
+    bottom: -45rpx;
+    right: 240rpx;
+}

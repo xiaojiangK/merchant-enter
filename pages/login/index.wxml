@@ -1,0 +1,24 @@
+<view class="wrap">
+   <view class="logo">
+      <image src="/assets/logo.png" />
+   </view>
+   <view class="form">
+      <form bindsubmit="formSubmit">
+         <view class="item">
+            <image src="/assets/icon-user.png" />
+            <input type="text" bindfocus="formFocus" name="user" placeholder="请输入正确的账号" />
+         </view>
+         <view class="item pass">
+            <image src="/assets/icon-pass.png" />
+            <input type="password" bindfocus="formFocus" name="pass" placeholder="请输入正确的密码" />
+         </view>
+         <view class="error" hidden="{{!error}}">
+            <image src="/assets/icon-error.png" />
+            <text>{{error}}</text>
+         </view>
+         <view class="btn">
+            <button form-type="submit">登录</button>
+         </view>
+      </form>
+   </view>
+</view>

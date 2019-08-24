@@ -1,0 +1,33 @@
+.form{
+    color: #333;
+    padding: 32rpx 0;
+    font-size: 24rpx;
+}
+.form .item{
+    margin: 0 0 32rpx;
+    background: #fff;
+    padding: 28rpx 30rpx;
+    border-top: 2rpx solid #ccc;
+    border-bottom: 2rpx solid #ccc;
+}
+.form .item:first-child image{
+    width: 40rpx;
+    height: 40rpx;
+}
+.form .item image{
+    width: 37rpx;
+    height: 44rpx;
+    margin: 0 22rpx 0 0;
+    vertical-align: middle;
+}
+.form .item text{
+    vertical-align: middle;
+}
+.form .item input{
+    width: 600rpx;
+    display: inline-block;
+    vertical-align: middle;
+}
+.form .error, .form .btn{
+    padding: 0 30rpx;
+}

@@ -1,0 +1,30 @@
+<view class="wrap">
+    <view class="form">
+        <form bindsubmit="formSubmit">
+            <view class="item">
+                <image src="/assets/icon-user.png" />
+                <text>账号：{{user}}</text>
+            </view>
+            <view class="item">
+                <image src="/assets/icon-pass.png" />
+                <input type="password" name="password" placeholder="新的密码" />
+            </view>
+            <view class="item">
+                <image src="/assets/icon-pass.png" />
+                <input type="password" name="repassword" placeholder="确认新的密码" />
+            </view>
+            <view class="error" hidden="{{!error}}">
+                <image src="/assets/icon-error.png" />
+                <text>{{error}}</text>
+            </view>
+            <view class="btn">
+                <button form-type="submit">保存</button>
+            </view>
+        </form>
+    </view>
+    <view class="popup" hidden="{{!popup.title}}">
+        <image src="/assets/{{popup.icon}}.png" />    
+        <text>{{popup.title}}</text>
+    </view>
+    <view class="mask" hidden="{{!popup.title}}"></view>
+</view>

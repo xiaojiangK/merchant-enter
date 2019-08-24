@@ -1,0 +1,17 @@
+<view class="wrap">
+    <view class="list">
+        <navigator wx:for="{{list}}" wx:key="index" url="{{item.status == 1 ? '' : item.url}}" hover-class="none" class="item">
+            <view class="title">{{item.statusText}}</view>
+            <view class="content">
+                <text>姓名：{{item.use_name}}</text>
+                <text>开通通道：{{item.pay_ment == '1' ? '官方通道' : '网商通道'}}</text>
+                <text>联系电话：{{item.phone}}</text>
+                <text>常用邮箱：{{item.email}}</text>
+                <text>银行账户类型：{{item.account_type == "01" ? '对公账户' : '对私账户'}}</text>
+            </view>
+        </navigator>
+        <view class="btn" bindtap="toSelect">
+            <button>申请审核</button>
+        </view>
+    </view>
+</view>

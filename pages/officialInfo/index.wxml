@@ -1,0 +1,278 @@
+<view class="navigator">
+    <view class="icon" bindtap="goBack">
+        <image src="/assets/icon-back.png" />
+    </view>
+    <view class="title">{{navTitle}}</view>
+</view>
+<view class="wrap">
+    <view class="line">
+        <view class="item {{step >= 1 ? 'active' : ''}}">
+            <view class="num">1</view>
+            <view class="title">填写基本信息</view>
+        </view>
+        <view class="item {{step >= 2 ? 'active' : ''}}">
+            <view class="num">2</view>
+            <view class="title">填写公司信息</view>
+        </view>
+        <view class="item {{step >= 3 ? 'active' : ''}}">
+            <view class="num">3</view>
+            <view class="title">上传门店照片</view>
+        </view>
+        <view class="item">
+            <view class="num">4</view>
+            <view class="title">等待审核</view>
+        </view>
+    </view>
+    <view class="content">
+        <view class="item {{step == 1 ? 'active' : ''}}">
+            <view class="form">
+                <form bindsubmit="nextStep">
+                    <view class="title">基本信息</view>
+                    <view class="main basic">
+                        <view class="item required">
+                            <view class="label">联系人姓名：</view>
+                            <input type="text" name="name" bindblur="inputBlur" data-id="name" value="{{basicInfo.name}}" placeholder="请填写商户支付业务联系人的真实姓名" />
+                        </view>
+                        <view class="item required">
+                            <view class="label">联系人手机号码：</view>
+                            <input type="number" name="phone" bindblur="inputBlur" data-id="phone" value="{{basicInfo.phone}}" maxlength="11" placeholder="用于接收管理信息及验证码" />
+                        </view>
+                        <view class="item required">
+                            <view class="label">联系人常用邮箱：</view>
+                            <input type="text" name="email" bindblur="inputBlur" data-id="email" value="{{basicInfo.email}}" placeholder="用于接收微信支付的账号密码" />
+                        </view>
+                        <view class="item required">
+                            <view class="label">商户简称：</view>
+                            <input type="text" name="mch_name" bindblur="inputBlur" data-id="mch_name" value="{{basicInfo.mch_name}}" placeholder="将在支付完成页向买家展示" />
+                        </view>
+                        <view class="item">
+                            <view class="label">
+                                <view class="helpUp" wx:if="{{index == 0}}">{{help[index]}}</view>
+                                交易类型：<image src="/assets/icon-help.png" data-idx="0" bindtap="helpUp" />
+                            </view>
+                            <checkbox-group name="trade_type" bindchange="groupChange" data-id="trade_type">
+                                <label class="checkbox" wx:for="{{trade_type}}" wx:key="index">
+                                    <checkbox color="#F08300" value="{{item.value}}" checked="{{item.checked}}" />{{item.title}}
+                                </label>
+                            </checkbox-group>
+                        </view>
+                        <view class="item">
+                            <view class="label">
+                                开通支付渠道：<image src="/assets/icon-help.png" data-idx="1" bindtap="helpUp" />
+                                <view class="helpUp now2" wx:if="{{index == 1}}">{{help[index]}}</view>
+                            </view>
+                            <checkbox-group name="pay" bindchange="groupChange" data-id="pay">
+                                <label class="checkbox" wx:for="{{pay_ment}}" wx:key="index">
+                                    <checkbox color="#F08300" value="{{item.value}}" checked="{{item.checked}}" />{{item.title}}
+                                </label>
+                            </checkbox-group>
+                        </view>
+                    </view>
+                    <view class="title">银行账户信息</view>
+                    <view class="main">
+                        <view class="item">
+                            <view class="label">
+                                公司类型：<image src="/assets/icon-help.png" data-idx="2" bindtap="helpUp" />
+                                <view class="helpUp now3" wx:if="{{index == 2}}">{{help[index]}}</view>
+                            </view>
+                            <checkbox-group name="mch_type">
+                                <label class="checkbox" wx:for="{{mch_type}}" wx:key="index" data-type="{{item.value}}" bindtap="companyChange">
+                                    <checkbox color="#F08300" value="{{item.value}}" checked="{{item.checked}}" />{{item.title}}
+                                </label>
+                            </checkbox-group>
+                        </view>
+                        <view class="item" wx:if="{{company == '01'}}">
+                            <view class="label">
+                                开户许可证：<image src="/assets/icon-help.png" data-idx="3" bindtap="helpUp" />
+                                <view class="helpUp now4" wx:if="{{index == 3}}">{{help[index]}}</view>
+                            </view>
+                            <checkbox-group name="permit_type">
+                                <label class="checkbox" wx:for="{{permit_type}}" wx:key="index" data-type="{{item.value}}" bindtap="permitChange">
+                                    <checkbox color="#F08300" value="{{item.value}}" checked="{{item.checked}}" />{{item.title}}
+                                </label>
+                            </checkbox-group>
+                        </view>
+                        <view class="upload" wx:if="{{permit == '01' && company == '01'}}">
+                            <view class="picture" bindtap="uploadLicence">
+                                <view class="box">
+                                    <block wx:if="{{licence}}">
+                                        <image src="{{baseURL + licence}}" mode="aspectFit" class="img" />
+                                    </block>
+                                    <block wx:else>
+                                        <image src="/assets/licence.png" class="img" />
+                                        <image src="/assets/icon-add.png" class="icon" />
+                                    </block>
+                                </view>
+                            </view>
+                            <view class="tip">
+                                <text>必须为彩色图片且小于2M，</text>
+                                <text>文件格式为bmp、png、jpeg、jpg或gif</text>
+                            </view>
+                        </view>
+                        <block wx:if="{{permit == '02' || company == '02'}}">
+                            <view class="item required">
+                                <view class="label">
+                                    法人代表人：<image src="/assets/icon-help.png" data-idx="4" bindtap="helpUp" />
+                                    <view class="helpUp now5" wx:if="{{index == 4}}">{{help[index]}}</view>
+                                </view>
+                                <input type="text" name="card_name" bindblur="inputBlur" data-id="card_name" value="{{basicInfo.card_name}}" placeholder="填写开户许可证上的法人代表人" />
+                            </view>
+                            <view class="item required">
+                                <view class="label">
+                                    开户银行：<image src="/assets/icon-help.png" data-idx="5" bindtap="helpUp" />
+                                    <view class="helpUp now6" wx:if="{{index == 5}}">{{help[index]}}</view>
+                                </view>
+                                <input type="text" name="account_bank" bindblur="inputBlur" data-id="account_bank" value="{{basicInfo.account_bank}}" placeholder="填写开户许可证上的开户银行" />
+                            </view>
+                            <view class="item required">
+                                <view class="label">
+                                    银行卡号：<image src="/assets/icon-help.png" data-idx="6" bindtap="helpUp" />
+                                    <view class="helpUp now6" wx:if="{{index == 6}}">{{help[index]}}</view>
+                                </view>
+                                <input type="text" name="account_number" bindblur="inputBlur" data-id="account_number" value="{{basicInfo.account_number}}" placeholder="填写开户许可证上的银行卡号" />
+                            </view>
+                        </block>
+                    </view>
+                    <view class="item btn">
+                        <button form-type="submit">下一步</button>
+                    </view>
+                </form>
+            </view>
+        </view>
+        <view class="item items {{step == 2 ? 'active' : ''}}">
+            <view class="form">
+                <view class="title">公司信息</view>
+                <view class="main">
+                    <view class="label required">
+                        公司营业执照（企业/个体户)：<image src="/assets/icon-help.png" data-idx="7" bindtap="helpUp" />
+                        <view class="helpUp now7" wx:if="{{index == 7}}">{{help[index]}}</view>
+                    </view>
+                    <view class="upload business">
+                        <view class="picture" bindtap="uploadLicence" data-type="1">
+                            <view class="box">
+                                <block wx:if="{{bus_photo}}">
+                                    <image src="{{baseURL + bus_photo}}" mode="aspectFit" class="img" />
+                                </block>
+                                <block wx:else>
+                                    <image src="/assets/business.png" class="img" />
+                                    <image src="/assets/icon-add.png" class="icon" />
+                                </block>
+                            </view>
+                        </view>
+                        <view class="tip">
+                            <text>需年检章齐全（当年成立公司除外）；必须为彩色图片且</text>
+                            <text>小于2M，文件格式为bmp、png、jpeg、jpg或gif</text>
+                        </view>
+                    </view>
+                    <view class="label required">
+                        公司法人身份证：<image src="/assets/icon-help.png" data-idx="8" bindtap="helpUp" />
+                        <view class="helpUp now8" wx:if="{{index == 8}}">{{help[index]}}</view>
+                    </view>
+                    <view class="upload">
+                        <view class="picture" bindtap="uploadLicence" data-type="2">
+                            <view class="box">
+                                <block wx:if="{{card_pos}}">
+                                    <image src="{{baseURL + card_pos}}" mode="aspectFit" class="img" />
+                                </block>
+                                <block wx:else>
+                                    <image src="/assets/card-front.png" class="img" />
+                                    <image src="/assets/icon-add.png" class="icon" />
+                                </block>
+                            </view>
+                        </view>
+                        <view class="picture" bindtap="uploadLicence" data-type="3">
+                            <view class="box">
+                                <block wx:if="{{card_opp}}">
+                                    <image src="{{baseURL + card_opp}}" mode="aspectFit" class="img" />
+                                </block>
+                                <block wx:else>
+                                    <image src="/assets/card-back.png" class="img" />
+                                    <image src="/assets/icon-add.png" class="icon" />
+                                </block>
+                            </view>
+                        </view>
+                        <view class="tip">
+                            <text>必须为彩色图片且小于2M，文件格式</text>
+                            <text>为bmp、png、jpeg、jpg或gif</text>
+                        </view>
+                    </view>
+                </view>
+                <view class="item btn">
+                    <button bindtap="prevStep">上一步</button>
+                    <button bindtap="nextStep2">下一步</button>
+                </view>
+            </view>
+        </view>
+        <view class="item items {{step == 3 ? 'active' : ''}}">
+            <view class="form">
+                <view class="title">门店信息</view>
+                <view class="main">
+                    <view class="label required">公司门店照片：</view>
+                    <view class="upload">
+                        <view class="picture" bindtap="uploadLicence" data-type="4">
+                            <view class="box">
+                                <block wx:if="{{store_photo}}">
+                                    <image src="{{baseURL + store_photo}}" mode="aspectFit" class="img" />
+                                </block>
+                                <block wx:else>
+                                    <image src="/assets/company.png" class="img company" />
+                                    <image src="/assets/icon-add.png" class="icon" />
+                                </block>
+                            </view>        
+                        </view>
+                        <view class="tip">
+                            <text>必须为彩色图片（文档请截图后上传），小于2M，</text>
+                            <text>格式为bmp、png、jpeg、jpg或gif</text>
+                        </view>
+                    </view>
+                    <view class="label required">公司收银台照片：</view>
+                    <view class="upload">
+                        <view class="picture" bindtap="uploadLicence" data-type="5">
+                            <view class="box">
+                                <block wx:if="{{cashier_photo}}">
+                                    <image src="{{baseURL + cashier_photo}}" mode="aspectFit" class="img" />
+                                </block>
+                                <block wx:else>
+                                    <image src="/assets/cashier.png" class="img cashier" />
+                                    <image src="/assets/icon-add.png" class="icon" />
+                                </block>
+                            </view>
+                        </view>
+                        <view class="tip">
+                            <text>必须为彩色图片（文档请截图后上传），小于2M，</text>
+                            <text>格式为bmp、png、jpeg、jpg或gif</text>
+                        </view>
+                    </view>
+                    <view class="label required">公司营业场所照片：</view>
+                    <view class="upload">
+                        <view class="picture" bindtap="uploadLicence" data-type="6">
+                            <view class="box">
+                                <block wx:if="{{in_store_photo}}">
+                                    <image src="{{baseURL + in_store_photo}}" mode="aspectFit" class="img" />
+                                </block>
+                                <block wx:else>
+                                    <image src="/assets/place.png" class="img place" />
+                                    <image src="/assets/icon-add.png" class="icon" />
+                                </block>
+                            </view>
+                        </view>
+                        <view class="tip">
+                            <text>必须为彩色图片（文档请截图后上传），小于2M，</text>
+                            <text>格式为bmp、png、jpeg、jpg或gif</text>
+                        </view>
+                    </view>
+                </view>
+                <view class="item btn">
+                    <button bindtap="prevStep">上一步</button>
+                    <button bindtap="stepSubmit">提交审核</button>
+                </view>
+            </view>
+        </view>
+        <!-- 弹层提示 -->
+        <view class="popup" hidden="{{!popupTitle}}">
+            <image src="/assets/icon-error.png" />    
+            <text>{{popupTitle}}</text>
+        </view>
+        <view class="mask" hidden="{{!popupTitle}}"></view>
+    </view>
+</view>

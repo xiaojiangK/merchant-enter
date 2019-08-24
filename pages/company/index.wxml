@@ -1,0 +1,25 @@
+<view class="wrap">
+    <view class="company">
+        <image src="/assets/user-img.png" />
+        <text>账号：{{userInfo.username}}</text>
+    </view>
+    <view class="menu">
+        <view class="item" bindtap="changePass">
+            <image src="/assets/icon-pass.png" />
+            <text>修改密码</text>
+        </view>
+        <view class="item" bindtap="logout">
+            <image src="/assets/icon-out.png" />
+            <text>退出登录</text>
+        </view>
+    </view>
+    <view class="list">
+        <navigator wx:for="{{companyList}}" wx:key="index" url="{{item.gf == -1 && item.ws == -1 ? '/pages/selectApply/index?id='+item.id : '/pages/apply/index?id='+item.id}}" hover-class="none" class="item">
+            <view class="title">{{item.company}}</view>
+            <view class="content">
+                <text>官方通道：<block wx:if="{{item.gf == -1}}">尚未申请</block> <block wx:if="{{item.gf == 1}}">审核通过</block> <block wx:if="{{item.gf == 0 || item.gf == 2 || item.gf == 3 || item.gf == 4}}">等待审核</block> <block wx:if="{{item.gf == 5}}">审核驳回</block></text>
+                <text>网商通道：<block wx:if="{{item.ws == -1}}">尚未申请</block> <block wx:if="{{item.ws == 1}}">审核通过</block> <block wx:if="{{item.ws == 0 || item.ws == 2 || item.ws == 3 || item.ws == 4}}">等待审核</block> <block wx:if="{{item.ws == 5}}">审核驳回</block></text>
+            </view>
+        </navigator>
+    </view>
+</view>

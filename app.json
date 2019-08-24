@@ -1,0 +1,21 @@
+{
+  "pages": [
+    "pages/selection/index",
+    "pages/login/index",
+    "pages/company/index",
+    "pages/changePass/index",
+    "pages/officialInfo/index",
+    "pages/networkInfo/index",
+    "pages/applyResult/index",
+    "pages/apply/index",
+    "pages/selectApply/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "商户入件",
+    "navigationBarTextStyle": "black"
+  },
+  "debug": false,
+  "sitemapLocation": "sitemap.json"
+}

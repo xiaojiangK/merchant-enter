@@ -1,0 +1,26 @@
+<view class="wrap">
+    <view class="list">
+        <radio-group class="radio-group">
+            <view class="item" bindtap="changeType" wx:for="{{channels}}" wx:key="index" data-item="{{item}}" data-idx="{{index}}">
+                <view class="left">
+                    <block wx:if="{{item.channels == 1}}">
+                        <image src="/assets/official.png" />
+                        <text>官方通道</text>
+                    </block>
+                    <block wx:else>
+                        <image src="/assets/network.png" />
+                        <text>网商银行通道</text>
+                    </block>
+                </view>
+                <view class="right">
+                    <text wx:if="{{item.wxlst == 1 && item.zfblst == 1}}">已申请</text>
+                    <radio value="official" wx:else color="#F08300" checked="{{item.checked}}" />
+                </view>
+                <view class="icon">￥</view>
+            </view>
+        </radio-group>
+    </view>
+    <view class="btn">
+        <button bindtap="submit" class="{{applying == 2 ? 'none' : ''}}">确定</button>
+    </view>
+</view>

@@ -1,0 +1,186 @@
+page {
+    padding: 164rpx 0 0;
+}
+.line .item{
+    width: 20%;
+}
+.line .item .num:before {
+    right: 0;
+    width: 153rpx;
+}
+.line .item .now5:before{
+    width: 150rpx;
+}
+.content>.item{
+    display: none;
+}
+.content>.item.active{
+    display: block;
+}
+.form .title{
+    color: #222;
+    font-size: 30rpx;
+    margin: 40rpx 30rpx 20rpx;
+}
+.form .main{
+    padding: 0 30rpx;
+    background: #fff;
+    border-top: 2rpx solid #ccc;
+    border-bottom: 2rpx solid #ccc;
+}
+.form .main .item{
+    height: 88rpx;
+    line-height: 88rpx;
+    border-bottom: 2rpx solid #ccc;
+}
+.form .main .area{
+    height: 200rpx;
+}
+.form .main .item:last-child{
+    border: none;
+}
+.form .label{
+    color: #333;
+    font-size: 28rpx;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+}
+.form .helpUp{
+    top: 0;
+    left: 85rpx;
+    width: 506rpx;
+    color: #666;
+    z-index: 999;
+    padding: 22rpx;
+    line-height: 36rpx;
+    font-size: 22rpx;
+    background: #fff;
+    position: absolute;
+    border-radius: 8rpx;
+    transform: translateY(-90%);
+    border: 2rpx solid #F08300;
+}
+.form .helpUp:after{
+    content: '';
+    left: 55rpx;
+    bottom: -16%;
+    width: 20rpx;
+    z-index: 1001;
+    height: 15rpx;
+    display: block;
+    position: absolute;
+    background: url('https://i.ibb.co/2ZDwvWH/icon-down.png') center center no-repeat;
+    background-size: 20rpx 15rpx;
+}
+.form .label image{
+    width: 24rpx;
+    height: 24rpx;
+    margin: 0 20rpx 0 0;
+    vertical-align: middle;
+}
+.form .required:before{
+    content: '*';
+    color: #F02800;
+    font-size: 24rpx;
+    margin: 0 5rpx 0 0;
+    display: inline-block;
+    vertical-align: top;
+}
+.form .item input, .form .main textarea{
+    width: 450rpx;
+    height: 88rpx;
+    font-size: 24rpx;
+    display: inline-block;
+    vertical-align: middle;
+}
+.form .main textarea{
+    height: 170rpx;
+    padding: 30rpx 0 0;
+    line-height: 36rpx;
+    vertical-align: top;
+}
+.form .item checkbox-group, form .item picker{
+    color: #333;
+    font-size: 24rpx;
+    min-width: 300rpx;
+    max-width: 500rpx;
+    display: inline-block;
+    vertical-align: middle;
+}
+.form .item checkbox{
+    transform: scale(.6);
+}
+.form .item.auto{
+    height: auto;
+}
+.form .main .searchBank{
+    height: auto;
+}
+.form .searchBank picker{
+    vertical-align: top;
+    margin: 0 0 0 160rpx;
+}
+.form .item.auto checkbox-group{
+    vertical-align: top;
+}
+.form .upload{
+    margin: 40rpx 0 0;
+}
+form .upload .label{
+    margin: 0 0 30rpx;
+}
+.form .upload .picture{
+    width: 560rpx;
+    height: 336rpx;
+    padding: 20rpx;
+    margin: 0 auto 30rpx;
+    position: relative;
+    border-radius: 20rpx;
+    box-sizing: border-box;
+    background: rgba(204, 204, 204, .1);
+    border: 2rpx dashed rgba(204, 204, 204, .1);
+}
+.form .upload .picture .box{
+    display: flex;
+    height: 296rpx;
+    background: #E6F1F3;
+    border-radius: 10rpx;
+    justify-content: center;
+    align-items: center;
+}
+.form .upload .img{
+    width: 100%;
+    height: 296rpx;
+}
+.form .upload .business{
+    width: 337rpx;
+}
+.form .upload .icon{
+    top: 50%;
+    left: 50%;
+    width: 88rpx;
+    height: 88rpx;
+    position: absolute;
+    transform: translate3d(-50%,-50%,0);
+}
+.form .upload .tip{
+    color: #333;
+    font-size: 24rpx;
+    line-height: 36rpx;
+    text-align: center;
+    margin: 0 0 30rpx;
+}
+.form .upload .tip text{
+    display: block;
+}
+.form .btn{
+    padding: 0 30rpx;
+    margin: 80rpx 0;
+}
+.form .btns button:first-child{
+    background: none;
+    color: #F08300;
+    margin: 0 0 30rpx;
+    border: 2rpx solid #F08300;
+}

@@ -1,0 +1,28 @@
+page {
+    padding: 164rpx 0 0;
+}
+.content{
+    padding: 100rpx 30rpx;
+    text-align: center;
+}
+.content image{
+    width: 220rpx;
+    height: 220rpx;
+    margin: 0 0 30rpx;
+}
+.content .title{
+    color: #222;
+    font-size: 36rpx;
+    font-weight: bold;
+    margin: 0 0 60rpx;
+}
+.content .tip{
+    color: #333;
+    font-size: 28rpx;
+    line-height: 46rpx;
+    margin: 0 0 30rpx;
+}
+.content .why{
+    color: #F02D00;
+    font-size: 24rpx;
+}

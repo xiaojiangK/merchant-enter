@@ -1,0 +1,47 @@
+<view class="navigator">
+    <view class="icon" bindtap="goBack">
+        <image src="/assets/icon-back.png" />
+    </view>
+    <view class="title">{{navTitle}}</view>
+</view>
+<view class="wrap">
+    <view class="line">
+        <view class="item active">
+            <view class="num">1</view>
+            <view class="title">填写基本信息</view>
+        </view>
+        <view class="item active">
+            <view class="num">2</view>
+            <view class="title">填写公司信息</view>
+        </view>
+        <view class="item active">
+            <view class="num">3</view>
+            <view class="title">上传门店照片</view>
+        </view>
+        <view class="item active">
+            <view class="num">4</view>
+            <view class="title">等待审核</view>
+        </view>
+    </view>
+    <view class="content">
+        <block wx:if="{{status == 1}}">
+            <image src="/assets/icon-clock.png" />
+            <view class="title">资料等待审核中</view>
+            <view class="tip">
+                <view>您的资料已成功提交，客服将会审核你的资料.</view>
+                <view>这个过程至少需要1-3个工作日以上.</view>
+            </view>
+            <view class="why" wx:if="{{type == 'official'}}">审核成功后请留意邮箱扫描二维码进行验证</view>
+            <view class="why" wx:else>请注意查收验证码配合客服进行开通支付通道</view>
+        </block>
+        <block wx:if="{{status == 2}}">
+            <image src="/assets/icon-err-big.png" />
+            <view class="title">资料审核驳回</view>
+            <view class="tip">您的资料已被驳回，请修改后重新提交</view>
+            <view class="why">驳回原因：{{reason}}</view>
+            <view class="btn">
+                <button bindtap="goUpdate">立即修改</button>
+            </view>
+        </block>
+    </view>
+</view>

@@ -1,0 +1,163 @@
+/**
+ *  通用样式
+ */
+page {
+  background: #f3f3f3;
+  box-sizing: border-box;
+  position: relative;
+  line-height: 1;
+}
+/*** 输入项占位符 ***/
+.placeholder {
+  color: #999;
+}
+.navigator{
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 78rpx;
+  z-index: 9999;
+  position: fixed;
+  padding: 82rpx 0 0;
+  background: #fff;
+  border-bottom: 2rpx solid #ccc;
+}
+.navigator .title{
+  position: absolute;
+  width: 100%;
+  left: 88rpx;
+  top: 88rpx;
+  color: #333;
+  font-size: 36rpx;
+}
+.navigator .icon{
+  padding: 10rpx 30rpx;
+  display: inline-block;
+}
+.navigator image{
+  width: 20rpx;
+  height: 35rpx;
+}
+.form .error image{
+  width: 24rpx;
+  height: 24rpx;
+  margin: 0 10rpx 0 0;
+  vertical-align: middle;
+}
+.form .error text{
+  font-size: 24rpx;
+  color: #F02800;
+  vertical-align: middle;
+}
+.btn{
+  margin: 60rpx 0 0;
+}
+.btn button{
+  width: 100%;
+  height: 88rpx;
+  color: #fff;
+  font-size: 36rpx;
+  line-height: 88rpx;
+  text-align: center;
+  border-radius: 10rpx;
+  background: #F08300;
+}
+.btn button.none{
+  background: #ccc;
+  pointer-events: none;
+}
+@keyframes fadeInDown {
+  0% {
+    top: 10%;
+    opacity: 0
+  }
+  100% {
+    top: 30%;
+    opacity: 1
+  }
+}
+.popup{
+  top: 30%;
+  left: 50%;
+  z-index: 999;
+  width: 560rpx;
+  position: fixed;
+  background: #fff;
+  text-align: center;
+  border-radius: 8rpx;
+  margin-left: -280rpx;
+  padding: 80rpx 0 75rpx;
+  animation: fadeInDown .3s;
+}
+.popup image{
+  width: 80rpx;
+  height: 80rpx;
+  display: block;
+  margin: 0 auto 30rpx;
+}
+.popup text{
+  font-size: 28rpx;
+}
+.mask{
+  top: 0;
+  left: 0;
+  z-index: 99;
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: fixed;
+  transition: .3s all;
+  background: rgba(0, 0, 0, .2);
+}
+.line{
+  color: #333;
+  padding: 20rpx 0;
+  overflow: hidden;
+  position: relative;
+  background: #fff;
+  border-bottom: 2rpx solid #ccc;
+}
+.line .item{
+  width: 25%;
+  float: left;
+  text-align: center;
+}
+.line .item .num{
+  width: 32rpx;
+  z-index: 99;
+  height: 32rpx;
+  color: #fff;
+  margin: 0 auto;
+  color: #666;
+  position: relative;
+  font-size: 18rpx;
+  text-align: center;
+  line-height: 32rpx;
+  border-radius: 50%;
+  background: #ccc;
+}
+.line .item.active .num{
+  color: #fff;
+  background: #F08300;
+}
+.line .item .num:before{
+  top: 50%;
+  z-index: -1;
+  right: 28rpx;
+  content: '';
+  height: 4rpx;
+  width: 160rpx;
+  margin-top: -2rpx;
+  position: absolute;
+  background: #ccc;
+}
+.line .item.active .num:before{
+  background: #F08300;
+}
+.line .item:first-child .num:before{
+  display: none;
+}
+.line .item .title{
+  font-size: 24rpx;
+  margin: 20rpx 0 0;
+}

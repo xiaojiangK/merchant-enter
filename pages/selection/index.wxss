@@ -1,0 +1,41 @@
+.list{
+    padding: 25rpx;
+}
+.list .item{
+    height: 130rpx;
+    overflow: hidden;
+    margin: 0 0 25rpx;
+    background: #fff;
+    border-radius: 10rpx;
+    background-size: 100% 100% !important;
+    box-shadow: 0 0 16rpx 0px rgba(0, 0, 0, .2);
+}
+.list .item .left{
+    float: left;
+    padding: 28rpx 0 28rpx 35rpx;
+}
+.list .left image{
+    width: 80rpx;
+    height: 80rpx;
+    margin: 0 20rpx 0 0;
+    vertical-align: middle;
+}
+.list .left text{
+    color: #333;
+    font-size: 30rpx;
+    line-height: 80rpx;
+    display: inline-block;
+    vertical-align: middle;
+}
+.list .item .right{
+    width: 80rpx;
+    float: right;
+    height: 130rpx;
+    text-align: center;
+    line-height: 130rpx;
+    background: #F08300;
+}
+.list .right image{
+    width: 44rpx;
+    height: 39rpx;
+}

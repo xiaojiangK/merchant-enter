@@ -1,0 +1,26 @@
+.list{
+    color: #333;
+    padding: 30rpx;
+}
+.list .item{
+    padding: 0 30rpx;
+    margin: 0 0 30rpx;
+    background: #fff;
+    border-radius: 10rpx;
+    box-shadow: 0 2rpx 6rpx 0 rgba(0, 0, 0, 0.1);
+}
+.list .item .title{
+    font-size: 30rpx;
+    padding: 25rpx 0;
+    margin: 0 0 30rpx;
+    text-align: center;
+    border-bottom: 2rpx solid #ccc;
+}
+.list .item .content text{
+    display: block;
+    font-size: 28rpx;
+    padding: 0 0 30rpx;
+}
+.btn{
+    margin: 200rpx 0 0;
+}
