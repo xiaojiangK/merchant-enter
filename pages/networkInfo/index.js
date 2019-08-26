@@ -461,7 +461,7 @@ Page({
     console.log(data);
 
     // api
-    post('v1_entry/Wsentry', data).then(res => {
+    post('v1_entry/ws_entry', data).then(res => {
       if (res.code == 200) {
         wx.navigateTo({
           url: `/pages/applyResult/index?status=1&type=network&id=${this.data.id}`
@@ -697,7 +697,7 @@ Page({
       success: (result) => {
         if(result.confirm){
           // 保存资料
-          post('v1_entry/Wsentry', this.data.basicInfo).then(res => {
+          post('v1_entry/ws_entry', this.data.basicInfo).then(res => {
             if (res.code == 200) {
               wx.navigateBack({
                 delta: 1
