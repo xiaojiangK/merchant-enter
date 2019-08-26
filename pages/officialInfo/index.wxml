@@ -95,8 +95,8 @@
                         <view class="upload" wx:if="{{permit == '01' && company == '01'}}">
                             <view class="picture" bindtap="uploadLicence">
                                 <view class="box">
-                                    <block wx:if="{{licence}}">
-                                        <image src="{{baseURL + licence}}" mode="aspectFit" class="img" />
+                                    <block wx:if="{{basicInfo.licence}}">
+                                        <image src="{{baseURL + basicInfo.licence}}" mode="aspectFit" class="img" />
                                     </block>
                                     <block wx:else>
                                         <image src="/assets/licence.png" class="img" />
@@ -150,8 +150,8 @@
                     <view class="upload business">
                         <view class="picture" bindtap="uploadLicence" data-type="1">
                             <view class="box">
-                                <block wx:if="{{bus_photo}}">
-                                    <image src="{{baseURL + bus_photo}}" mode="aspectFit" class="img" />
+                                <block wx:if="{{basicInfo.bus_photo}}">
+                                    <image src="{{baseURL + basicInfo.bus_photo}}" mode="aspectFit" class="img" />
                                 </block>
                                 <block wx:else>
                                     <image src="/assets/business.png" class="img" />
@@ -171,8 +171,8 @@
                     <view class="upload">
                         <view class="picture" bindtap="uploadLicence" data-type="2">
                             <view class="box">
-                                <block wx:if="{{card_pos}}">
-                                    <image src="{{baseURL + card_pos}}" mode="aspectFit" class="img" />
+                                <block wx:if="{{basicInfo.card_pos}}">
+                                    <image src="{{baseURL + basicInfo.card_pos}}" mode="aspectFit" class="img" />
                                 </block>
                                 <block wx:else>
                                     <image src="/assets/card-front.png" class="img" />
@@ -182,8 +182,8 @@
                         </view>
                         <view class="picture" bindtap="uploadLicence" data-type="3">
                             <view class="box">
-                                <block wx:if="{{card_opp}}">
-                                    <image src="{{baseURL + card_opp}}" mode="aspectFit" class="img" />
+                                <block wx:if="{{basicInfo.card_opp}}">
+                                    <image src="{{baseURL + basicInfo.card_opp}}" mode="aspectFit" class="img" />
                                 </block>
                                 <block wx:else>
                                     <image src="/assets/card-back.png" class="img" />
@@ -211,8 +211,8 @@
                     <view class="upload">
                         <view class="picture" bindtap="uploadLicence" data-type="4">
                             <view class="box">
-                                <block wx:if="{{store_photo}}">
-                                    <image src="{{baseURL + store_photo}}" mode="aspectFit" class="img" />
+                                <block wx:if="{{basicInfo.store_photo}}">
+                                    <image src="{{baseURL + basicInfo.store_photo}}" mode="aspectFit" class="img" />
                                 </block>
                                 <block wx:else>
                                     <image src="/assets/company.png" class="img company" />
@@ -229,8 +229,8 @@
                     <view class="upload">
                         <view class="picture" bindtap="uploadLicence" data-type="5">
                             <view class="box">
-                                <block wx:if="{{cashier_photo}}">
-                                    <image src="{{baseURL + cashier_photo}}" mode="aspectFit" class="img" />
+                                <block wx:if="{{basicInfo.cashier_photo}}">
+                                    <image src="{{baseURL + basicInfo.cashier_photo}}" mode="aspectFit" class="img" />
                                 </block>
                                 <block wx:else>
                                     <image src="/assets/cashier.png" class="img cashier" />
@@ -247,8 +247,8 @@
                     <view class="upload">
                         <view class="picture" bindtap="uploadLicence" data-type="6">
                             <view class="box">
-                                <block wx:if="{{in_store_photo}}">
-                                    <image src="{{baseURL + in_store_photo}}" mode="aspectFit" class="img" />
+                                <block wx:if="{{basicInfo.in_store_photo}}">
+                                    <image src="{{baseURL + basicInfo.in_store_photo}}" mode="aspectFit" class="img" />
                                 </block>
                                 <block wx:else>
                                     <image src="/assets/place.png" class="img place" />

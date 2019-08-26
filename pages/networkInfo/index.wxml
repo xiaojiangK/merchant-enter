@@ -61,7 +61,7 @@
                             <view class="item required">
                                 <view class="label">商户所在地：</view>
                                 <picker bindchange="regionChange" data-type="mchRegion" mode="region" value="{{mchRegion}}">
-                                    <view class="picker">{{mchRegion[0]}} - {{mchRegion[1]}} - {{mchRegion[2]}}</view>
+                                    <view class="picker">{{mchRegion[0]}} - {{mchRegion[1]}}</view>
                                 </picker>
                             </view>
                             <view class="item required">
@@ -214,7 +214,7 @@
                         <view class="item required">
                             <view class="label">开户行地址：</view>
                             <picker bindchange="regionChange" data-type="bankRegion" mode="region" value="{{bankRegion}}">
-                                <view class="picker">{{bankRegion[0]}} - {{bankRegion[1]}} - {{bankRegion[2]}}</view>
+                                <view class="picker">{{bankRegion[0]}} - {{bankRegion[1]}}</view>
                             </picker>
                         </view>
                         <view class="item required searchBank" wx:if="{{basicInfo.MerchantType != '03'}}">

@@ -457,10 +457,9 @@ Page({
       ...info,
       ...value
     };
-    wx.navigateTo({
-      url: `/pages/applyResult/index?status=1&type=network&id=${this.data.id}`
-    });
+
     console.log(data);
+
     // api
     post('v1_entry/Wsentry', data).then(res => {
       if (res.code == 200) {
@@ -630,7 +629,6 @@ Page({
           } else if (type == 5) {
             this.setData({ "basicInfo.CertPhotoB": path });
           }
-          wx.hideLoading();
           wx.showToast({
             title: data.msg,
             icon: 'none'
@@ -646,6 +644,9 @@ Page({
               popupTitle: ''
             });
           }, 1500);
+        },
+        complete: () => {
+          wx.hideLoading();
         }
       });
     } else {

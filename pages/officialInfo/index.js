@@ -22,7 +22,14 @@ Page({
       permit_type: "01",
       card_name: '',
       account_bank: '',
-      account_number:''
+      account_number:'',
+      licence: '',
+      bus_photo: '',
+      card_pos: '',
+      card_opp: '',
+      store_photo: '',
+      cashier_photo: '',
+      in_store_photo: '',
     },
     trade_type: [{       // 交易类型
       title: '正扫交易',
@@ -64,13 +71,6 @@ Page({
       value: '02',
       checked: false
     }],
-    licence: '',
-    bus_photo: '',
-    card_pos: '',
-    card_opp: '',
-    store_photo: '',
-    cashier_photo: '',
-    in_store_photo: '',
     popupTitle: '',
     navTitle: '官方通道',
     baseURL: config.baseImgURL,
@@ -96,17 +96,12 @@ Page({
     if (opt.save == 1) {
       get(`1/entry/info?id=${this.data.applyId}`).then(res => {
         if (res.code == 200) {
-          var res = {
-            ...res.data,
-            mch_type: 1,        // 公司类型
-            permit_type: 1,     // 开户许可证方式
-            pay_ment: [1, 2],   // 支付渠道
-            trade_type: [2, 3]  // 交易类型
-          };
+          var res = res.data;
           var data = this.data;
           // 交易类型
+          var trade = res.trade_type;
           var trade_type = data.trade_type.map(i => {
-            if (res.trade_type.includes(Number.parseInt(i.value))) {
+            if (trade.includes(i.value)) {
               i.checked = true;
             } else {
               i.checked = false;
@@ -114,18 +109,28 @@ Page({
             return i;
           });
           // 支付渠道
-          var pay_ment = data.pay_ment.map(i => {
-            if (res.pay_ment.includes(Number.parseInt(i.value))) {
-              i.checked = true;
-            } else {
+          var pay = [];
+          var channels = JSON.parse(res.channels);
+          var pay_ment = data.pay_ment.map((i,j) => {
+            if (!channels.wx && j == 0) {
+              i.checked = false;
+            }
+            if (!channels.ali && j == 1) {
               i.checked = false;
             }
             return i;
           });
+          for (let i in channels) {
+            if (i == 'wx') {
+              pay.push('01');
+            } else if (i == 'ali') {
+              pay.push('02');
+            }
+          }
           // 公司类型
+          var type = res.mch_type;
           var mch_type = data.mch_type.map(i => {
-            var type = res.mch_type;
-            if (Number.parseInt(i.value) == type) {
+            if (i.value == type) {
               this.setData({
                 company: type
               });
@@ -136,9 +141,9 @@ Page({
             return i;
           });
           // 开户许可证方式
+          var permit = res.permit_type;
           var permit_type = data.permit_type.map(i => {
-            var permit = res.permit_type;
-            if (Number.parseInt(i.value) == permit) {
+            if (i.value == permit) {
               this.setData({ permit });
               i.checked = true;
             } else {
@@ -148,25 +153,29 @@ Page({
           });
           this.setData({
             basicInfo: {
+              pay,
+              mch_type: type,
               name: res.use_name,
+              trade_type: trade,
               phone: res.phone,
               email: res.email,
+              permit_type: permit,
               mch_name: res.mch_name,
               card_name: res.card_name,
               account_bank: res.account_bank,
-              account_number: res.account_number
+              account_number: res.account_number,
+              licence: res.licence,               // 开户许可证
+              bus_photo: res.bus_photo,
+              card_pos: res.card_pos,
+              card_opp: res.card_opp,
+              store_photo: res.store_photo,
+              cashier_photo: res.cashier_photo,   // 公司收银台
+              in_store_photo: res.in_store_photo
             },
             pay_ment,
             trade_type,
             mch_type,
-            permit_type,
-            licence: res.licence,               // 开户许可证
-            bus_photo: res.bus_photo,
-            card_pos: res.card_pos,
-            card_opp: res.card_opp,
-            store_photo: res.store_photo,
-            cashier_photo: res.cashier_photo,   // 公司收银台
-            in_store_photo: res.in_store_photo
+            permit_type
           });
         }
       });
@@ -174,6 +183,7 @@ Page({
   },
   // 步骤一-下一步
   nextStep(e) {
+    var info = this.data.basicInfo;
     var value = e.detail.value;
     if (!value.name) {
       wx.showToast({
@@ -226,8 +236,7 @@ Page({
     }
     var permit = this.data.permit;
     var company = this.data.company;
-    var licence = this.data.licence;
-    if (permit == 1 && company == 1 && !licence) {
+    if (permit == 1 && company == 1 && !info.licence) {
       wx.showToast({
         title: '开户许可证未上传',
         icon: 'none'
@@ -257,7 +266,10 @@ Page({
     }
     this.setData({
       step: 2,
-      basicInfo: value
+      basicInfo: {
+        ...info,
+        ...value
+      }
     });
   },
   // 上一步
@@ -267,19 +279,20 @@ Page({
   },
   // 步骤二-下一步
   nextStep2() {
-    if (!this.data.bus_photo) {
+    var info = this.data.basicInfo;
+    if (!info.bus_photo) {
       wx.showToast({
         title: '公司营业执照未上传',
         icon: 'none'
       });
       return;
-    } else if (!this.data.card_pos) {
+    } else if (!info.card_pos) {
       wx.showToast({
         title: '法人身份证正面未上传',
         icon: 'none'
       });
       return;
-    } else if (!this.data.card_opp) {
+    } else if (!info.card_opp) {
       wx.showToast({
         title: '法人身份证反面未上传',
         icon: 'none'
@@ -292,26 +305,20 @@ Page({
   },
   // 步骤三-提交审核
   stepSubmit() {
-    var licence = this.data.licence;
-    var bus_photo = this.data.bus_photo;
-    var card_pos = this.data.card_pos;
-    var card_opp = this.data.card_opp;
-    var store_photo = this.data.store_photo;
-    var cashier_photo = this.data.cashier_photo;
-    var in_store_photo = this.data.in_store_photo;
-    if (!store_photo) {
+    var info = this.data.basicInfo;
+    if (!info.store_photo) {
       wx.showToast({
         title: '公司门店照片未上传',
         icon: 'none'
       });
       return;
-    } else if (!cashier_photo) {
+    } else if (!info.cashier_photo) {
       wx.showToast({
         title: '公司收银台照片未上传',
         icon: 'none'
       });
       return;
-    } else if (!in_store_photo) {
+    } else if (!info.in_store_photo) {
       wx.showToast({
         title: '公司营业场所照片未上传',
         icon: 'none'
@@ -319,19 +326,10 @@ Page({
       return;
     }
 
-    var data = {
-      ...this.data.basicInfo,
-      licence,
-      bus_photo,
-      card_pos,
-      card_opp,
-      store_photo,
-      cashier_photo,
-      in_store_photo
-    };
-    console.log(data);
+    console.log(this.data.basicInfo);
+
     // api
-    post('v1_entry/default_create', data).then(res => {
+    post('v1_entry/default_create', this.data.basicInfo).then(res => {
       if (res.code == 200) {
         wx.navigateTo({
           url: `/pages/applyResult/index?status=1&type=official&id=${this.data.id}`
@@ -420,21 +418,20 @@ Page({
           var data = JSON.parse(res.data);
           var path = data.data.path;
           if (type == 1) {
-            this.setData({ bus_photo: path });
+            this.setData({ "basicInfo.bus_photo": path });
           } else if (type == 2) {
-            this.setData({ card_pos: path });
+            this.setData({ "basicInfo.card_pos": path });
           } else if (type == 3) {
-            this.setData({ card_opp: path });
+            this.setData({ "basicInfo.card_opp": path });
           } else if (type == 4) {
-            this.setData({ store_photo: path });
+            this.setData({ "basicInfo.store_photo": path });
           } else if (type == 5) {
-            this.setData({ cashier_photo: path });
+            this.setData({ "basicInfo.cashier_photo": path });
           } else if (type == 6) {
-            this.setData({ in_store_photo: path });
+            this.setData({ "basicInfo.in_store_photo": path });
           } else {
-            this.setData({ licence: path });
+            this.setData({ "basicInfo.licence": path });
           }
-          wx.hideLoading();
           wx.showToast({
             title: data.msg,
             icon: 'none'
@@ -450,6 +447,9 @@ Page({
               popupTitle: ''
             });
           }, 1500);
+        },
+        complete: () => {
+          wx.hideLoading();
         }
       });
     } else {
@@ -501,24 +501,7 @@ Page({
       success: (result) => {
         if(result.confirm){
           // 保存资料
-          var licence = this.data.licence;
-          var bus_photo = this.data.bus_photo;
-          var card_pos = this.data.card_pos;
-          var card_opp = this.data.card_opp;
-          var store_photo = this.data.store_photo;
-          var cashier_photo = this.data.cashier_photo;
-          var in_store_photo = this.data.in_store_photo;
-          var data = {
-            ...this.data.basicInfo,
-            licence,
-            bus_photo,
-            card_pos,
-            card_opp,
-            store_photo,
-            cashier_photo,
-            in_store_photo
-          };
-          post('v1_entry/default_create', data).then(res => {
+          post('v1_entry/default_create', this.data.basicInfo).then(res => {
             if (res.code == 200) {
               wx.navigateBack({
                 delta: 1
