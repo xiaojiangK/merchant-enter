@@ -46,8 +46,14 @@ Page({
         });
     },
     toSelect() {
+        var applyId = 0;
+        for (let i of this.data.list) {
+            if (i.status == 4 || i.status == 5) {
+                applyId = i.id;
+            }
+        }
         wx.navigateTo({
-            url: `/pages/selectApply/index?id=${this.data.id}`
+            url: `/pages/selectApply/index?id=${this.data.id}&applyId=${applyId}`
         });
     }
 });
