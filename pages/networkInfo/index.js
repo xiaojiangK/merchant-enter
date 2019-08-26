@@ -145,10 +145,7 @@ Page({
     if (opt.save == 1) {
       get(`1/entry/info?id=${this.data.applyId}`).then(res => {
         if (res.code == 200) {
-          var res = {
-            ...res.data,
-            // mch_type: '03'
-          };
+          var res = res.data;
           var data = this.data;
           // 商户类型
           var MerchantType = data.MerchantType.map(i => {
@@ -453,28 +450,34 @@ Page({
       return;
     }
 
-    var data = {
-      ...info,
-      ...value
-    };
+    wx.getStorage({
+      key: 'userId',
+      success: (res)=>{
+        var data = {
+          ...info,
+          ...value,
+          mch_id: res.data,
+          customer_id: this.data.id,
+          entryid: this.data.applyId
+        };
 
-    console.log(data);
-
-    // api
-    post('v1_entry/ws_entry', data).then(res => {
-      if (res.code == 200) {
-        wx.navigateTo({
-          url: `/pages/applyResult/index?status=1&type=network&id=${this.data.id}`
+        // api
+        post('v1_entry/ws_entry', data).then(res => {
+          if (res.code == 200) {
+            wx.navigateTo({
+              url: `/pages/applyResult/index?status=1&type=network&id=${this.data.id}`
+            });
+          } else {
+            this.setData({
+              popupTitle: '提交失败，请重新尝试',
+            });
+            setTimeout(() => {
+              this.setData({
+                popupTitle: ''
+              });
+            }, 1500);
+          }
         });
-      } else {
-        this.setData({
-          popupTitle: '提交失败，请重新尝试',
-        });
-        setTimeout(() => {
-          this.setData({
-            popupTitle: ''
-          });
-        }, 1500);
       }
     });
   },
@@ -697,20 +700,34 @@ Page({
       success: (result) => {
         if(result.confirm){
           // 保存资料
-          post('v1_entry/ws_entry', this.data.basicInfo).then(res => {
-            if (res.code == 200) {
-              wx.navigateBack({
-                delta: 1
+          wx.getStorage({
+            key: 'userId',
+            success: (res)=>{
+              var data = {
+                ...info,
+                ...value,
+                mch_id: res.data,
+                customer_id: this.data.id,
+                entryid: this.data.applyId
+              };
+
+              // api
+              post('v1_entry/ws_entry', data).then(res => {
+                if (res.code == 200) {
+                  wx.navigateBack({
+                    delta: 1
+                  });
+                } else {
+                  this.setData({
+                    popupTitle: '保存失败，请重新尝试',
+                  });
+                  setTimeout(() => {
+                    this.setData({
+                      popupTitle: ''
+                    });
+                  }, 1500);
+                }
               });
-            } else {
-              this.setData({
-                popupTitle: '保存失败，请重新尝试',
-              });
-              setTimeout(() => {
-                this.setData({
-                  popupTitle: ''
-                });
-              }, 1500);
             }
           });
         }

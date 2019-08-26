@@ -5,6 +5,9 @@ Page({
         userInfo: {},
         companyList: []
     },
+    onPullDownRefresh() {
+        this.getUser();
+    },
     logout() {
         wx.showModal({
             content: '是否要退出登录？',
@@ -39,7 +42,7 @@ Page({
             url: `/pages/changePass/index?user=${user.username}&id=${user.id}`
         });
     },
-    onLoad(opts) {
+    getUser() {
         wx.getStorage({
             key: 'userId',
             success:(res) => {
@@ -60,6 +63,9 @@ Page({
                     }
                 });
             }
-          });
+        });
+    },
+    onLoad() {
+        this.getUser();
     }
 });

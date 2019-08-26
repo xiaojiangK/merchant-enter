@@ -326,23 +326,33 @@ Page({
       return;
     }
 
-    console.log(this.data.basicInfo);
+    wx.getStorage({
+      key: 'userId',
+      success: (res)=>{
+        var data = {
+          ...this.data.basicInfo,
+          mch_id: res.data,
+          customer_id: this.data.id,
+          entryid: this.data.applyId
+        }
 
-    // api
-    post('v1_entry/default_create', this.data.basicInfo).then(res => {
-      if (res.code == 200) {
-        wx.navigateTo({
-          url: `/pages/applyResult/index?status=1&type=official&id=${this.data.id}`
+        // api
+        post('v1_entry/default_create', data).then(res => {
+          if (res.code == 200) {
+            wx.navigateTo({
+              url: `/pages/applyResult/index?status=1&type=official&id=${this.data.id}`
+            });
+          } else {
+            this.setData({
+              popupTitle: '提交失败，请重新尝试',
+            });
+            setTimeout(() => {
+              this.setData({
+                popupTitle: ''
+              });
+            }, 1500);
+          }
         });
-      } else {
-        this.setData({
-          popupTitle: '提交失败，请重新尝试',
-        });
-        setTimeout(() => {
-          this.setData({
-            popupTitle: ''
-          });
-        }, 1500);
       }
     });
   },
@@ -501,20 +511,33 @@ Page({
       success: (result) => {
         if(result.confirm){
           // 保存资料
-          post('v1_entry/default_create', this.data.basicInfo).then(res => {
-            if (res.code == 200) {
-              wx.navigateBack({
-                delta: 1
+          wx.getStorage({
+            key: 'userId',
+            success: (res)=>{
+              var data = {
+                ...this.data.basicInfo,
+                mch_id: res.data,
+                customer_id: this.data.id,
+                entryid: this.data.applyId
+              };
+
+              // api
+              post('v1_entry/default_create', data).then(res => {
+                if (res.code == 200) {
+                  wx.navigateBack({
+                    delta: 1
+                  });
+                } else {
+                  this.setData({
+                    popupTitle: '保存失败，请重新尝试',
+                  });
+                  setTimeout(() => {
+                    this.setData({
+                      popupTitle: ''
+                    });
+                  }, 1500);
+                }
               });
-            } else {
-              this.setData({
-                popupTitle: '保存失败，请重新尝试',
-              });
-              setTimeout(() => {
-                this.setData({
-                  popupTitle: ''
-                });
-              }, 1500);
             }
           });
         }

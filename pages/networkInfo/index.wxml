@@ -257,7 +257,7 @@
                     <view class="main">
                         <view class="item required">
                             <view class="label">负责人手机号：</view>
-                            <input type="text" name="PrincipalMobile" bindblur="inputBlur" data-id="PrincipalMobile" value="{{basicInfo.PrincipalMobile}}" placeholder="请填写负责人手机号" />
+                            <input type="text" name="PrincipalMobile" maxlength="11" bindblur="inputBlur" data-id="PrincipalMobile" value="{{basicInfo.PrincipalMobile}}" placeholder="请填写负责人手机号" />
                         </view>
                         <view class="upload required">
                             <view class="label">负责人身份证照片：</view>
