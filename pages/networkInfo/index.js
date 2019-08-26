@@ -608,48 +608,53 @@ Page({
     let last = src.lastIndexOf(".") + 1;
     var imgType = src.substr(last);
     if (imgType == 'bmp' || imgType == 'png' || imgType == 'jpeg' || imgType == 'jpg' || imgType == 'gif') {
-      wx.uploadFile({
-        url: 'http://i.qiuxin.tech/Currency/Uploadpic',
-        filePath: src,
-        header: {
-          "Content-Type": "multipart/form-data",
-          'accept': 'application/json',
-        },
-        name: 'file',
-        success: (res) => {
-          var data = JSON.parse(res.data);
-          var path = data.data.path;
-          if (type == 0) {
-            this.setData({ "basicInfo.LicensePhoto": path });
-          } else if (type == 1) {
-            this.setData({ "basicInfo.ShopPhoto": path });
-          } else if (type == 2) {
-            this.setData({ "basicInfo.ShopEntrancePhoto": path });
-          } else if (type == 3) {
-            this.setData({ "basicInfo.IndustryLicensePhoto": path });
-          } else if (type == 4) {
-            this.setData({ "basicInfo.CertPhotoA": path });
-          } else if (type == 5) {
-            this.setData({ "basicInfo.CertPhotoB": path });
-          }
-          wx.showToast({
-            title: data.msg,
-            icon: 'none'
+      wx.getStorage({
+        key: 'userId',
+        success: (res)=>{
+          wx.uploadFile({
+            url: `http://i.qiuxin.tech/Currency/Uploadpic?mch_id=${res.data}`,
+            filePath: src,
+            header: {
+              "Content-Type": "multipart/form-data",
+              'accept': 'application/json',
+            },
+            name: 'file',
+            success: (res) => {
+              var data = JSON.parse(res.data);
+              var path = data.data.path;
+              if (type == 0) {
+                this.setData({ "basicInfo.LicensePhoto": path });
+              } else if (type == 1) {
+                this.setData({ "basicInfo.ShopPhoto": path });
+              } else if (type == 2) {
+                this.setData({ "basicInfo.ShopEntrancePhoto": path });
+              } else if (type == 3) {
+                this.setData({ "basicInfo.IndustryLicensePhoto": path });
+              } else if (type == 4) {
+                this.setData({ "basicInfo.CertPhotoA": path });
+              } else if (type == 5) {
+                this.setData({ "basicInfo.CertPhotoB": path });
+              }
+              wx.showToast({
+                title: data.msg,
+                icon: 'none'
+              });
+            },
+            fail: (res) => {
+              var data = JSON.parse(res.data);
+              this.setData({
+                popupTitle: data.msg,
+              });
+              setTimeout(() => {
+                this.setData({
+                  popupTitle: ''
+                });
+              }, 1500);
+            },
+            complete: () => {
+              wx.hideLoading();
+            }
           });
-        },
-        fail: (res) => {
-          var data = JSON.parse(res.data);
-          this.setData({
-            popupTitle: data.msg,
-          });
-          setTimeout(() => {
-            this.setData({
-              popupTitle: ''
-            });
-          }, 1500);
-        },
-        complete: () => {
-          wx.hideLoading();
         }
       });
     } else {
