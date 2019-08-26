@@ -46,7 +46,7 @@ Page({
         });
     },
     toSelect() {
-        var applyId = 0;
+        var applyId = '';
         for (let i of this.data.list) {
             if (i.status == 4 || i.status == 5) {
                 applyId = i.id;
