@@ -5,10 +5,13 @@ Page({
         
     },
     onLoad() {
-        if (!app.globalData.user.Authorization) {
-            wx.redirectTo({
-                url: '/pages/login/index'
-            });
-        }
+        wx.getStorage({
+            key: 'user',
+            fail: ()=>{
+                wx.redirectTo({
+                    url: '/pages/login/index'
+                });
+            }
+        });
     }
 });
