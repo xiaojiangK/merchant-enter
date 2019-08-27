@@ -1,15 +1,14 @@
+var app = getApp();
+
 Page({
     data: {
         
     },
     onLoad() {
-        wx.getStorage({
-            key: 'userId',
-            fail() {
-                wx.redirectTo({
-                    url: '/pages/login/index'
-                });
-            }
-        });
+        if (!app.globalData.user.Authorization) {
+            wx.redirectTo({
+                url: '/pages/login/index'
+            });
+        }
     }
 });

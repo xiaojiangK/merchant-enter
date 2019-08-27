@@ -1,4 +1,5 @@
-import { post } from '../../utils/utils.js'
+import { post } from '../../utils/utils.js';
+var app = getApp();
 
 Page({
     data: {
@@ -36,7 +37,7 @@ Page({
             });
             return;
         }
-        post('v1_sign/Password', { id, password, repassword }).then(res => {
+        post('v1_sign/Password', { id, password, repassword }, `renren ${app.globalData.user.Authorization}`).then(res => {
             if (res.code == 200) {
                 this.setData({
                     "popup.icon": 'icon-success',

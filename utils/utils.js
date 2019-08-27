@@ -1,11 +1,12 @@
 const config = require('../config/index');
 
-export function get(url) {
+export function get(url, Authorization) {
     return new Promise((resolve, reject) => {
         wx.request({
             url: config.baseURL + url,
             method: 'GET',
             header: {
+                Authorization,
                 "Content-Type": "json"
             },
             success: (res) => {
@@ -18,13 +19,14 @@ export function get(url) {
     });
 }
 
-export function post(url, data) {
+export function post(url, data, Authorization='') {
     return new Promise(function (resolve, reject) {
         wx.request({
             url: config.baseURL + url,
             method: 'POST',
             data,
             header: {
+                Authorization,
                 'content-type': 'application/x-www-form-urlencoded',
             },
             success: function (res) {

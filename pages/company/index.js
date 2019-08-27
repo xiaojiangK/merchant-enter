@@ -1,4 +1,6 @@
-import { post } from '../../utils/utils.js'
+
+import { post } from '../../utils/utils.js';
+var app = getApp();
 
 Page({
     data: {
@@ -15,13 +17,15 @@ Page({
             confirmText: '确定',
             success: (result) => {
                 if(result.confirm){
-                    post('v1_sign/quit').then(res => {
+                    post('v1_sign/quit', {}, `renren ${app.globalData.user.Authorization}`).then(res => {
                         if (res.code == 200) {
                             wx.showToast({
                                 title: res.msg,
                                 icon: 'none'
                             });
-                            wx.clearStorage('userId');
+                            wx.removeStorage({
+                                key: 'user'
+                            });
                             wx.navigateTo({
                                 url: '/pages/login/index'
                             });
@@ -43,24 +47,19 @@ Page({
         });
     },
     getUser() {
-        wx.getStorage({
-            key: 'userId',
-            success:(res) => {
-                post('v1_user/info', {
-                    page: 1,
-                    id: res.data
-                }).then(res => {
-                    if (res.code == 200) {
-                        this.setData({
-                            userInfo: res.userinfo && res.userinfo[0],
-                            companyList: res.data.list
-                        });
-                    } else {
-                        wx.showToast({
-                            title: res.msg,
-                            icon: 'none'
-                        });
-                    }
+        post('v1_user/info', {
+            page: 1,
+            id: app.globalData.user.uid
+        }, `renren ${app.globalData.user.Authorization}`).then(res => {
+            if (res.code == 200) {
+                this.setData({
+                    userInfo: res.userinfo.length && res.userinfo[0],
+                    companyList: res.data.list
+                });
+            } else {
+                wx.showToast({
+                    title: res.msg,
+                    icon: 'none'
                 });
             }
         });

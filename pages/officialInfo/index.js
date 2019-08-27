@@ -1,5 +1,6 @@
 import { post, get, checkTel, checkEmail } from '../../utils/utils.js'
 var config = require('../../config/index');
+var app = getApp();
 
 Page({
 
@@ -94,7 +95,7 @@ Page({
     });
     // 需要用保存的资料
     if (opt.save == 1) {
-      get(`1/entry/info?id=${this.data.applyId}`).then(res => {
+      get(`1/entry/info?id=${this.data.applyId}`, `renren ${app.globalData.user.Authorization}`).then(res => {
         if (res.code == 200) {
           var res = res.data;
           var data = this.data;
@@ -326,33 +327,28 @@ Page({
       return;
     }
 
-    wx.getStorage({
-      key: 'userId',
-      success: (res)=>{
-        var data = {
-          ...this.data.basicInfo,
-          mch_id: res.data,
-          customer_id: this.data.id,
-          entryid: this.data.applyId
-        }
+    var data = {
+      ...this.data.basicInfo,
+      mch_id: app.globalData.user.uid,
+      customer_id: this.data.id,
+      entryid: this.data.applyId
+    }
 
-        // api
-        post('v1_entry/default_create', data).then(res => {
-          if (res.code == 200) {
-            wx.navigateTo({
-              url: `/pages/applyResult/index?status=1&type=official&id=${this.data.id}`
-            });
-          } else {
-            this.setData({
-              popupTitle: '提交失败，请重新尝试',
-            });
-            setTimeout(() => {
-              this.setData({
-                popupTitle: ''
-              });
-            }, 1500);
-          }
+    // api
+    post('v1_entry/default_create', data, `renren ${app.globalData.user.Authorization}`).then(res => {
+      if (res.code == 200) {
+        wx.navigateTo({
+          url: `/pages/applyResult/index?status=1&type=official&id=${this.data.id}`
         });
+      } else {
+        this.setData({
+          popupTitle: '提交失败，请重新尝试',
+        });
+        setTimeout(() => {
+          this.setData({
+            popupTitle: ''
+          });
+        }, 1500);
       }
     });
   },
@@ -416,55 +412,53 @@ Page({
     let last = src.lastIndexOf(".") + 1;
     var imgType = src.substr(last);
     if (imgType == 'bmp' || imgType == 'png' || imgType == 'jpeg' || imgType == 'jpg' || imgType == 'gif') {
-      wx.getStorage({
-        key: 'userId',
-        success: (res)=>{
-          wx.uploadFile({
-            url: `http://i.qiuxin.tech/Currency/Uploadpic?mch_id=${res.data}`,
-            filePath: src,
-            header: {
-              "Content-Type": "multipart/form-data",
-              'accept': 'application/json',
-            },
-            name: 'file',
-            success: (res) => {
-              var data = JSON.parse(res.data);
-              var path = data.data.path;
-              if (type == 1) {
-                this.setData({ "basicInfo.bus_photo": path });
-              } else if (type == 2) {
-                this.setData({ "basicInfo.card_pos": path });
-              } else if (type == 3) {
-                this.setData({ "basicInfo.card_opp": path });
-              } else if (type == 4) {
-                this.setData({ "basicInfo.store_photo": path });
-              } else if (type == 5) {
-                this.setData({ "basicInfo.cashier_photo": path });
-              } else if (type == 6) {
-                this.setData({ "basicInfo.in_store_photo": path });
-              } else {
-                this.setData({ "basicInfo.licence": path });
-              }
-              wx.showToast({
-                title: data.msg,
-                icon: 'none'
-              });
-            },
-            fail: (res) => {
-              var data = JSON.parse(res.data);
-              this.setData({
-                popupTitle: data.msg,
-              });
-              setTimeout(() => {
-                this.setData({
-                  popupTitle: ''
-                });
-              }, 1500);
-            },
-            complete: () => {
-              wx.hideLoading();
+      wx.uploadFile({
+        url: `http://i.qiuxin.tech/Currency/Uploadpic?mch_id=${app.globalData.user.uid}`,
+        filePath: src,
+        header: {
+          "Authorization": `renren ${app.globalData.user.Authorization}`,
+          "Content-Type": "multipart/form-data",
+          'accept': 'application/json',
+        },
+        name: 'file',
+        success: (res) => {
+          var data = JSON.parse(res.data);
+          if (data.code == 200) {
+            var path = data.data.path;
+            if (type == 1) {
+              this.setData({ "basicInfo.bus_photo": path });
+            } else if (type == 2) {
+              this.setData({ "basicInfo.card_pos": path });
+            } else if (type == 3) {
+              this.setData({ "basicInfo.card_opp": path });
+            } else if (type == 4) {
+              this.setData({ "basicInfo.store_photo": path });
+            } else if (type == 5) {
+              this.setData({ "basicInfo.cashier_photo": path });
+            } else if (type == 6) {
+              this.setData({ "basicInfo.in_store_photo": path });
+            } else {
+              this.setData({ "basicInfo.licence": path });
             }
+          }
+          wx.showToast({
+            title: data.msg,
+            icon: 'none'
           });
+        },
+        fail: (res) => {
+          var data = JSON.parse(res.data);
+          this.setData({
+            popupTitle: data.msg,
+          });
+          setTimeout(() => {
+            this.setData({
+              popupTitle: ''
+            });
+          }, 1500);
+        },
+        complete: () => {
+          wx.hideLoading();
         }
       });
     } else {
@@ -517,33 +511,28 @@ Page({
       success: (result) => {
         if(result.confirm){
           // 保存资料
-          wx.getStorage({
-            key: 'userId',
-            success: (res)=>{
-              var data = {
-                ...this.data.basicInfo,
-                mch_id: res.data,
-                customer_id: this.data.id,
-                entryid: this.data.applyId
-              };
+          var data = {
+            ...this.data.basicInfo,
+            mch_id: app.globalData.user.uid,
+            customer_id: this.data.id,
+            entryid: this.data.applyId
+          };
 
-              // api
-              post('v1_entry/default_create', data).then(res => {
-                if (res.code == 200) {
-                  wx.navigateBack({
-                    delta: 1
-                  });
-                } else {
-                  this.setData({
-                    popupTitle: '保存失败，请重新尝试',
-                  });
-                  setTimeout(() => {
-                    this.setData({
-                      popupTitle: ''
-                    });
-                  }, 1500);
-                }
+          // api
+          post('v1_entry/default_create', data, `renren ${app.globalData.user.Authorization}`).then(res => {
+            if (res.code == 200) {
+              wx.navigateBack({
+                delta: 1
               });
+            } else {
+              this.setData({
+                popupTitle: '保存失败，请重新尝试',
+              });
+              setTimeout(() => {
+                this.setData({
+                  popupTitle: ''
+                });
+              }, 1500);
             }
           });
         }

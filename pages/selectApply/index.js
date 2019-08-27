@@ -1,4 +1,5 @@
-import { post } from '../../utils/utils.js'
+import { post } from '../../utils/utils.js';
+var app = getApp();
 
 Page({
     data: {
@@ -19,7 +20,7 @@ Page({
         });
     },
     onShow() {
-        post('v1_entry/Entryroad', { id: this.data.id }).then(res => {
+        post('v1_entry/Entryroad', { id: this.data.id }, `renren ${app.globalData.user.Authorization}`).then(res => {
             var data = res.data;
             if (res.code == 200 && data) {
                 var applying = 0;   // 是否申请

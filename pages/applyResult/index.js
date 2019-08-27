@@ -1,4 +1,5 @@
-import { get } from '../../utils/utils.js'
+import { get } from '../../utils/utils.js';
+var app = getApp();
 
 Page({
     data: {
@@ -22,7 +23,7 @@ Page({
           this.setData({
             applyId: opts.applyId
           });
-          get(`1/entry/info?id=${opts.applyId}`).then(res => {
+          get(`1/entry/info?id=${opts.applyId}`, `renren ${app.globalData.user.Authorization}`).then(res => {
             if (res.code == 200) {
               this.setData({
                 reason: res.data.reason

@@ -1,18 +1,16 @@
-import { post } from '../../utils/utils.js'
+import { post } from '../../utils/utils.js';
+var app = getApp();
 
 Page({
   data: {
     error: ''
   },
   onLoad() {
-    wx.getStorage({
-      key: 'userId',
-      success() {
-        wx.redirectTo({
-            url: '/pages/selection/index'
-        });
-      }
-    });
+    if (app.globalData.user.Authorization) {
+      wx.redirectTo({
+        url: '/pages/selection/index'
+      });
+    }
   },
   formFocus() {
     this.setData({
@@ -44,14 +42,20 @@ Page({
         });
       }
     }
+    wx.showToast({
+      title: '登录中...',
+      icon: 'none'
+    });
     post('v1_sign/loginin', { username, password }).then(res => {
       if (res.code == 200) {
-        wx.navigateTo({
-          url: '/pages/selection/index'
-        });
         wx.setStorage({
-          key: 'userId',
-          data: res.data
+          key: 'user',
+          data: res.data,
+          success: () => {
+            wx.navigateTo({
+              url: '/pages/selection/index'
+            });
+          }
         });
       } else {
         wx.showToast({
@@ -59,6 +63,7 @@ Page({
           icon: 'none'
         });
       }
+      wx.hideLoading();
     });
   }
 });

@@ -1,4 +1,6 @@
+
 import { post } from '../../utils/utils.js';
+var app = getApp();
 
 Page({
     data: {
@@ -10,7 +12,7 @@ Page({
         this.setData({
             id: opt.id
         });
-        post('v1_entry/List', { id: this.data.id }).then(res => {
+        post('v1_entry/List', { id: this.data.id }, `renren ${app.globalData.user.Authorization}`).then(res => {
             if (res.code == 200) {
                 var list = res.data.map(item => {
                     var type = -1;
