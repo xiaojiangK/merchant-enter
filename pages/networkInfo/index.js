@@ -666,6 +666,7 @@ Page({
           popupTitle: ''
         });
       }, 1500);
+      wx.hideLoading();
     }
   },
   uploadLicence(e) {

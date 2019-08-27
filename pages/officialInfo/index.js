@@ -476,6 +476,7 @@ Page({
           popupTitle: ''
         });
       }, 1500);
+      wx.hideLoading();
     }
   },
   // 上传开户许可证/公司信息/门店照片
