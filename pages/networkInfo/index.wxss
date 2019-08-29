@@ -2,14 +2,7 @@ page {
     padding: 164rpx 0 0;
 }
 .line .item{
-    width: 20%;
-}
-.line .item .num:before {
-    right: 0;
-    width: 153rpx;
-}
-.line .item .now5:before{
-    width: 150rpx;
+    width: 25%;
 }
 .content>.item{
     display: none;
@@ -107,26 +100,11 @@ page {
     line-height: 36rpx;
     vertical-align: top;
 }
-.form .item checkbox-group, form .item picker{
-    color: #333;
-    font-size: 24rpx;
-    min-width: 300rpx;
-    max-width: 500rpx;
-    display: inline-block;
-    vertical-align: middle;
-}
 .form .item checkbox{
     transform: scale(.6);
 }
 .form .item.auto{
     height: auto;
-}
-.form .main .searchBank{
-    height: auto;
-}
-.form .searchBank picker{
-    vertical-align: top;
-    margin: 0 0 0 160rpx;
 }
 .form .item.auto checkbox-group{
     vertical-align: top;

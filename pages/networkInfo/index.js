@@ -31,21 +31,9 @@ Page({
       IndustryLicensePhoto: '',
       PrincipalMobile: '',
       CertPhotoA: '',
-      CertPhotoB: ''
+      CertPhotoB: '',
+      SupportPrepayment: 'N'
     },
-    MerchantType: [{       // 商户类型
-      title: '自然人',
-      value: '01',
-      checked: true
-    },{
-      title: '个体户商户',
-      value: '02',
-      checked: false
-    },{
-      title: '企业商户',
-      value: '03',
-      checked: false
-    }],
     mccIdx: 0,
     mccData: ['美食','超市便利店','休闲娱乐','购物','爱车','生活服务','教育培训','医疗健康','航旅','专业销售/批发','政府/社会组织'],
     mccID: ['2015050700000000','2015091000052157','2015062600004525','2015062600002758','2016062900190124','2015063000020189','2016042200000148','2016062900190296','2015080600000001','2016062900190337','2016062900190371'],
@@ -126,6 +114,10 @@ Page({
       value: '02',
       checked: false
     }],
+    merchantIdx: 0,
+    MerchantType: ['自然人', '个体工商户', '企业商户'], // 商户类型
+    supportData: ['不支持'],    // 是否支持T+0
+    supportIdx: 0,
     bankData: [],   // 支行名称
     bankID: [],     // 支行ID
     bankIdx: 0,
@@ -148,15 +140,6 @@ Page({
         if (res.code == 200) {
           var res = res.data;
           var data = this.data;
-          // 商户类型
-          var MerchantType = data.MerchantType.map(i => {
-            if (i.value == res.mch_type) {
-              i.checked = true;
-            } else {
-              i.checked = false;
-            }
-            return i;
-          });
           // 商户地址
           var mchID = [];
           var mchRegion = [];
@@ -248,9 +231,9 @@ Page({
             bankRegion,
             PayChannel,
             AccountType,
-            MerchantType,
             TradeTypeList,
-            dealIdx: Number.parseInt(res.business_type) - 1
+            dealIdx: Number.parseInt(res.business_type) - 1,
+            merchantIdx: Number.parseInt(res.mch_type) - 1
           });
         }
       });
@@ -262,41 +245,25 @@ Page({
     var data = e.detail.value;
     var value = {
       ...data,
-      DealType: `0${data.DealType + 1}`
+      DealType: `0${data.DealType + 1}`,
+      MerchantType: `0${data.MerchantType + 1}`
     };
-    // 自然人
-    if (value.MerchantType == '01') {
-      if (!value.MerchantName) {
-        wx.showToast({
-          title: '公司名称不能为空',
-          icon: 'none'
-        });
-        return;
-      } else if (!value.Address) {
-        wx.showToast({
-          title: '详细地址不能为空',
-          icon: 'none'
-        });
-        return;
-      } else if (!value.jingying) {
-        wx.showToast({
-          title: '经营范围不能为空',
-          icon: 'none'
-        });
-        return;
-      }
-    } else {  // 个体、企业
-      if (!info.LicensePhoto) {
-        wx.showToast({
-          title: '营业执照未上传',
-          icon: 'none'
-        });
-        return;
-      }
-    }
-    if (!value.MerchantType.length) {
+    
+    if (!value.MerchantName) {
       wx.showToast({
-        title: '商户类型至少选择一项',
+        title: '公司名称不能为空',
+        icon: 'none'
+      });
+      return;
+    } else if (!value.Address) {
+      wx.showToast({
+        title: '详细地址不能为空',
+        icon: 'none'
+      });
+      return;
+    } else if (!value.jingying) {
+      wx.showToast({
+        title: '经营范围不能为空',
         icon: 'none'
       });
       return;
@@ -342,17 +309,13 @@ Page({
   nextStep2(e) {
     var info = this.data.basicInfo;
     var value = e.detail.value;
-    // 自然人
-    if (info.MerchantType != '03') {
-      if (!value.OtherBankCardNo) {
-        wx.showToast({
-          title: '结算方式不能为空',
-          icon: 'none'
-        });
-        return;
-      }
-    }
-    if (!value.PayChannelList.length) {
+    if (!value.OtherBankCardNo) {
+      wx.showToast({
+        title: '结算方式不能为空',
+        icon: 'none'
+      });
+      return;
+    } else if (!value.PayChannelList.length) {
       wx.showToast({
         title: '支付渠道至少选择一项',
         icon: 'none'
@@ -396,29 +359,29 @@ Page({
       });
       return;
     }
-    if (info.MerchantType == '03') {
-      if (!info.IndustryLicensePhoto) {
-        wx.showToast({
-          title: '开户许可证未上传',
-          icon: 'none'
-        });
-        return;
-      }
-    } else {
-      if (!value.BankCardNo) {
-        wx.showToast({
-          title: '银行卡号不能为空',
-          icon: 'none'
-        });
-        return;
-      } else if (!info.ContactLine) {
-        wx.showToast({
-          title: '所在支行未选择',
-          icon: 'none'
-        });
-        return;
-      }
+  
+    if (!info.IndustryLicensePhoto) {
+      wx.showToast({
+        title: '开户许可证未上传',
+        icon: 'none'
+      });
+      return;
     }
+    
+    if (!value.BankCardNo) {
+      wx.showToast({
+        title: '银行卡号不能为空',
+        icon: 'none'
+      });
+      return;
+    } else if (!info.ContactLine) {
+      wx.showToast({
+        title: '所在支行未选择',
+        icon: 'none'
+      });
+      return;
+    }
+      
     this.setData({
       step: 4,
       basicInfo: {
@@ -510,18 +473,23 @@ Page({
       this.setData({
         AccountType: data
       });
-    } else {
-      this.setData({
-        MerchantType: data
-      });
     }
     this.setData({
       [info]: val
     });
   },
-  dealChange(e) {
+  pickerChange(e) {
+    var type = e.currentTarget.dataset.type;
+    var value = Number.parseInt(e.detail.value);
+    var info = '';
+    if (type == 'merchantIdx') {
+      info = 'basicInfo.MerchantType';
+    } else {
+      info = 'basicInfo.DealType';
+    }
     this.setData({
-      dealIdx: Number.parseInt(e.detail.value)
+      [type]: value,
+      [info]: `0${value + 1}`
     });
   },
   regionChange(e) {
@@ -577,7 +545,6 @@ Page({
             bankData,
             "basicInfo.ContactLine": bankID[0]
           });
-          wx.hideLoading();
         } else {
           wx.showToast({
             title: '未搜索出此支行',
@@ -586,6 +553,7 @@ Page({
         }
       }
     });
+    wx.hideLoading();
   },
   bankChange(e) {
     var idx = e.detail.value;
@@ -701,8 +669,7 @@ Page({
         if(result.confirm){
           // 保存资料
           var data = {
-            ...info,
-            ...value,
+            ...this.data.basicInfo,
             mch_id: app.globalData.user.uid,
             customer_id: this.data.id,
             entryid: this.data.applyId

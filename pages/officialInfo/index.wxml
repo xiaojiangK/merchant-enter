@@ -45,6 +45,10 @@
                             <view class="label">商户简称：</view>
                             <input type="text" name="mch_name" bindblur="inputBlur" data-id="mch_name" value="{{basicInfo.mch_name}}" placeholder="将在支付完成页向买家展示" />
                         </view>
+                        <view class="item required">
+                            <view class="label">商户客服电话：</view>
+                            <input type="text" name="ServicePhoneNo" bindblur="inputBlur" data-id="ServicePhoneNo" value="{{basicInfo.ServicePhoneNo}}" placeholder="请填写商户客服电话" />
+                        </view>
                         <view class="item">
                             <view class="label">
                                 <view class="helpUp" wx:if="{{index == 0}}">{{help[index]}}</view>
@@ -125,8 +129,21 @@
                                 <input type="text" name="account_bank" bindblur="inputBlur" data-id="account_bank" value="{{basicInfo.account_bank}}" placeholder="填写开户许可证上的开户银行" />
                             </view>
                             <view class="item required">
+                                <view class="label">开户行地址：</view>
+                                <picker bindchange="regionChange" mode="region" value="{{bankRegion}}">
+                                    <view class="picker">{{bankRegion[0]}} - {{bankRegion[1]}}</view>
+                                </picker>
+                            </view>
+                            <view class="item required searchBank">
+                                <view class="label">所在支行：</view>
+                                <input type="text" bindblur="bankSearch" placeholder="请在此输入支行地址关键字" />
+                                <picker bindchange="bankChange" value="{{bankIdx}}" range="{{bankData}}">
+                                    <view class="picker">{{bankData[bankIdx]}}</view>
+                                </picker>
+                            </view>
+                            <view class="item required">
                                 <view class="label">
-                                    银行卡号：<image src="/assets/icon-help.png" data-idx="6" bindtap="helpUp" />
+                                    银行账户：<image src="/assets/icon-help.png" data-idx="6" bindtap="helpUp" />
                                     <view class="helpUp now6" wx:if="{{index == 6}}">{{help[index]}}</view>
                                 </view>
                                 <input type="text" name="account_number" bindblur="inputBlur" data-id="account_number" value="{{basicInfo.account_number}}" placeholder="填写开户许可证上的银行卡号" />

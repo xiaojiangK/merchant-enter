@@ -3,12 +3,37 @@ var app = getApp();
 
 Page({
   data: {
-    error: ''
+    error: '',
+    isAuthorize: false
   },
   onLoad() {
     if (app.globalData.user.Authorization) {
       wx.redirectTo({
         url: '/pages/selection/index'
+      });
+    }
+  },
+  // 用户登录
+  bindGetUserInfo: function (e) {
+    if (e.detail.errMsg == 'getUserInfo:ok') {
+      wx.login({
+        success: (res) => {
+          if (res.code) {
+            console.log(res.code);
+            post('api', { code: res.code }, `renren ${app.globalData.user.Authorization}`).then(res => {
+              if (res.code == 200) {
+                this.setData({
+                  isAuthorize: true
+                });
+              } else {
+                wx.showToast({
+                  title: res.msg,
+                  icon: 'none'
+                });
+              }
+            });
+          }
+        }
       });
     }
   },

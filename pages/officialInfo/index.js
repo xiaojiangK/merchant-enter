@@ -31,7 +31,14 @@ Page({
       store_photo: '',
       cashier_photo: '',
       in_store_photo: '',
+      ServicePhoneNo: '',
+      ContactLine: '',
+      bankRegion: ["110000", "110100", "110101"]
     },
+    bankRegion: ['北京市', '北京市', '东城区'],
+    bankData: [],   // 支行名称
+    bankID: [],     // 支行ID
+    bankIdx: 0,
     trade_type: [{       // 交易类型
       title: '正扫交易',
       value: '01',
@@ -97,7 +104,17 @@ Page({
     if (opt.save == 1) {
       get(`1/entry/info?id=${this.data.applyId}`, `renren ${app.globalData.user.Authorization}`).then(res => {
         if (res.code == 200) {
-          var res = res.data;
+          var res = {
+            ...res.data,
+            bankRegion: [{
+              id: '110000',
+              name: '北京市'
+            },{
+              id: '110100',
+              name: '北京市'
+            }],
+            ServicePhoneNo: '18518981272'
+          };
           var data = this.data;
           // 交易类型
           var trade = res.trade_type;
@@ -152,6 +169,13 @@ Page({
             }
             return i;
           });
+          // 开户行地址
+          var bankID = [];
+          var bankRegion = [];
+          res.bankRegion.map(i => {
+            bankID.push(i.id);
+            bankRegion.push(i.name);
+          });
           this.setData({
             basicInfo: {
               pay,
@@ -160,11 +184,13 @@ Page({
               trade_type: trade,
               phone: res.phone,
               email: res.email,
+              bankRegion: bankID,
               permit_type: permit,
               mch_name: res.mch_name,
               card_name: res.card_name,
               account_bank: res.account_bank,
               account_number: res.account_number,
+              ServicePhoneNo: res.ServicePhoneNo,
               licence: res.licence,               // 开户许可证
               bus_photo: res.bus_photo,
               card_pos: res.card_pos,
@@ -176,7 +202,8 @@ Page({
             pay_ment,
             trade_type,
             mch_type,
-            permit_type
+            permit_type,
+            bankRegion
           });
         }
       });
@@ -222,6 +249,12 @@ Page({
         icon: 'none'
       });
       return;
+    } else if (!value.ServicePhoneNo) {
+      wx.showToast({
+        title: '商户客服电话不能为空',
+        icon: 'none'
+      });
+      return;
     } else if (!value.trade_type.length) {
       wx.showToast({
         title: '交易类型至少选择一项',
@@ -254,6 +287,12 @@ Page({
       } else if (!value.account_bank) {
         wx.showToast({
           title: '开户银行不能为空',
+          icon: 'none'
+        });
+        return;
+      } else if (!value.ContactLine) {
+        wx.showToast({
+          title: '所在支行不能为空',
           icon: 'none'
         });
         return;
@@ -400,6 +439,52 @@ Page({
       permit,
       permit_type,
       "basicInfo.permit_type": permit
+    });
+  },
+  regionChange(e) {
+    var code = e.detail.code;
+    var value = e.detail.value;
+    this.setData({
+      bankRegion: value,
+      "basicInfo.bankRegion": code
+    });
+  },
+  // 搜索所在支行
+  bankSearch(e) {
+    wx.showLoading({
+      title: '加载中...',
+      mask: true
+    });
+    var bankID = [];
+    var bankData = [];
+    var key = e.detail.value;
+    post('Currency/Searchlist', { key }, `renren ${app.globalData.user.Authorization}`).then(res => {
+      if (res.code == 200) {
+        if (res.data.length) {
+          res.data.map(item => {
+            bankID.push(item.instOutCode);
+            bankData.push(item.bankName);
+          });
+          this.setData({
+            bankID,
+            bankData,
+            "basicInfo.ContactLine": bankID[0]
+          });
+        } else {
+          wx.showToast({
+            title: '未搜索出此支行',
+            icon: 'none'
+          });
+        }
+      }
+    });
+    wx.hideLoading();
+  },
+  bankChange(e) {
+    var idx = e.detail.value;
+    this.setData({
+      bankIdx: idx,
+      "basicInfo.ContactLine": this.data.bankID[idx]
     });
   },
   // 上传图片

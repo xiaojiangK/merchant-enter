@@ -1,4 +1,5 @@
 <view class="wrap">
+   <button wx:if="{{!isAuthorize}}" class="authorize" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" />
    <view class="logo">
       <image src="/assets/logo.png" />
    </view>
