@@ -5,12 +5,12 @@ var app = getApp();
 Page({
   data: {
     id: '',
-    step: 1,
+    step: 4,
     basicInfo: {      // 保存信息
       MerchantType: "01",
       MerchantName: '',
       Alias: '',
-      DealType: '',
+      DealType: '01',
       mchRegion: ["110000", "110100", "110101"],
       bankRegion: ["110000", "110100", "110101"],
       Address: '',
@@ -32,7 +32,11 @@ Page({
       PrincipalMobile: '',
       CertPhotoA: '',
       CertPhotoB: '',
-      SupportPrepayment: 'N'
+      SupportPrepayment: 'N',
+      SettleMode: '01',
+      PartnerType: '03',
+      BankCertName: '',
+      CertType: '01'
     },
     mccIdx: 0,
     mccData: ['美食','超市便利店','休闲娱乐','购物','爱车','生活服务','教育培训','医疗健康','航旅','专业销售/批发','政府/社会组织'],
@@ -105,21 +109,20 @@ Page({
       ,"荷兰合作银行","厦门国际银行","法国巴黎银行"
       ,"华商银行","华一银行"
     ],
-    AccountType: [{
-      title: '对公账户',
-      value: '01',
-      checked: true
-    },{
-      title: '私人账户',
-      value: '02',
-      checked: false
-    }],
+    accountType: ['对公账户', '私人账户'],
+    accountIdx: 0,
     merchantIdx: 0,
     MerchantType: ['自然人', '个体工商户', '企业商户'], // 商户类型
     supportData: ['不支持'],    // 是否支持T+0
     supportIdx: 0,
     bankData: [],   // 支行名称
-    bankID: [],     // 支行ID
+    bankID: [],     // 支行ID,
+    settleMode: ['结算到他行卡'],
+    settleIdx: 0,
+    partnerType: ['合作机构公众号'],
+    partnerIdx: 0,
+    CertType: ['身份证'],
+    certIdx: 0,
     bankIdx: 0,
     helpIdx: -1,
     help: [
@@ -181,15 +184,6 @@ Page({
               branchIdx = j;
             }
           });
-          // 账户类型
-          var AccountType = data.AccountType.map(i => {
-            if (i.value == res.account_type) {
-              i.checked = true;
-            } else {
-              i.checked = false;
-            }
-            return i;
-          });
           // 开户行地址
           var bankID = [];
           var bankRegion = [];
@@ -200,6 +194,7 @@ Page({
           this.setData({
             basicInfo: {
               Mcc: res.mch_cate,
+              CertType: res.account_type,   // 证件类型（未确定）
               ShopPhoto: res.store_photo,
               DealType: res.business_type,
               MerchantType: res.mch_type,
@@ -213,6 +208,7 @@ Page({
               Email: res.email,
               TradeTypeList: trade,
               PayChannelList: channel,
+              SettleMode: res.settlement,
               LicensePhoto: res.bus_photo,
               BranchName: res.account_name,
               ContactLine: res.back_branch,
@@ -222,6 +218,8 @@ Page({
               CertPhotoB: res.blame_card_opp,
               OtherBankCardNo: res.card_number,
               PrincipalMobile: res.blame_phone,
+              SupportPrepayment: res.is_account,
+              BankCertName: res.bank_account_number,
               IndustryLicensePhoto: res.in_store_photo,
               ShopEntrancePhoto: res.shop_entrance_photo
             },
@@ -230,10 +228,12 @@ Page({
             mchRegion,
             bankRegion,
             PayChannel,
-            AccountType,
             TradeTypeList,
+            supportIdx: res.is_account == 'N' ? 0 : 1,
             dealIdx: Number.parseInt(res.business_type) - 1,
-            merchantIdx: Number.parseInt(res.mch_type) - 1
+            merchantIdx: Number.parseInt(res.mch_type) - 1,
+            settleIdx: Number.parseInt(res.settlement) - 1,
+            accountIdx: Number.parseInt(res.account_type) - 1,
           });
         }
       });
@@ -242,16 +242,16 @@ Page({
   // 步骤一-下一步
   nextStep(e) {
     var info = this.data.basicInfo;
-    var data = e.detail.value;
-    var value = {
-      ...data,
-      DealType: `0${data.DealType + 1}`,
-      MerchantType: `0${data.MerchantType + 1}`
-    };
-    
+    var value = e.detail.value;
     if (!value.MerchantName) {
       wx.showToast({
         title: '公司名称不能为空',
+        icon: 'none'
+      });
+      return;
+    } else if (!value.Alias) {
+      wx.showToast({
+        title: '商户简称不能为空',
         icon: 'none'
       });
       return;
@@ -264,12 +264,6 @@ Page({
     } else if (!value.jingying) {
       wx.showToast({
         title: '经营范围不能为空',
-        icon: 'none'
-      });
-      return;
-    } else if (!value.Alias) {
-      wx.showToast({
-        title: '商户简称不能为空',
         icon: 'none'
       });
       return;
@@ -311,7 +305,7 @@ Page({
     var value = e.detail.value;
     if (!value.OtherBankCardNo) {
       wx.showToast({
-        title: '结算方式不能为空',
+        title: '储蓄卡卡号不能为空',
         icon: 'none'
       });
       return;
@@ -327,7 +321,36 @@ Page({
         icon: 'none'
       });
       return;
-    } else if (!info.ShopPhoto) {
+    }
+    this.setData({
+      step: 3,
+      basicInfo: {
+        ...info,
+        ...value
+      }
+    });
+  },
+  // 步骤三-下一步
+  nextStep3(e) {
+    var info = this.data.basicInfo;
+    if (info.MerchantType != '01') {
+      if (!info.LicensePhoto) {
+        wx.showToast({
+          title: '营业执照未上传',
+          icon: 'none'
+        });
+        return;
+      }
+    } else if (info.MerchantType == '03') {
+      if (!info.IndustryLicensePhoto) {
+        wx.showToast({
+          title: '开户许可证未上传',
+          icon: 'none'
+        });
+        return;
+      }
+    }
+    if (!info.ShopPhoto) {
       wx.showToast({
         title: '店铺招牌照片未上传',
         icon: 'none'
@@ -341,34 +364,20 @@ Page({
       return;
     }
     this.setData({
-      step: 3,
-      basicInfo: {
-        ...info,
-        ...value
-      }
+      step: 4
     });
   },
-  // 步骤三-下一步
-  nextStep3(e) {
+  // 步骤四-下一步
+  nextStep4(e) {
     var info = this.data.basicInfo;
     var value = e.detail.value;
-    if (!value.AccountType.length) {
+    if (!value.BankCertName) {
       wx.showToast({
-        title: '账户类型至少选择一项',
+        title: '银行账户户名不能为空',
         icon: 'none'
       });
       return;
-    }
-  
-    if (!info.IndustryLicensePhoto) {
-      wx.showToast({
-        title: '开户许可证未上传',
-        icon: 'none'
-      });
-      return;
-    }
-    
-    if (!value.BankCardNo) {
+    } else if (!value.BankCardNo) {
       wx.showToast({
         title: '银行卡号不能为空',
         icon: 'none'
@@ -380,27 +389,42 @@ Page({
         icon: 'none'
       });
       return;
+    } else if (!info.CertNo) {
+      wx.showToast({
+        title: '持证人证件号码不能为空',
+        icon: 'none'
+      });
+      return;
+    } else if (!info.CardHolderAddress) {
+      wx.showToast({
+        title: '持证人地址不能为空',
+        icon: 'none'
+      });
+      return;
     }
-      
-    this.setData({
-      step: 4,
-      basicInfo: {
-        ...info,
-        ...value
-      }
-    });
-  },
-  // 步骤四-下一步
-  nextStep4(e) {
-    var info = this.data.basicInfo;
-    var value = e.detail.value;
+  
     if (!value.PrincipalMobile) {
       wx.showToast({
         title: '负责人手机号不能为空',
         icon: 'none'
       });
       return;
-    } else if (!info.CertPhotoA) {
+    }
+
+    this.setData({
+      step: 5,
+      basicInfo: {
+        ...info,
+        ...value
+      }
+    });
+  },
+  // 步骤五-审核
+  nextStep5(e) {
+    var info = this.data.basicInfo;
+    var value = e.detail.value;
+    
+    if (!info.CertPhotoA) {
       wx.showToast({
         title: '负责人身份证正面未上传',
         icon: 'none'
@@ -413,7 +437,7 @@ Page({
       });
       return;
     }
-
+    
     var data = {
       ...info,
       ...value,
@@ -469,11 +493,11 @@ Page({
       }
       return item;
     });
-    if (type == 'AccountType') {
-      this.setData({
-        AccountType: data
-      });
-    }
+    // if (type == 'AccountType') {
+    //   this.setData({
+    //     AccountType: data
+    //   });
+    // }
     this.setData({
       [info]: val
     });
@@ -482,14 +506,31 @@ Page({
     var type = e.currentTarget.dataset.type;
     var value = Number.parseInt(e.detail.value);
     var info = '';
-    if (type == 'merchantIdx') {
+    var infoVal = `0${value + 1}`;
+    if (type == 'merchantIdx') {               // 商户类型
       info = 'basicInfo.MerchantType';
-    } else {
+    } else if (type == 'dealIdx') {            // 经营类型
       info = 'basicInfo.DealType';
+    } else if (type == 'supportIdx') {         // 支持T+0
+      if (value == 0) {
+        infoVal = 'N';
+      }
+      info = 'basicInfo.SupportPrepayment';
+    } else if (type == 'settleIdx') {          // 结算方式
+      info = 'basicInfo.SettleMode';
+    } else if (type == 'partnerIdx') {         // 公众号类型
+      if (value == 0) {
+        infoVal = '03';
+      }
+      info = 'basicInfo.PartnerType';
+    } else if (type == 'certIdx') {
+      info = 'basicInfo.CertType';
+    } else if(type == 'accountIdx') {
+      info = 'basicInfo.AccountType';
     }
     this.setData({
       [type]: value,
-      [info]: `0${value + 1}`
+      [info]: infoVal
     });
   },
   regionChange(e) {

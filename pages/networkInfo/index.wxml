@@ -39,19 +39,19 @@
                         </view>
                         <view class="item required">
                             <view class="label">商户类型：</view>
-                            <picker bindchange="pickerChange" data-type="merchantIdx" name="MerchantType" value="{{merchantIdx}}" range="{{MerchantType}}">
+                            <picker bindchange="pickerChange" data-type="merchantIdx" value="{{merchantIdx}}" range="{{MerchantType}}">
                                 <view class="picker">{{MerchantType[merchantIdx]}}</view>
                             </picker>
                         </view>
                         <view class="item required">
                             <view class="label">商户经营类型：</view>
-                            <picker bindchange="pickerChange" data-type="dealIdx" name="DealType" value="{{dealIdx}}" range="{{dealData}}">
+                            <picker bindchange="pickerChange" data-type="dealIdx" value="{{dealIdx}}" range="{{dealData}}">
                                 <view class="picker">{{dealData[dealIdx]}}</view>
                             </picker>
                         </view>
                         <view class="item required">
                             <view class="label">是否支持T+0到账：</view>
-                            <picker value="{{supportIdx}}" range="{{supportData}}">
+                            <picker bindchange="pickerChange" data-type="supportIdx" value="{{supportIdx}}" range="{{supportData}}">
                                 <view class="picker">{{supportData[supportIdx]}}</view>
                             </picker>
                         </view>
@@ -77,27 +77,6 @@
                             <view class="label">商户邮箱：</view>
                             <input type="text" name="Email" bindblur="inputBlur" data-id="Email" value="{{basicInfo.Email}}" placeholder="请填写商户邮箱" />
                         </view>
-                        <view class="upload required">
-                            <view class="label">
-                                <view class="helpUp License" wx:if="{{helpIdx == 0}}">{{help[helpIdx]}}</view>
-                                上传营业执照：<image src="/assets/icon-help.png" data-idx="0" bindtap="helpUp" />
-                            </view>
-                            <view class="picture" data-type="0" bindtap="uploadLicence">
-                                <view class="box">
-                                    <block wx:if="{{basicInfo.LicensePhoto}}">
-                                        <image src="{{baseURL + basicInfo.LicensePhoto}}" mode="aspectFit" class="img" />
-                                    </block>
-                                    <block wx:else>
-                                        <image src="/assets/business.png" class="img business" />
-                                        <image src="/assets/icon-add.png" class="icon" />
-                                    </block>
-                                </view>
-                            </view>
-                            <view class="tip">
-                                <text>必须为彩色图片且小于2M，</text>
-                                <text>文件格式为bmp、png、jpeg、jpg或gif</text>
-                            </view>
-                        </view>
                     </view>
                     <view class="item btn">
                         <button form-type="submit">下一步</button>
@@ -108,10 +87,16 @@
         <view class="item {{step == 2 ? 'active' : ''}}">
             <view class="form">
                 <form bindsubmit="nextStep2">
-                    <view class="title">公司信息</view>
+                    <view class="title">商户信息</view>
                     <view class="main">
                         <view class="item required">
                             <view class="label">结算方式：</view>
+                            <picker bindchange="pickerChange" data-type="settleIdx" value="{{settleIdx}}" range="{{settleMode}}">
+                                <view class="picker">{{settleMode[settleIdx]}}</view>
+                            </picker>
+                        </view>
+                        <view class="item required">
+                            <view class="label">他行储蓄卡卡号：</view>
                             <input type="text" name="OtherBankCardNo" bindblur="inputBlur" data-id="OtherBankCardNo" value="{{basicInfo.OtherBankCardNo}}" placeholder="请填写他行储蓄卡卡号" />
                         </view>
                         <view class="item required">
@@ -135,6 +120,46 @@
                                     <checkbox color="#F08300" value="{{item.value}}" checked="{{item.checked}}" />{{item.title}}
                                 </label>
                             </checkbox-group>
+                        </view>
+                        <view class="item required">
+                            <view class="label">公众号类型：</view>
+                            <picker bindchange="pickerChange" data-type="partnerIdx" value="{{partnerIdx}}" range="{{partnerType}}">
+                                <view class="picker">{{partnerType[partnerIdx]}}</view>
+                            </picker>
+                        </view>
+                    </view>
+                    <view class="btns btn">
+                        <button bindtap="prevStep">上一步</button>
+                        <button form-type="submit">下一步</button>
+                    </view>
+                </form>
+            </view>
+        </view>
+        <view class="item {{step == 3 ? 'active' : ''}}">
+            <view class="form">
+                <form bindsubmit="nextStep3">
+                    <view class="title">商户信息</view>
+                    <view class="main">
+                        <view class="upload required" wx:if="{{basicInfo.MerchantType != '01'}}">
+                            <view class="label">
+                                <view class="helpUp License" wx:if="{{helpIdx == 0}}">{{help[helpIdx]}}</view>
+                                上传营业执照：<image src="/assets/icon-help.png" data-idx="0" bindtap="helpUp" />
+                            </view>
+                            <view class="picture" data-type="0" bindtap="uploadLicence">
+                                <view class="box">
+                                    <block wx:if="{{basicInfo.LicensePhoto}}">
+                                        <image src="{{baseURL + basicInfo.LicensePhoto}}" mode="aspectFit" class="img" />
+                                    </block>
+                                    <block wx:else>
+                                        <image src="/assets/business.png" class="img business" />
+                                        <image src="/assets/icon-add.png" class="icon" />
+                                    </block>
+                                </view>
+                            </view>
+                            <view class="tip">
+                                <text>必须为彩色图片且小于2M，</text>
+                                <text>文件格式为bmp、png、jpeg、jpg或gif</text>
+                            </view>
                         </view>
                         <view class="upload required">
                             <view class="label">店铺招牌照片：</view>
@@ -172,51 +197,7 @@
                                 <text>文件格式为bmp、png、jpeg、jpg或gif</text>
                             </view>
                         </view>
-                    </view>
-                    <view class="btns btn">
-                        <button bindtap="prevStep">上一步</button>
-                        <button form-type="submit">下一步</button>
-                    </view>
-                </form>
-            </view>
-        </view>
-        <view class="item {{step == 3 ? 'active' : ''}}">
-            <view class="form">
-                <form bindsubmit="nextStep3">
-                    <view class="title">银行卡信息</view>
-                    <view class="main">
-                        <view class="item required">
-                            <view class="label">开户行：</view>
-                            <picker bindchange="branchChange" value="{{branchIdx}}" range="{{branchData}}">
-                                <view class="picker">{{branchData[branchIdx]}}</view>
-                            </picker>
-                        </view>
-                        <view class="item required">
-                            <view class="label">账户类型：</view>
-                            <checkbox-group name="AccountType">
-                                <label class="checkbox" wx:for="{{AccountType}}" wx:key="index" data-val="{{item.value}}" data-type="AccountType" bindtap="singleChange">
-                                    <checkbox color="#F08300" value="{{item.value}}" checked="{{item.checked}}" />{{item.title}}
-                                </label>
-                            </checkbox-group>
-                        </view>
-                        <view class="item required">
-                            <view class="label">银行卡号：</view>
-                            <input type="text" name="BankCardNo" bindblur="inputBlur" data-id="BankCardNo" value="{{basicInfo.BankCardNo}}" placeholder="请填写银行卡号" />
-                        </view>
-                        <view class="item required">
-                            <view class="label">开户行地址：</view>
-                            <picker bindchange="regionChange" data-type="bankRegion" mode="region" value="{{bankRegion}}">
-                                <view class="picker">{{bankRegion[0]}} - {{bankRegion[1]}}</view>
-                            </picker>
-                        </view>
-                        <view class="item required searchBank">
-                            <view class="label">所在支行：</view>
-                            <input type="text" bindblur="bankSearch" placeholder="请在此输入支行地址关键字" />
-                            <picker bindchange="bankChange" value="{{bankIdx}}" range="{{bankData}}">
-                                <view class="picker">{{bankData[bankIdx]}}</view>
-                            </picker>
-                        </view>
-                        <view class="upload">
+                        <view class="upload required" wx:if="{{basicInfo.MerchantType == '03'}}">
                             <view class="label">上传开户许可证：</view>
                             <view class="picture" data-type="3" bindtap="uploadLicence">
                                 <view class="box">
@@ -243,6 +224,66 @@
             </view>
         </view>
         <view class="item {{step == 4 ? 'active' : ''}}">
+            <view class="form">
+                <form bindsubmit="nextStep4">
+                    <view class="title">银行卡信息</view>
+                    <view class="main">
+                        <view class="item required">
+                            <view class="label">银行账户户名：</view>
+                            <input type="text" name="BankCertName" bindblur="inputBlur" data-id="BankCertName" value="{{basicInfo.BankCertName}}" placeholder="请填写银行账户户名" />
+                        </view>
+                        <view class="item required">
+                            <view class="label">开户行：</view>
+                            <picker bindchange="branchChange" value="{{branchIdx}}" range="{{branchData}}">
+                                <view class="picker">{{branchData[branchIdx]}}</view>
+                            </picker>
+                        </view>
+                        <view class="item required">
+                            <view class="label">账户类型：</view>
+                            <picker bindchange="pickerChange" data-type="accountIdx" value="{{accountIdx}}" range="{{accountType}}">
+                                <view class="picker">{{accountType[accountIdx]}}</view>
+                            </picker>
+                        </view>
+                        <view class="item required">
+                            <view class="label">银行卡号：</view>
+                            <input type="text" name="BankCardNo" bindblur="inputBlur" data-id="BankCardNo" value="{{basicInfo.BankCardNo}}" placeholder="请填写银行卡号" />
+                        </view>
+                        <view class="item required">
+                            <view class="label">开户行地址：</view>
+                            <picker bindchange="regionChange" data-type="bankRegion" mode="region" value="{{bankRegion}}">
+                                <view class="picker">{{bankRegion[0]}} - {{bankRegion[1]}}</view>
+                            </picker>
+                        </view>
+                        <view class="item required searchBank">
+                            <view class="label">所在支行：</view>
+                            <input type="text" bindblur="bankSearch" placeholder="请在此输入支行地址关键字" />
+                            <picker bindchange="bankChange" value="{{bankIdx}}" range="{{bankData}}">
+                                <view class="picker">{{bankData[bankIdx]}}</view>
+                            </picker>
+                        </view>
+                        <view class="item required">
+                            <view class="label">持证人证件类型：</view>
+                            <picker bindchange="pickerChange" data-type="certIdx" value="{{certIdx}}" range="{{CertType}}">
+                                <view class="picker">{{CertType[certIdx]}}</view>
+                            </picker>
+                        </view>
+                        <view class="item required">
+                            <view class="label">持证人证件号码：</view>
+                            <input type="text" name="CertNo" bindblur="inputBlur" data-id="CertNo" value="{{basicInfo.CertNo}}" placeholder="请填写持证人证件号码" />
+                        </view>
+                        <view class="item required">
+                            <view class="label">持证人地址：</view>
+                            <input type="text" name="CardHolderAddress" bindblur="inputBlur" data-id="CardHolderAddress" value="{{basicInfo.CardHolderAddress}}" placeholder="请填写持证人地址" />
+                        </view>
+                    </view>
+                    <view class="btns btn">
+                        <button bindtap="prevStep">上一步</button>
+                        <button form-type="submit">下一步</button>
+                    </view>
+                </form>
+            </view>
+        </view>
+        <view class="item {{step == 5 ? 'active' : ''}}">
             <view class="form">
                 <form bindsubmit="nextStep4">
                     <view class="title">经营者信息</view>
@@ -291,8 +332,6 @@
                     </view>
                 </form>
             </view>
-        </view>
-        <view class="item {{step == 5 ? 'active' : ''}}">
         </view>
         <!-- 弹层提示 -->
         <view class="popup" hidden="{{!popupTitle}}">
