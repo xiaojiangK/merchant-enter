@@ -61,32 +61,55 @@ Page({
             });
         }
     },
-    getSavaInfo(url) {
-        if (this.data.applyId) {
-            wx.showModal({
-                title: '通知',
-                content: '是否使用之前所填写资料？',
-                cancelText: '取消',
-                confirmText: '确定',
-                success: (result) => {
-                    if(result.confirm){
-                        wx.navigateTo({
-                            url: `${url}&save=1`
-                        });
-                    } else {
-                        wx.navigateTo({ url });
-                    }
-                }
+    goEntry(index) {
+        if (index == 1) {
+            wx.navigateTo({
+                url: `/pages/networkInfo/index?id=${this.data.id}&applyId=`
             });
         } else {
-            wx.navigateTo({ url });
+            wx.navigateTo({
+                url: `/pages/officialInfo/index?id=${this.data.id}&applyId=`
+            });
         }
     },
     submit() {
-        if (this.data.openType == 1) {                  // 网商
-            this.getSavaInfo(`/pages/networkInfo/index?id=${this.data.id}&applyId=${this.data.applyId}`);
-        } else {                                        // 官方
-            this.getSavaInfo(`/pages/officialInfo/index?id=${this.data.id}&applyId=${this.data.applyId}`);
-        }
+        var openType = this.data.openType;
+        this.data.channels.map((item, index) => {
+            if (openType == index) {
+                if (item.entryid) {
+                    wx.showModal({
+                        title: '通知',
+                        content: '是否使用之前所填写资料？',
+                        cancelText: '取消',
+                        confirmText: '确定',
+                        success: (result) => {
+                            if(result.confirm){
+                                if (index == 1) {
+                                    wx.navigateTo({
+                                        url: `/pages/networkInfo/index?id=${this.data.id}&applyId=${item.entryid}&save=1`
+                                    });
+                                } else {
+                                    wx.navigateTo({
+                                        url: `/pages/officialInfo/index?id=${this.data.id}&applyId=${item.entryid}&save=1`
+                                    });
+                                }
+                            } else {
+                                post('1/entry/info', { id: item.entryid, type: 1 }, `renren ${app.globalData.user.Authorization}`).then(res => {
+                                    if (res.code != 200) {
+                                        wx.showToast({
+                                            title: res.msg,
+                                            icon: 'none'
+                                        });
+                                    }
+                                });
+                                this.goEntry(index);
+                            }
+                        }
+                    });
+                } else {
+                    this.goEntry(index);
+                }
+            }
+        });
     }
 });

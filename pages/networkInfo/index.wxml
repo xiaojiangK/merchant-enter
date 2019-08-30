@@ -269,7 +269,7 @@
                         </view>
                         <view class="item required">
                             <view class="label">持证人证件号码：</view>
-                            <input type="text" name="CertNo" bindblur="inputBlur" data-id="CertNo" value="{{basicInfo.CertNo}}" placeholder="请填写持证人证件号码" />
+                            <input type="text" name="CertNo" maxlength="18" bindblur="inputBlur" data-id="CertNo" value="{{basicInfo.CertNo}}" placeholder="请填写持证人证件号码" />
                         </view>
                         <view class="item required">
                             <view class="label">持证人地址：</view>

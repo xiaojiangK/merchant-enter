@@ -51,6 +51,10 @@ Page({
         });
     },
     getUser(page = 1) {
+        wx.showLoading({
+            title: '加载中...',
+            mask: true
+        });
         post('v1_user/info', {
             page,
             id: app.globalData.user.uid
@@ -58,6 +62,13 @@ Page({
             if (res.code == 200) {
                 var oldData = this.data.companyList;
                 var newData = res.data.list;
+                if (newData.length == 0) {
+                    wx.showToast({
+                        title: '没有更多数据',
+                        icon: 'none'
+                    });
+                    return;
+                }
                 this.setData({
                     userInfo: res.userinfo.length && res.userinfo[0],
                     companyList: [...oldData, ...newData]
@@ -68,6 +79,7 @@ Page({
                     icon: 'none'
                 });
             }
+            wx.hideLoading();
         });
     },
     onLoad() {

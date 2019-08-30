@@ -7,7 +7,7 @@ var count = 60;
 Page({
   data: {
     id: '',
-    step: 5,
+    step: 1,
     basicInfo: {      // 保存信息
       MerchantType: "01",
       MerchantName: '',
@@ -418,13 +418,19 @@ Page({
         icon: 'none'
       });
       return;
-    } else if (!info.CertNo) {
+    } else if (!value.CertNo) {
       wx.showToast({
         title: '持证人证件号码不能为空',
         icon: 'none'
       });
       return;
-    } else if (!info.CardHolderAddress) {
+    } else if (value.CertNo.length < 18) {
+      wx.showToast({
+        title: '持证人证件号码不合法',
+        icon: 'none'
+      });
+      return;
+    } else if (!value.CardHolderAddress) {
       wx.showToast({
         title: '持证人地址不能为空',
         icon: 'none'
@@ -477,6 +483,12 @@ Page({
         icon: 'none'
       });
       return;
+    } else if (value.PrincipalCertNo.length < 18) {
+      wx.showToast({
+        title: '负责人身份证号码不合法',
+        icon: 'none'
+      });
+      return;
     } else if (!info.CertPhotoA) {
       wx.showToast({
         title: '负责人身份证正面未上传',
@@ -507,7 +519,7 @@ Page({
         icon: 'none'
       });
       return;
-    } else if (info.ContactMobile != info.PrincipalMobile) {
+    } else if (value.ContactMobile != value.PrincipalMobile) {
       wx.showToast({
           title: '负责人手机号必须和联系人手机号一致!',
           icon: 'none'
@@ -592,6 +604,10 @@ Page({
       });
       return;
     }
+    wx.showLoading({
+      title: '发送中...',
+      mask: true
+    });
     post('v1_entry/ws_sms', { mobile_type: "04", mobile: info.ContactMobile }, `renren ${app.globalData.user.Authorization}`).then(res => {
         if (res.code == 200) {
           timer = setInterval(() => {
@@ -605,6 +621,7 @@ Page({
           title: res.msg,
           icon: 'none'
         });
+        wx.hideLoading();
     });
   },
   // checkbox change

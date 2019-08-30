@@ -162,7 +162,7 @@ Page({
           // 开户行地址
           var bankID = [];
           var bankRegion = [];
-          res.bankRegion.map(i => {
+          res.back_address.map(i => {
             bankID.push(i.id);
             bankRegion.push(i.name);
           });
