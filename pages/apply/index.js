@@ -48,14 +48,8 @@ Page({
         });
     },
     toSelect() {
-        var applyId = '';
-        for (let i of this.data.list) {
-            if (i.status == 4 || i.status == 5) {
-                applyId = i.id;
-            }
-        }
         wx.navigateTo({
-            url: `/pages/selectApply/index?id=${this.data.id}&applyId=${applyId}`
+            url: `/pages/selectApply/index?id=${this.data.id}`
         });
     }
 });

@@ -4,17 +4,11 @@ var app = getApp();
 Page({
     data: {
         id: '',
-        applyId: '',
         channels: [],
         applying: 0,
         openType: 0
     },
     onLoad(opt) {
-        if (opt.applyId) {
-            this.setData({
-                applyId: opt.applyId
-            });
-        }
         this.setData({
             id: opt.id
         });
