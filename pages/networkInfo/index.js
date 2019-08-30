@@ -1,11 +1,13 @@
-import { get, post, checkEmail } from '../../utils/utils.js'
+import { get, post, checkTel, checkEmail } from '../../utils/utils.js'
 var config = require('../../config/index');
 var app = getApp();
+var timer = null;
+var count = 60;
 
 Page({
   data: {
     id: '',
-    step: 4,
+    step: 5,
     basicInfo: {      // 保存信息
       MerchantType: "01",
       MerchantName: '',
@@ -36,7 +38,16 @@ Page({
       SettleMode: '01',
       PartnerType: '03',
       BankCertName: '',
-      CertType: '01'
+      CertType: '01',
+      LegalPerson: '',
+      PrincipalPerson: '',
+      PrincipalCertNo: '',
+      ContactName: '',
+      ContactMobile: '',
+      lanhai: '01',
+      FeeType: '02',
+      ali_t1_fee: '0.006',
+      wx_t1_fee: '0.006'
     },
     mccIdx: 0,
     mccData: ['美食','超市便利店','休闲娱乐','购物','爱车','生活服务','教育培训','医疗健康','航旅','专业销售/批发','政府/社会组织'],
@@ -123,6 +134,10 @@ Page({
     partnerIdx: 0,
     CertType: ['身份证'],
     certIdx: 0,
+    lanhaiData: ['是','否'],
+    lanhaiIdx: 0,
+    FeeData: ['T1收单手续费'],
+    FeeIdx: 0,
     bankIdx: 0,
     helpIdx: -1,
     help: [
@@ -130,7 +145,9 @@ Page({
     ],
     popupTitle: '',
     navTitle: '网商通道',
-    baseURL: config.baseImgURL
+    baseURL: config.baseImgURL,
+    sendText: '获取验证码',
+    disabled: false
   },
   onLoad(opt) {
     this.setData({
@@ -193,10 +210,18 @@ Page({
           });
           this.setData({
             basicInfo: {
+              ...this.data.basicInfo,
               Mcc: res.mch_cate,
-              // CertNo: res.,              // 未知
-              // CardHolderAddress: res.,
-              // CertType: res.,
+              CertNo: res.CertNo,
+              CardHolderAddress: res.CardHolderAddress,
+              CertType: res.CertType,
+              LegalPerson: res.LegalPerson,
+              PrincipalPerson: res.blame_name,
+              PrincipalCertNo: res.blame_certno,
+              ContactName: res.contacts_name,
+              ContactMobile: res.contacts_phone,
+              lanhai: res.lanhai,
+              FeeType: res.FeeType,
               ShopPhoto: res.store_photo,
               DealType: res.business_type,
               MerchantType: res.mch_type,
@@ -231,11 +256,13 @@ Page({
             bankRegion,
             PayChannel,
             TradeTypeList,
+            // FeeIdx: res.,
             supportIdx: res.is_account == 'N' ? 0 : 1,
             dealIdx: Number.parseInt(res.business_type) - 1,
             merchantIdx: Number.parseInt(res.mch_type) - 1,
             settleIdx: Number.parseInt(res.settlement) - 1,
             accountIdx: Number.parseInt(res.account_type) - 1,
+            lanhaiIdx: Number.parseInt(res.business_type) - 1
           });
         }
       });
@@ -404,15 +431,6 @@ Page({
       });
       return;
     }
-  
-    if (!value.PrincipalMobile) {
-      wx.showToast({
-        title: '负责人手机号不能为空',
-        icon: 'none'
-      });
-      return;
-    }
-
     this.setData({
       step: 5,
       basicInfo: {
@@ -423,10 +441,43 @@ Page({
   },
   // 步骤五-审核
   nextStep5(e) {
+    // checkTel
     var info = this.data.basicInfo;
     var value = e.detail.value;
-    
-    if (!info.CertPhotoA) {
+    if (info.MerchantType == '03') {
+      if (!value.LegalPerson) {
+        wx.showToast({
+          title: '企业法人名称不能为空',
+          icon: 'none'
+        });
+        return;
+      }
+    }
+    if (!value.PrincipalPerson) {
+      wx.showToast({
+        title: '负责人/法人姓名不能为空',
+        icon: 'none'
+      });
+      return;
+    } else if (!value.PrincipalMobile) {
+      wx.showToast({
+        title: '负责人手机号不能为空',
+        icon: 'none'
+      });
+      return;
+    } else if (!checkTel(value.PrincipalMobile)) {
+      wx.showToast({
+        title: '负责人手机号不合法',
+        icon: 'none'
+      });
+      return;
+    } else if (!value.PrincipalCertNo) {
+      wx.showToast({
+        title: '负责人身份证号码不能为空',
+        icon: 'none'
+      });
+      return;
+    } else if (!info.CertPhotoA) {
       wx.showToast({
         title: '负责人身份证正面未上传',
         icon: 'none'
@@ -435,6 +486,36 @@ Page({
     } else if (!info.CertPhotoB) {
       wx.showToast({
         title: '负责人身份证反面未上传',
+        icon: 'none'
+      });
+      return;
+    } else if (!value.ContactName) {
+      wx.showToast({
+        title: '联系人姓名不能为空',
+        icon: 'none'
+      });
+      return;
+    } else if (!value.ContactMobile) {
+      wx.showToast({
+        title: '联系人手机号不能为空',
+        icon: 'none'
+      });
+      return;
+    } else if (!checkTel(value.ContactMobile)) {
+      wx.showToast({
+        title: '联系人手机号不合法',
+        icon: 'none'
+      });
+      return;
+    } else if (info.ContactMobile != info.PrincipalMobile) {
+      wx.showToast({
+          title: '负责人手机号必须和联系人手机号一致!',
+          icon: 'none'
+      });
+      return;
+    } else if (!value.mobile_sms) {
+      wx.showToast({
+        title: '手机验证码不能为空',
         icon: 'none'
       });
       return;
@@ -464,6 +545,66 @@ Page({
           });
         }, 1500);
       }
+    });
+  },
+  countDown() {
+      if (count <= 1) {
+        this.setData({
+          disabled: false,
+          sendText: '获取验证码'
+        });
+        count = 60;
+        clearInterval(timer);
+      }
+      else {
+        count--;
+        this.setData({
+          disabled: true,
+          sendText: `发送成功 ${count}s`
+        });
+      }
+  },
+  sendCode() {
+    var info = this.data.basicInfo;
+    if (!info.ContactMobile) {
+        wx.showToast({
+          title: '联系人手机号不能为空',
+          icon: 'none'
+        });
+        return;
+    } else if (!checkTel(info.ContactMobile)) {
+      wx.showToast({
+        title: '联系人手机号不合法',
+        icon: 'none'
+      });
+      return;
+    } else if (!checkTel(info.PrincipalMobile)) {
+      wx.showToast({
+        title: '负责人手机号不合法',
+        icon: 'none'
+      });
+      return;
+    }
+    if (info.ContactMobile != info.PrincipalMobile) {
+      wx.showToast({
+        title: '负责人手机号必须和联系人手机号一致!',
+        icon: 'none'
+      });
+      return;
+    }
+    post('v1_entry/ws_sms', { mobile_type: "04", mobile: info.ContactMobile }, `renren ${app.globalData.user.Authorization}`).then(res => {
+        if (res.code == 200) {
+          timer = setInterval(() => {
+            this.countDown();
+          }, 1000);
+          this.setData({
+            disabled: true
+          });
+        }
+        wx.showToast({
+          title: res.msg,
+          icon: 'none'
+        });
     });
   },
   // checkbox change
@@ -529,6 +670,13 @@ Page({
       info = 'basicInfo.CertType';
     } else if(type == 'accountIdx') {
       info = 'basicInfo.AccountType';
+    } else if(type == 'lanhaiIdx') {
+      info = 'basicInfo.lanhai';
+    } else if(type == 'FeeIdx') {
+      if (value == 0) {
+        infoVal = '02';
+      }
+      info = 'basicInfo.FeeType';
     }
     this.setData({
       [type]: value,
@@ -719,7 +867,7 @@ Page({
           };
 
           // api
-          post('v1_entry/ws_entry2', data, `renren ${app.globalData.user.Authorization}`).then(res => {
+          post('v1_entry/ws_entry', data, `renren ${app.globalData.user.Authorization}`).then(res => {
             if (res.code == 200) {
               wx.navigateBack({
                 delta: 1

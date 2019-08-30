@@ -39,6 +39,12 @@ page {
     display: inline-block;
     vertical-align: middle;
 }
+form .value{
+    float: right;
+    color: #666;
+    font-size: 26rpx;
+    padding: 0 20rpx 0 0;
+}
 .form .helpUp{
     top: 0;
     left: 85rpx;
@@ -93,6 +99,26 @@ page {
     font-size: 24rpx;
     display: inline-block;
     vertical-align: middle;
+}
+.form .long input{
+    width: 400rpx;
+}
+.form .vcode input{
+    width: 260rpx;
+}
+.form .vcode .send{
+    float: right;
+    height: auto;
+    line-height: 1;
+    font-size: 26rpx;
+    color: #F08300;
+    margin: 15rpx 0 0;
+    border-radius: 10rpx;
+    padding: 16rpx 20rpx;
+    border: 2rpx solid #F08300;
+}
+.form .vcode .send.no{
+    pointer-events: none;
 }
 .form .main textarea{
     height: 170rpx;

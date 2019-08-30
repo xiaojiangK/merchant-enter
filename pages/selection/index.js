@@ -11,6 +11,7 @@ Page({
                 this.setData({
                     user: res.data
                 });
+                app.globalData.user = res.data
             },
             fail: ()=>{
                 wx.redirectTo({

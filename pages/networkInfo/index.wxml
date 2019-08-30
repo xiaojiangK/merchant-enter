@@ -288,9 +288,21 @@
                 <form bindsubmit="nextStep4">
                     <view class="title">经营者信息</view>
                     <view class="main">
+                        <view class="item required long" wx:if="{{basicInfo.MerchantType == '03'}}">
+                            <view class="label">企业法人名称(法人)：</view>
+                            <input type="text" name="LegalPerson" bindblur="inputBlur" data-id="LegalPerson" value="{{basicInfo.LegalPerson}}" placeholder="营业执照上的公司名称，非法人代表名称" />
+                        </view>
+                        <view class="item required long">
+                            <view class="label">负责人/法人姓名：</view>
+                            <input type="text" name="PrincipalPerson" bindblur="inputBlur" data-id="PrincipalPerson" value="{{basicInfo.PrincipalPerson}}" placeholder="自然人写责任人，个体户写经营者本人，企业写企业法人" />
+                        </view>
                         <view class="item required">
                             <view class="label">负责人手机号：</view>
                             <input type="text" name="PrincipalMobile" maxlength="11" bindblur="inputBlur" data-id="PrincipalMobile" value="{{basicInfo.PrincipalMobile}}" placeholder="请填写负责人手机号" />
+                        </view>
+                        <view class="item required long">
+                            <view class="label">负责人身份证号码：</view>
+                            <input type="text" name="PrincipalCertNo" maxlength="18" bindblur="inputBlur" data-id="PrincipalCertNo" value="{{basicInfo.PrincipalCertNo}}" placeholder="请填写负责人身份证号码" />
                         </view>
                         <view class="upload required">
                             <view class="label">负责人身份证照片：</view>
@@ -306,7 +318,7 @@
                                 </view>
                             </view>
                             <view class="tip">
-                                <text>必须为彩色图片且小于2M，</text>
+                                <text>必须为彩色图片且小于10M，</text>
                                 <text>文件格式为bmp、png、jpeg、jpg或gif</text>
                             </view>
                             <view class="picture" data-type="5" bindtap="uploadLicence">
@@ -321,9 +333,48 @@
                                 </view>
                             </view>
                             <view class="tip">
-                                <text>必须为彩色图片且小于2M，</text>
+                                <text>必须为彩色图片且小于10M，</text>
                                 <text>文件格式为bmp、png、jpeg、jpg或gif</text>
                             </view>
+                        </view>
+                    </view>
+                    <view class="title">联系人信息</view>
+                    <view class="main">
+                        <view class="item required">
+                            <view class="label">联系人姓名：</view>
+                            <input type="text" name="ContactName" bindblur="inputBlur" data-id="ContactName" value="{{basicInfo.ContactName}}" placeholder="请填写联系人姓名" />
+                        </view>
+                        <view class="item required">
+                            <view class="label">联系人手机号：</view>
+                            <input type="text" name="ContactMobile" maxlength="11" bindblur="inputBlur" data-id="ContactMobile" value="{{basicInfo.ContactMobile}}" placeholder="请填写联系人手机号" />
+                        </view>
+                    </view>
+                    <view class="title">手续费信息</view>
+                    <view class="main">
+                        <view class="item required">
+                            <view class="label">是否申请蓝海：</view>
+                            <picker bindchange="pickerChange" data-type="lanhaiIdx" value="{{lanhaiIdx}}" range="{{lanhaiData}}">
+                                <view class="picker">{{lanhaiData[lanhaiIdx]}}</view>
+                            </picker>
+                        </view>
+                        <view class="item required">
+                            <view class="label">手续费用类型：</view>
+                            <picker bindchange="pickerChange" data-type="FeeIdx" value="{{FeeIdx}}" range="{{FeeData}}">
+                                <view class="picker">{{FeeData[FeeIdx]}}</view>
+                            </picker>
+                        </view>
+                        <view class="item required">
+                            <view class="label">支付宝T1手续费：</view>
+                            <view class="value">{{basicInfo.ali_t1_fee}}</view>
+                        </view>
+                        <view class="item required">
+                            <view class="label">微信T1手续费：</view>
+                            <view class="value">{{basicInfo.wx_t1_fee}}</view>
+                        </view>
+                        <view class="item required vcode">
+                            <view class="label">手机验证码：</view>
+                            <input type="text" name="mobile_sms" bindblur="inputBlur" data-id="mobile_sms" value="{{basicInfo.mobile_sms}}" placeholder="请填写手机验证码" />
+                            <view class="send {{disabled ? 'no' : ''}}" bindtap="sendCode">{{sendText}}</view>
                         </view>
                     </view>
                     <view class="btns btn">

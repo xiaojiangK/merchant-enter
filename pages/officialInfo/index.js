@@ -104,17 +104,7 @@ Page({
     if (opt.save == 1) {
       get(`1/entry/info?id=${this.data.applyId}`, `renren ${app.globalData.user.Authorization}`).then(res => {
         if (res.code == 200) {
-          var res = {
-            ...res.data,
-            bankRegion: [{
-              id: '110000',
-              name: '北京市'
-            },{
-              id: '110100',
-              name: '北京市'
-            }],
-            ServicePhoneNo: '18518981272'
-          };
+          var res = res.data;
           var data = this.data;
           // 交易类型
           var trade = res.trade_type;
