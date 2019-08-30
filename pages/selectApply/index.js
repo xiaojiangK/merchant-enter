@@ -76,6 +76,13 @@ Page({
         var openType = this.data.openType;
         this.data.channels.map((item, index) => {
             if (openType == index) {
+                if (item.wxlst == 1 && item.zfblst == 1) {
+                    wx.showToast({
+                        title: '通道已申请，请重新选择!',
+                        icon: 'none'
+                    });
+                    return;
+                }
                 if (item.entryid) {
                     wx.showModal({
                         title: '通知',
