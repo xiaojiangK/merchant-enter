@@ -194,7 +194,9 @@ Page({
           this.setData({
             basicInfo: {
               Mcc: res.mch_cate,
-              CertType: res.account_type,   // 证件类型（未确定）
+              // CertNo: res.,              // 未知
+              // CardHolderAddress: res.,
+              // CertType: res.,
               ShopPhoto: res.store_photo,
               DealType: res.business_type,
               MerchantType: res.mch_type,
@@ -717,7 +719,7 @@ Page({
           };
 
           // api
-          post('v1_entry/ws_entry', data, `renren ${app.globalData.user.Authorization}`).then(res => {
+          post('v1_entry/ws_entry2', data, `renren ${app.globalData.user.Authorization}`).then(res => {
             if (res.code == 200) {
               wx.navigateBack({
                 delta: 1

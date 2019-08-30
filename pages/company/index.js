@@ -4,11 +4,15 @@ var app = getApp();
 
 Page({
     data: {
+        page: 1,
         userInfo: {},
         companyList: []
     },
     onPullDownRefresh() {
         this.getUser();
+    },
+    onReachBottom() {
+        this.getUser(++this.data.page);
     },
     logout() {
         wx.showModal({
@@ -46,15 +50,17 @@ Page({
             url: `/pages/changePass/index?user=${user.username}&id=${user.id}`
         });
     },
-    getUser() {
+    getUser(page = 1) {
         post('v1_user/info', {
-            page: 1,
+            page,
             id: app.globalData.user.uid
         }, `renren ${app.globalData.user.Authorization}`).then(res => {
             if (res.code == 200) {
+                var oldData = this.data.companyList;
+                var newData = res.data.list;
                 this.setData({
                     userInfo: res.userinfo.length && res.userinfo[0],
-                    companyList: res.data.list
+                    companyList: [...oldData, ...newData]
                 });
             } else {
                 wx.showToast({

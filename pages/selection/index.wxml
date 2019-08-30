@@ -1,6 +1,6 @@
 <view class="wrap">
     <view class="list">
-        <navigator url="/pages/company/index" hover-class="none" class="item" style="background: #fff url('/assets/pay-bg.png') left top no-repeat">
+        <view class="item" bindtap="next" style="background: #fff url('/assets/pay-bg.png') left top no-repeat">
             <view class="left">
                 <image src="/assets/pay.png" />
                 <text>支付通道申请</text>
@@ -8,6 +8,6 @@
             <view class="right">
                 <image src="/assets/icon-right.png" />
             </view>
-        </navigator>
+        </view>
     </view>
 </view>

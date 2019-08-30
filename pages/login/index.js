@@ -4,6 +4,7 @@ var app = getApp();
 Page({
   data: {
     error: '',
+    openid: '',
     isAuthorize: false
   },
   onLoad() {
@@ -19,9 +20,28 @@ Page({
       wx.login({
         success: (res) => {
           if (res.code) {
-            console.log(res.code);
-            post('api', { code: res.code }, `renren ${app.globalData.user.Authorization}`).then(res => {
+            post('v1_sign/loginin', { code: res.code }, `renren ${app.globalData.user.Authorization}`).then(res => {
               if (res.code == 200) {
+                var data = res.data;
+                if (data.openid) {
+                  this.setData({
+                    openid: data.openid
+                  });
+                  wx.showToast({
+                    title: '绑定成功，请登录',
+                    icon: 'none'
+                  });
+                } else if (data.uid) {
+                  wx.setStorage({
+                    data,
+                    key: 'user',
+                    success: () => {
+                      wx.navigateTo({
+                        url: '/pages/selection/index'
+                      });
+                    }
+                  });
+                }
                 this.setData({
                   isAuthorize: true
                 });
@@ -33,6 +53,12 @@ Page({
               }
             });
           }
+        },
+        fail: () => {
+          wx.showToast({
+            title: '授权失败，请重试',
+            icon: 'none'
+          });
         }
       });
     }
@@ -43,6 +69,7 @@ Page({
     });
   },
   formSubmit(e) {
+    var openid = this.data.openid;
     var username = e.detail.value.user;
     var password = e.detail.value.pass;
     if (!username && !password) {
@@ -71,7 +98,7 @@ Page({
       title: '登录中...',
       icon: 'none'
     });
-    post('v1_sign/loginin', { username, password }).then(res => {
+    post('v1_sign/loginin', { username, password, openid }).then(res => {
       if (res.code == 200) {
         wx.setStorage({
           key: 'user',
