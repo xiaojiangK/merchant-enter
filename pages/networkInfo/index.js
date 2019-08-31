@@ -147,7 +147,8 @@ Page({
     navTitle: '网商通道',
     baseURL: config.baseImgURL,
     sendText: '获取验证码',
-    disabled: false
+    disabled: false,
+    bankKeyword: '花都'
   },
   onLoad(opt) {
     this.setData({
@@ -238,7 +239,8 @@ Page({
               SettleMode: res.settlement,
               LicensePhoto: res.bus_photo,
               BranchName: res.account_name,
-              ContactLine: res.back_branch,
+              ContactLine: res.ContactLine.id,
+              bankKeyword: res.ContactLine.title,
               AccountType: res.account_type,
               BankCardNo: res.account_number,
               CertPhotoA: res.blame_card_pos,
@@ -266,6 +268,9 @@ Page({
           });
         }
       });
+    }
+    if (this.data.bankKeyword) {
+      this.bankSearch();
     }
   },
   // 步骤一-下一步
@@ -740,7 +745,7 @@ Page({
     });
     var bankID = [];
     var bankData = [];
-    var key = e.detail.value;
+    var key = this.data.bankKeyword || e.detail.value;
     post('Currency/Searchlist', { key }, `renren ${app.globalData.user.Authorization}`).then(res => {
       if (res.code == 200) {
         if (res.data.length) {
