@@ -285,7 +285,7 @@
         </view>
         <view class="item {{step == 5 ? 'active' : ''}}">
             <view class="form">
-                <form bindsubmit="nextStep4">
+                <form bindsubmit="nextStep5">
                     <view class="title">经营者信息</view>
                     <view class="main">
                         <view class="item required long" wx:if="{{basicInfo.MerchantType == '03'}}">

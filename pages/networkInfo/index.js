@@ -367,7 +367,7 @@ Page({
     });
   },
   // 步骤三-下一步
-  nextStep3(e) {
+  nextStep3() {
     var info = this.data.basicInfo;
     if (info.MerchantType != '01') {
       if (!info.LicensePhoto) {
