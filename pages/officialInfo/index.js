@@ -280,7 +280,7 @@ Page({
           icon: 'none'
         });
         return;
-      } else if (!value.ContactLine) {
+      } else if (!info.ContactLine) {
         wx.showToast({
           title: '所在支行不能为空',
           icon: 'none'
