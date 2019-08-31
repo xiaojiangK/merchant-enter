@@ -13,6 +13,20 @@ Page({
             id: opt.id
         });
         post('v1_entry/List', { id: this.data.id }, `renren ${app.globalData.user.Authorization}`).then(res => {
+            if (res.code == 100002) {
+                wx.showToast({
+                    title: '授权已过期，请重新授权',
+                    icon: 'none'
+                });
+                wx.removeStorage({
+                    key: 'user'
+                });
+                app.globalData.user = {};
+                wx.navigateTo({
+                    url: '/pages/login/index'
+                });
+                return;
+            }
             if (res.code == 200) {
                 var list = res.data.map(item => {
                     var type = -1;

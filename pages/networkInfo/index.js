@@ -874,31 +874,36 @@ Page({
       cancelText: '取消',
       confirmText: '确定',
       success: (result) => {
-        if(result.confirm){
-          // 保存资料
-          var data = {
-            ...this.data.basicInfo,
-            mch_id: app.globalData.user.uid,
-            customer_id: this.data.id,
-            entryid: this.data.applyId
-          };
+        // 保存资料
+        var data = {
+          ...this.data.basicInfo,
+          type: 1,
+          mch_id: app.globalData.user.uid,
+          customer_id: this.data.id,
+          entryid: this.data.applyId
+        };
 
-          // api
-          post('v1_entry/ws_entry', data, `renren ${app.globalData.user.Authorization}`).then(res => {
-            if (res.code == 200) {
-              wx.navigateBack({
-                delta: 1
-              });
-            } else {
+        // api
+        post('v1_entry/ws_entry', data, `renren ${app.globalData.user.Authorization}`).then(res => {
+          if (res.code == 200) {
+            wx.showToast({
+              title: res.msg,
+              icon: 'none'
+            });
+          } else {
+            this.setData({
+              popupTitle: '保存失败，请重新尝试',
+            });
+            setTimeout(() => {
               this.setData({
-                popupTitle: '保存失败，请重新尝试',
+                popupTitle: ''
               });
-              setTimeout(() => {
-                this.setData({
-                  popupTitle: ''
-                });
-              }, 1500);
-            }
+            }, 1500);
+          }
+        });
+        if(result.confirm){
+          wx.navigateBack({
+            delta: 2
           });
         }
       }

@@ -8,10 +8,16 @@ Page({
         wx.getStorage({
             key: 'user',
             success: (res) => {
-                this.setData({
-                    user: res.data
-                });
-                app.globalData.user = res.data
+                if (res.data.Authorization) {
+                    this.setData({
+                        user: res.data
+                    });
+                    app.globalData.user = res.data
+                } else {
+                    wx.redirectTo({
+                        url: '/pages/login/index'
+                    });
+                }
             },
             fail: ()=>{
                 wx.redirectTo({

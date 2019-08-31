@@ -59,6 +59,20 @@ Page({
             page,
             id: app.globalData.user.uid
         }, `renren ${app.globalData.user.Authorization}`).then(res => {
+            if (res.code == 100002) {
+                wx.showToast({
+                    title: '授权已过期，请重新授权',
+                    icon: 'none'
+                });
+                wx.removeStorage({
+                    key: 'user'
+                });
+                app.globalData.user = {};
+                wx.navigateTo({
+                    url: '/pages/login/index'
+                });
+                return;
+            }
             if (res.code == 200) {
                 var oldData = this.data.companyList;
                 var newData = res.data.list;

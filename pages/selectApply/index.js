@@ -16,6 +16,20 @@ Page({
     onShow() {
         post('v1_entry/Entryroad', { id: this.data.id }, `renren ${app.globalData.user.Authorization}`).then(res => {
             var data = res.data;
+            if (res.code == 100002) {
+                wx.showToast({
+                    title: '授权已过期，请重新授权',
+                    icon: 'none'
+                });
+                wx.removeStorage({
+                    key: 'user'
+                });
+                app.globalData.user = {};
+                wx.navigateTo({
+                    url: '/pages/login/index'
+                });
+                return;
+            }
             if (res.code == 200 && data) {
                 var applying = 0;   // 是否申请
                 var openType = 0;   // 开通类型
