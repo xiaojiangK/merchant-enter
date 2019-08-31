@@ -209,6 +209,8 @@ Page({
             bankID.push(i.id);
             bankRegion.push(i.name);
           });
+          // 开户支行
+          var back_branch = JSON.parse(res.back_branch);
           this.setData({
             basicInfo: {
               ...this.data.basicInfo,
@@ -239,8 +241,8 @@ Page({
               SettleMode: res.settlement,
               LicensePhoto: res.bus_photo,
               BranchName: res.account_name,
-              ContactLine: res.ContactLine.id,
-              bankKeyword: res.ContactLine.title,
+              ContactLine: back_branch.id,
+              bankKeyword: back_branch.title,
               AccountType: res.account_type,
               BankCardNo: res.account_number,
               CertPhotoA: res.blame_card_pos,

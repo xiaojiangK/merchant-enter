@@ -167,6 +167,8 @@ Page({
             bankID.push(i.id);
             bankRegion.push(i.name);
           });
+          // 开户支行
+          var back_branch = JSON.parse(res.back_branch);
           this.setData({
             basicInfo: {
               pay,
@@ -179,8 +181,8 @@ Page({
               permit_type: permit,
               mch_name: res.mch_name,
               card_name: res.card_name,
-              ContactLine: res.ContactLine.id,
-              bankKeyword: res.ContactLine.title,
+              ContactLine: back_branch.id,
+              bankKeyword: back_branch.title,
               account_bank: res.account_bank,
               account_number: res.account_number,
               ServicePhoneNo: res.tel,
