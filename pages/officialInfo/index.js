@@ -370,7 +370,10 @@ Page({
       customer_id: this.data.id,
       entryid: this.data.applyId
     }
-
+    wx.showLoading({
+      title: '提交中...',
+      mask: true
+    });
     // api
     post('v1_entry/default_create', data, `renren ${app.globalData.user.Authorization}`).then(res => {
       if (res.code == 200) {
@@ -387,6 +390,7 @@ Page({
           });
         }, 1500);
       }
+      wx.hideLoading();
     });
   },
   // checkbox change
@@ -600,7 +604,10 @@ Page({
           customer_id: this.data.id,
           entryid: this.data.applyId
         };
-
+        wx.showLoading({
+          title: '提交中...',
+          mask: true
+        });
         // api
         post('v1_entry/default_create', data, `renren ${app.globalData.user.Authorization}`).then(res => {
           if (res.code == 200) {
@@ -618,6 +625,7 @@ Page({
               });
             }, 1500);
           }
+          wx.hideLoading();
         });
         if(result.confirm){
           wx.navigateBack({

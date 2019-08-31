@@ -547,7 +547,10 @@ Page({
       customer_id: this.data.id,
       entryid: this.data.applyId
     };
-
+    wx.showLoading({
+      title: '提交中...',
+      mask: true
+    });
     // api
     post('v1_entry/ws_entry', data, `renren ${app.globalData.user.Authorization}`).then(res => {
       if (res.code == 200) {
@@ -564,6 +567,7 @@ Page({
           });
         }, 1500);
       }
+      wx.hideLoading();
     });
   },
   countDown() {
@@ -889,7 +893,10 @@ Page({
           customer_id: this.data.id,
           entryid: this.data.applyId
         };
-
+        wx.showLoading({
+          title: '提交中...',
+          mask: true
+        });
         // api
         post('v1_entry/ws_entry', data, `renren ${app.globalData.user.Authorization}`).then(res => {
           if (res.code == 200) {
@@ -907,6 +914,7 @@ Page({
               });
             }, 1500);
           }
+          wx.hideLoading();
         });
         if(result.confirm){
           wx.navigateBack({
