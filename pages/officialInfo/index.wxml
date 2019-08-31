@@ -136,7 +136,7 @@
                             </view>
                             <view class="item required searchBank">
                                 <view class="label">所在支行：</view>
-                                <input type="text" bindblur="bankSearch" value="{{bankKeyword}}" placeholder="请在此输入支行地址关键字" />
+                                <input type="text" bindblur="bankSearch" value="{{basicInfo.bankKeyword}}" placeholder="请在此输入支行地址关键字" />
                                 <picker bindchange="bankChange" value="{{bankIdx}}" range="{{bankData}}">
                                     <view class="picker">{{bankData[bankIdx]}}</view>
                                 </picker>
