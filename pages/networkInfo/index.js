@@ -436,7 +436,7 @@ Page({
       });
       return;
     }
-    if (info.AccountType == '01') {
+    if (info.AccountType == '02') {
       if (!value.CertNo) {
         wx.showToast({
           title: '持证人证件号码不能为空',

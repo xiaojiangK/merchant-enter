@@ -267,7 +267,7 @@
                                 <view class="picker">{{bankData[bankIdx]}}</view>
                             </picker>
                         </view>
-                        <block wx:if="{{basicInfo.AccountType == '01'}}">
+                        <block wx:if="{{basicInfo.AccountType == '02'}}">
                             <view class="item required">
                                 <view class="label">持证人证件类型：</view>
                                 <picker bindchange="pickerChange" data-type="certIdx" value="{{certIdx}}" range="{{CertType}}">
