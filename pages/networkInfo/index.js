@@ -148,7 +148,7 @@ Page({
     baseURL: config.baseImgURL,
     sendText: '获取验证码',
     disabled: false,
-    bankKeyword: '花都'
+    bankKeyword: ''
   },
   onLoad(opt) {
     this.setData({
