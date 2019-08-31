@@ -140,27 +140,33 @@
                 <form bindsubmit="nextStep3">
                     <view class="title">商户信息</view>
                     <view class="main">
-                        <view class="upload required" wx:if="{{basicInfo.MerchantType != '01'}}">
-                            <view class="label">
-                                <view class="helpUp License" wx:if="{{helpIdx == 0}}">{{help[helpIdx]}}</view>
-                                上传营业执照：<image src="/assets/icon-help.png" data-idx="0" bindtap="helpUp" />
-                            </view>
-                            <view class="picture" data-type="0" bindtap="uploadLicence">
-                                <view class="box">
-                                    <block wx:if="{{basicInfo.LicensePhoto}}">
-                                        <image src="{{baseURL + basicInfo.LicensePhoto}}" mode="aspectFit" class="img" />
-                                    </block>
-                                    <block wx:else>
-                                        <image src="/assets/business.png" class="img business" />
-                                        <image src="/assets/icon-add.png" class="icon" />
-                                    </block>
+                        <block wx:if="{{basicInfo.MerchantType != '01'}}">
+                            <view class="upload required">
+                                <view class="label">
+                                    <view class="helpUp License" wx:if="{{helpIdx == 0}}">{{help[helpIdx]}}</view>
+                                    上传营业执照：<image src="/assets/icon-help.png" data-idx="0" bindtap="helpUp" />
+                                </view>
+                                <view class="picture" data-type="0" bindtap="uploadLicence">
+                                    <view class="box">
+                                        <block wx:if="{{basicInfo.LicensePhoto}}">
+                                            <image src="{{baseURL + basicInfo.LicensePhoto}}" mode="aspectFit" class="img" />
+                                        </block>
+                                        <block wx:else>
+                                            <image src="/assets/business.png" class="img business" />
+                                            <image src="/assets/icon-add.png" class="icon" />
+                                        </block>
+                                    </view>
+                                </view>
+                                <view class="tip">
+                                    <text>必须为彩色图片且小于2M，</text>
+                                    <text>文件格式为bmp、png、jpeg、jpg或gif</text>
                                 </view>
                             </view>
-                            <view class="tip">
-                                <text>必须为彩色图片且小于2M，</text>
-                                <text>文件格式为bmp、png、jpeg、jpg或gif</text>
+                            <view class="item required">
+                                <view class="label">营业执照注册号：</view>
+                                <input type="text" name="BussAuthNum" bindblur="inputBlur" data-id="BussAuthNum" value="{{basicInfo.BussAuthNum}}" placeholder="请填写营业执照注册号" />
                             </view>
-                        </view>
+                        </block>
                         <view class="upload required">
                             <view class="label">店铺招牌照片：</view>
                             <view class="picture" data-type="1" bindtap="uploadLicence">
@@ -261,20 +267,22 @@
                                 <view class="picker">{{bankData[bankIdx]}}</view>
                             </picker>
                         </view>
-                        <view class="item required">
-                            <view class="label">持证人证件类型：</view>
-                            <picker bindchange="pickerChange" data-type="certIdx" value="{{certIdx}}" range="{{CertType}}">
-                                <view class="picker">{{CertType[certIdx]}}</view>
-                            </picker>
-                        </view>
-                        <view class="item required">
-                            <view class="label">持证人证件号码：</view>
-                            <input type="text" name="CertNo" maxlength="18" bindblur="inputBlur" data-id="CertNo" value="{{basicInfo.CertNo}}" placeholder="请填写持证人证件号码" />
-                        </view>
-                        <view class="item required">
-                            <view class="label">持证人地址：</view>
-                            <input type="text" name="CardHolderAddress" bindblur="inputBlur" data-id="CardHolderAddress" value="{{basicInfo.CardHolderAddress}}" placeholder="请填写持证人地址" />
-                        </view>
+                        <block wx:if="{{basicInfo.AccountType == '01'}}">
+                            <view class="item required">
+                                <view class="label">持证人证件类型：</view>
+                                <picker bindchange="pickerChange" data-type="certIdx" value="{{certIdx}}" range="{{CertType}}">
+                                    <view class="picker">{{CertType[certIdx]}}</view>
+                                </picker>
+                            </view>
+                            <view class="item required">
+                                <view class="label">持证人证件号码：</view>
+                                <input type="text" name="CertNo" maxlength="18" bindblur="inputBlur" data-id="CertNo" value="{{basicInfo.CertNo}}" placeholder="请填写持证人证件号码" />
+                            </view>
+                            <view class="item required">
+                                <view class="label">持证人地址：</view>
+                                <input type="text" name="CardHolderAddress" bindblur="inputBlur" data-id="CardHolderAddress" value="{{basicInfo.CardHolderAddress}}" placeholder="请填写持证人地址" />
+                            </view>
+                        </block>
                     </view>
                     <view class="btns btn">
                         <button bindtap="prevStep">上一步</button>

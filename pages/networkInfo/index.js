@@ -7,7 +7,7 @@ var count = 60;
 Page({
   data: {
     id: '',
-    step: 1,
+    step: 4,
     basicInfo: {      // 保存信息
       MerchantType: "01",
       MerchantName: '',
@@ -47,7 +47,8 @@ Page({
       lanhai: '01',
       FeeType: '02',
       ali_t1_fee: '0.006',
-      wx_t1_fee: '0.006'
+      wx_t1_fee: '0.006',
+      BussAuthNum: ''
     },
     mccIdx: 0,
     mccData: ['美食','超市便利店','休闲娱乐','购物','爱车','生活服务','教育培训','医疗健康','航旅','专业销售/批发','政府/社会组织'],
@@ -217,9 +218,10 @@ Page({
               ...this.data.basicInfo,
               Mcc: res.mch_cate,
               CertNo: res.CertNo,
+              BussAuthNum: res.business,
               CardHolderAddress: res.CardHolderAddress,
               CertType: res.CertType || info.CertType,
-              LegalPerson: res.LegalPerson || info.LegalPerson,
+              LegalPerson: res.legal_name || info.LegalPerson,
               PrincipalPerson: res.blame_name,
               PrincipalCertNo: res.blame_certno,
               ContactName: res.contacts_name,
@@ -368,12 +370,19 @@ Page({
     });
   },
   // 步骤三-下一步
-  nextStep3() {
+  nextStep3(e) {
+    var value = e.detail.value;
     var info = this.data.basicInfo;
     if (info.MerchantType != '01') {
       if (!info.LicensePhoto) {
         wx.showToast({
           title: '营业执照未上传',
+          icon: 'none'
+        });
+        return;
+      } else if (!value.BussAuthNum) {
+        wx.showToast({
+          title: '营业执照注册号不能为空',
           icon: 'none'
         });
         return;
@@ -426,24 +435,27 @@ Page({
         icon: 'none'
       });
       return;
-    } else if (!value.CertNo) {
-      wx.showToast({
-        title: '持证人证件号码不能为空',
-        icon: 'none'
-      });
-      return;
-    } else if (value.CertNo.length < 18) {
-      wx.showToast({
-        title: '持证人证件号码不合法',
-        icon: 'none'
-      });
-      return;
-    } else if (!value.CardHolderAddress) {
-      wx.showToast({
-        title: '持证人地址不能为空',
-        icon: 'none'
-      });
-      return;
+    }
+    if (info.AccountType == '01') {
+      if (!value.CertNo) {
+        wx.showToast({
+          title: '持证人证件号码不能为空',
+          icon: 'none'
+        });
+        return;
+      } else if (value.CertNo.length < 18) {
+        wx.showToast({
+          title: '持证人证件号码不合法',
+          icon: 'none'
+        });
+        return;
+      } else if (!value.CardHolderAddress) {
+        wx.showToast({
+          title: '持证人地址不能为空',
+          icon: 'none'
+        });
+        return;
+      }
     }
     this.setData({
       step: 5,
