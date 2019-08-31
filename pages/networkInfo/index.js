@@ -121,7 +121,7 @@ Page({
       ,"荷兰合作银行","厦门国际银行","法国巴黎银行"
       ,"华商银行","华一银行"
     ],
-    accountType: ['对公账户', '私人账户'],
+    accountType: ['私人账户', '对公账户'],
     accountIdx: 0,
     merchantIdx: 0,
     MerchantType: ['自然人', '个体工商户', '企业商户'], // 商户类型
@@ -436,7 +436,7 @@ Page({
       });
       return;
     }
-    if (info.AccountType == '02') {
+    if (info.AccountType == '01') {
       if (!value.CertNo) {
         wx.showToast({
           title: '持证人证件号码不能为空',
