@@ -211,20 +211,21 @@ Page({
           });
           // 开户支行
           var back_branch = JSON.parse(res.back_branch);
+          var info = this.data.basicInfo;
           this.setData({
             basicInfo: {
               ...this.data.basicInfo,
               Mcc: res.mch_cate,
               CertNo: res.CertNo,
               CardHolderAddress: res.CardHolderAddress,
-              CertType: res.CertType,
-              LegalPerson: res.LegalPerson,
+              CertType: res.CertType || info.CertType,
+              LegalPerson: res.LegalPerson || info.LegalPerson,
               PrincipalPerson: res.blame_name,
               PrincipalCertNo: res.blame_certno,
               ContactName: res.contacts_name,
               ContactMobile: res.contacts_phone,
-              lanhai: res.lanhai,
-              FeeType: res.FeeType,
+              lanhai: res.lanhai || info.lanhai,
+              FeeType: res.FeeType || info.FeeType,
               ShopPhoto: res.store_photo,
               DealType: res.business_type,
               MerchantType: res.mch_type,
