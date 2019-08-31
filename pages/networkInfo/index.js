@@ -266,11 +266,11 @@ Page({
             accountIdx: Number.parseInt(res.account_type) - 1,
             lanhaiIdx: Number.parseInt(res.business_type) - 1
           });
+          if (this.data.bankKeyword) {
+            this.bankSearch();
+          }
         }
       });
-    }
-    if (this.data.bankKeyword) {
-      this.bankSearch();
     }
   },
   // 步骤一-下一步
