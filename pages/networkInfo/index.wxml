@@ -141,6 +141,10 @@
                     <view class="title">商户信息</view>
                     <view class="main">
                         <block wx:if="{{basicInfo.MerchantType != '01'}}">
+                            <view class="item required">
+                                <view class="label">营业执照注册号：</view>
+                                <input type="text" name="BussAuthNum" bindblur="inputBlur" data-id="BussAuthNum" value="{{basicInfo.BussAuthNum}}" placeholder="请填写营业执照注册号" />
+                            </view>
                             <view class="upload required">
                                 <view class="label">
                                     <view class="helpUp License" wx:if="{{helpIdx == 0}}">{{help[helpIdx]}}</view>
@@ -161,10 +165,6 @@
                                     <text>必须为彩色图片且小于2M，</text>
                                     <text>文件格式为bmp、png、jpeg、jpg或gif</text>
                                 </view>
-                            </view>
-                            <view class="item required">
-                                <view class="label">营业执照注册号：</view>
-                                <input type="text" name="BussAuthNum" bindblur="inputBlur" data-id="BussAuthNum" value="{{basicInfo.BussAuthNum}}" placeholder="请填写营业执照注册号" />
                             </view>
                         </block>
                         <view class="upload required">
@@ -267,7 +267,7 @@
                                 <view class="picker">{{bankData[bankIdx]}}</view>
                             </picker>
                         </view>
-                        <block wx:if="{{basicInfo.AccountType == '02'}}">
+                        <block wx:if="{{basicInfo.LegalPerson == '02'}}">
                             <view class="item required">
                                 <view class="label">持证人证件类型：</view>
                                 <picker bindchange="pickerChange" data-type="certIdx" value="{{certIdx}}" range="{{CertType}}">
