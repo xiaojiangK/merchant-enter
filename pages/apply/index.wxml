@@ -7,7 +7,7 @@
                 <text>开通通道：{{item.pay_ment == '1' ? '官方通道' : '网商通道'}}</text>
                 <text>联系电话：{{item.phone}}</text>
                 <text>常用邮箱：{{item.email}}</text>
-                <text>银行账户类型：{{item.account_type == "01" ? '对公账户' : '对私账户'}}</text>
+                <text>银行账户类型：{{item.account_type == "01" ? '对私账户' : '对公账户'}}</text>
             </view>
         </navigator>
         <view class="btn" bindtap="toSelect">
