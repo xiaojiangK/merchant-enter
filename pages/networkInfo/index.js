@@ -805,7 +805,7 @@ Page({
     var imgType = src.substr(last);
     if (imgType == 'bmp' || imgType == 'png' || imgType == 'jpeg' || imgType == 'jpg' || imgType == 'gif') {
       wx.uploadFile({
-        url: `http://i.qiuxin.tech/Currency/Uploadpic?mch_id=${app.globalData.user.uid}`,
+        url: `${config.baseURL}Currency/Uploadpic?mch_id=${app.globalData.user.uid}`,
         filePath: src,
         header: {
           "Authorization": `renren ${app.globalData.user.Authorization}`,
