@@ -94,7 +94,7 @@ form .value{
     vertical-align: top;
 }
 .form .item input, .form .main textarea{
-    width: 450rpx;
+    width: 420rpx;
     height: 88rpx;
     font-size: 24rpx;
     display: inline-block;

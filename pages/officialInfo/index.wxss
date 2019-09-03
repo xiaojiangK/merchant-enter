@@ -100,7 +100,7 @@ form .helpUp.now6:after{
     display: inline-block;
 }
 .form .item input{
-    width: 450rpx;
+    width: 420rpx;
     height: 88rpx;
     font-size: 24rpx;
     display: inline-block;
