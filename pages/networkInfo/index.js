@@ -7,7 +7,7 @@ var count = 60;
 Page({
   data: {
     id: '',
-    step: 4,
+    step: 1,
     basicInfo: {      // 保存信息
       MerchantType: "01",
       MerchantName: '',
