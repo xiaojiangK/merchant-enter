@@ -7,7 +7,7 @@ Page({
     openid: '',
     isAuthorize: false
   },
-  onLoad() {
+  onShow() {
     if (app.globalData.user.Authorization) {
       wx.redirectTo({
         url: '/pages/selection/index'
