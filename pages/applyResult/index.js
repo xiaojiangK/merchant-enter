@@ -50,8 +50,8 @@ Page({
     },
     // 监听返回
     goBack() {
-      wx.redirectTo({
-        url: `/pages/apply/index?id=${this.data.id}`
+      wx.navigateBack({
+        delta: 1
       });
     },
 });
