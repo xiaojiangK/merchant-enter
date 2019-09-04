@@ -3,12 +3,12 @@
         <navigator wx:for="{{list}}" wx:key="index" url="{{item.status == 1 ? '' : item.url}}" hover-class="none" class="item">
             <view class="title">{{item.statusText}}</view>
             <view class="content">
-                <text>姓名：{{item.use_name}}</text>
-                <text>开通通道：{{item.pay_ment == '1' ? '官方通道' : '网商通道'}} <block wx:if="{{item.channels.wx || item.channels.ali}}">（{{item.channels.wx ? '微信' : ''}} <block wx:if="{{item.channels.ali}}">、支付宝</block>）</block></text>
-                <text wx:if="{{item.trade_type.length}}">交易类型：<block wx:for="{{item.trade_type}}" wx:key="index"><block wx:if="{{item == '01'}}">正扫、</block><block wx:if="{{item == '02'}}">反扫、</block><block wx:if="{{item == '06'}}">退款、</block><block wx:if="{{item == '08'}}">动态订单扫码</block></block></text>
-                <text>联系电话：{{item.phone}}</text>
-                <text>常用邮箱：{{item.email}}</text>
-                <text>银行账户类型：{{item.account_type == "01" ? '对私账户' : '对公账户'}}</text>
+                <view>姓名：{{item.use_name}}</view>
+                <view>开通通道：{{item.pay_ment == '1' ? '官方通道' : '网商通道'}} （<text class="info" wx:if="{{item.channels.wx}}">微信</text><text class="info" wx:if="{{item.channels.ali}}">支付宝</text>）</view>
+                <view wx:if="{{item.trade_type.length}}">交易类型：<block wx:for="{{item.trade_type}}" wx:key="index"><text class="info" wx:if="{{item == '01'}}">正扫</text><text class="info" wx:if="{{item == '02'}}">反扫</text><text class="info" wx:if="{{item == '06'}}">退款</text><text class="info" wx:if="{{item == '08'}}">动态订单扫码</text></block></view>
+                <view>联系电话：{{item.phone}}</view>
+                <view>常用邮箱：{{item.email}}</view>
+                <view>银行账户类型：{{item.account_type == "01" ? '对私账户' : '对公账户'}}</view>
             </view>
         </navigator>
         <view class="btn" bindtap="toSelect">

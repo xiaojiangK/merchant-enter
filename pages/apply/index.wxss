@@ -16,10 +16,18 @@
     text-align: center;
     border-bottom: 2rpx solid #ccc;
 }
-.list .item .content text{
+.list .item .content>view{
     display: block;
+    height: 35rpx;
     font-size: 28rpx;
     padding: 0 0 30rpx;
+}
+.list .item .content>view .info:after{
+    content: '、';
+    display: inline-block;
+}
+.list .item .content>view .info:last-child:after{
+    content: '';
 }
 .btn{
     margin: 200rpx 0 0;
