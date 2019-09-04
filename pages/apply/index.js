@@ -28,6 +28,21 @@ Page({
                 return;
             }
             if (res.code == 200) {
+                // res.data = [{
+                //     account_type: "02",
+                //     channels: '{"ali":"2"}',
+                //     create_time: "1567498461",
+                //     customer_id: "85",
+                //     email: "21312@qq.com",
+                //     id: "120",
+                //     mch_id: "85",
+                //     mch_name: "12313213",
+                //     pay_ment: "1",
+                //     phone: "13265541514",
+                //     status: "0",
+                //     trade_type: ["01", '06'],
+                //     use_name: "123"
+                // }]
                 var list = res.data.map(item => {
                     var type = -1;
                     var status = -1;

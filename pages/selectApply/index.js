@@ -14,8 +14,7 @@ Page({
         });
     },
     onShow() {
-        // post('v1_entry/Entryroad', { id: this.data.id }, `renren ${app.globalData.user.Authorization}`).then(res => {
-        post('v1_entry/Entryroad', { id: this.data.id }, `renren b493b80977e569f8097785a99d8b08c468d57ae8`).then(res => {
+        post('v1_entry/Entryroad', { id: this.data.id }, `renren ${app.globalData.user.Authorization}`).then(res => {
             var data = res.data;
             if (res.code == 100002) {
                 wx.showToast({
