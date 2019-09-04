@@ -15,14 +15,16 @@ Page({
          * 2 => 审核驳回
          */
         if (opts.status == 2) {
-            this.setData({
-              navTitle: '审核驳回'
-            });
+          this.setData({
+            navTitle: '审核驳回'
+          });
         }
-        if (opts.applyId && opts.status == 2) {
+        if (opts.applyId) {
           this.setData({
             applyId: opts.applyId
           });
+        }
+        if (opts.status == 2) {
           get(`1/entry/info?id=${opts.applyId}`, `renren ${app.globalData.user.Authorization}`).then(res => {
             if (res.code == 200) {
               this.setData({
@@ -50,8 +52,14 @@ Page({
     },
     // 监听返回
     goBack() {
-      wx.navigateBack({
-        delta: 1
-      });
+      if (this.data.applyId) {
+        wx.navigateBack({
+          delta: 1
+        });
+      } else {
+        wx.navigateBack({
+          delta: 2
+        });
+      }
     },
 });
