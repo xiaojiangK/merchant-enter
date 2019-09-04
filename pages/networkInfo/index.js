@@ -9,10 +9,10 @@ Page({
     id: '',
     step: 1,
     basicInfo: {      // 保存信息
-      MerchantType: "01",
+      MerchantType: '',
       MerchantName: '',
       Alias: '',
-      DealType: '01',
+      DealType: '',
       mchRegion: ["110000", "110100", "110101"],
       bankRegion: ["110000", "110100", "110101"],
       Address: '',
@@ -21,48 +21,48 @@ Page({
       Email: '',
       LicensePhoto: '',
       OtherBankCardNo: '',
-      Mcc: '2015050700000000',
+      Mcc: '',
       PayChannelList: ["01", "02"],
       TradeTypeList: ["01", "02", "06", "08"],
       ShopPhoto: '',
       ShopEntrancePhoto: '',
-      BranchName: '工商银行',
-      AccountType: '01',
+      BranchName: '',
+      AccountType: '',
       BankCardNo: '',
       ContactLine: '',
       IndustryLicensePhoto: '',
       PrincipalMobile: '',
       CertPhotoA: '',
       CertPhotoB: '',
-      SupportPrepayment: 'N',
-      SettleMode: '01',
-      PartnerType: '03',
+      SupportPrepayment: '',
+      SettleMode: '',
+      PartnerType: '',
       BankCertName: '',
-      CertType: '01',
+      CertType: '',
       LegalPerson: '',
       PrincipalPerson: '',
       PrincipalCertNo: '',
       ContactName: '',
       ContactMobile: '',
-      lanhai: '01',
-      FeeType: '02',
+      lanhai: '',
+      FeeType: '',
       ali_t1_fee: '0.006',
       wx_t1_fee: '0.006',
       BussAuthNum: ''
     },
-    mccIdx: 0,
+    mccIdx: -1,
     mccData: ['美食','超市便利店','休闲娱乐','购物','爱车','生活服务','教育培训','医疗健康','航旅','专业销售/批发','政府/社会组织'],
     mccID: ['2015050700000000','2015091000052157','2015062600004525','2015062600002758','2016062900190124','2015063000020189','2016042200000148','2016062900190296','2015080600000001','2016062900190337','2016062900190371'],
-    dealIdx: 0,
+    dealIdx: -1,
     dealData: ['实体特约商户', '网络特约商户', '实体兼网络特约商户'],
     mchRegion: ['北京市', '北京市', '东城区'],
     bankRegion: ['北京市', '北京市', '东城区'],
     PayChannel: [{       // 支付渠道
-      title: '微信',
+      title: '支付宝',
       value: '01',
       checked: true
     },{
-      title: '支付宝',
+      title: '微信',
       value: '02',
       checked: true
     }],
@@ -83,7 +83,7 @@ Page({
       value: '08',
       checked: true
     }],
-    branchIdx: 0,
+    branchIdx: -1,
     branchData: [
       "中国工商银行","中国农业银行","中国银行"
       ,"中国建设银行","国家开发银行","中国进出口银行"
@@ -122,24 +122,24 @@ Page({
       ,"华商银行","华一银行"
     ],
     accountType: ['私人账户', '对公账户'],
-    accountIdx: 0,
-    merchantIdx: 0,
+    accountIdx: -1,
+    merchantIdx: -1,
     MerchantType: ['自然人', '个体工商户', '企业商户'], // 商户类型
     supportData: ['不支持'],    // 是否支持T+0
-    supportIdx: 0,
+    supportIdx: -1,
     bankData: [],   // 支行名称
     bankID: [],     // 支行ID,
     settleMode: ['结算到他行卡'],
-    settleIdx: 0,
+    settleIdx: -1,
     partnerType: ['合作机构公众号'],
-    partnerIdx: 0,
+    partnerIdx: -1,
     CertType: ['身份证'],
-    certIdx: 0,
+    certIdx: -1,
     lanhaiData: ['是','否'],
-    lanhaiIdx: 0,
+    lanhaiIdx: -1,
     FeeData: ['T1收单手续费'],
-    FeeIdx: 0,
-    bankIdx: 0,
+    FeeIdx: -1,
+    bankIdx: -1,
     helpIdx: -1,
     help: [
       '营业执照是工商行政管理机关发给工商企业、个体经营者的准许从事某项生产经营活动的凭证。其格式由国家工商行政管理局统一规定。'
@@ -294,6 +294,24 @@ Page({
         icon: 'none'
       });
       return;
+    } else if (!info.MerchantType) {
+      wx.showToast({
+        title: '商户类型未选择',
+        icon: 'none'
+      });
+      return;
+    } else if (!info.DealType) {
+      wx.showToast({
+        title: '商户经营类型未选择',
+        icon: 'none'
+      });
+      return;
+    } else if (!info.SupportPrepayment) {
+      wx.showToast({
+        title: '是否支持T+0未选择',
+        icon: 'none'
+      });
+      return;
     } else if (!value.Address) {
       wx.showToast({
         title: '详细地址不能为空',
@@ -342,9 +360,21 @@ Page({
   nextStep2(e) {
     var info = this.data.basicInfo;
     var value = e.detail.value;
-    if (!value.OtherBankCardNo) {
+    if (!info.SettleMode) {
+      wx.showToast({
+        title: '结算方式未选择',
+        icon: 'none'
+      });
+      return;
+    } else if (!value.OtherBankCardNo) {
       wx.showToast({
         title: '储蓄卡卡号不能为空',
+        icon: 'none'
+      });
+      return;
+    } else if (!info.Mcc) {
+      wx.showToast({
+        title: '经营类目未选择',
         icon: 'none'
       });
       return;
@@ -360,6 +390,21 @@ Page({
         icon: 'none'
       });
       return;
+    } else if (!info.PartnerType) {
+      wx.showToast({
+        title: '公众号类型未选择',
+        icon: 'none'
+      });
+      return;
+    } 
+    if (info.MerchantType != '01') {
+      if (!value.BussAuthNum) {
+        wx.showToast({
+          title: '营业执照注册号不能为空',
+          icon: 'none'
+        });
+        return;
+      }
     }
     this.setData({
       step: 3,
@@ -377,12 +422,6 @@ Page({
       if (!info.LicensePhoto) {
         wx.showToast({
           title: '营业执照未上传',
-          icon: 'none'
-        });
-        return;
-      } else if (!value.BussAuthNum) {
-        wx.showToast({
-          title: '营业执照注册号不能为空',
           icon: 'none'
         });
         return;
@@ -423,6 +462,18 @@ Page({
         icon: 'none'
       });
       return;
+    } else if (!info.BranchName) {
+      wx.showToast({
+        title: '开户行未选择',
+        icon: 'none'
+      });
+      return;
+    } else if (!info.AccountType) {
+      wx.showToast({
+        title: '账户类型未选择',
+        icon: 'none'
+      });
+      return;
     } else if (!value.BankCardNo) {
       wx.showToast({
         title: '银行卡号不能为空',
@@ -437,7 +488,13 @@ Page({
       return;
     }
     if (info.AccountType == '01') {
-      if (!value.CertNo) {
+      if (!info.CertType) {
+        wx.showToast({
+          title: '持证人证件类型未选择',
+          icon: 'none'
+        });
+        return;
+      } else if (!value.CertNo) {
         wx.showToast({
           title: '持证人证件号码不能为空',
           icon: 'none'
@@ -543,6 +600,18 @@ Page({
       wx.showToast({
           title: '负责人手机号必须和联系人手机号一致!',
           icon: 'none'
+      });
+      return;
+    } else if (!info.lanhai) {
+      wx.showToast({
+        title: '是否申请蓝海未选择',
+        icon: 'none'
+      });
+      return;
+    } else if (!info.FeeType) {
+      wx.showToast({
+        title: '手续费用类型未选择',
+        icon: 'none'
       });
       return;
     } else if (!value.mobile_sms) {
@@ -892,6 +961,13 @@ Page({
   },
   // 监听返回
   goBack() {
+    var info = this.data.basicInfo;
+    if (!info.MerchantName && !info.Alias && !info.MerchantType && !info.DealType && !info.SupportPrepayment && !info.Address && !info.jingying && !info.ServicePhoneNo && !info.Email) {
+      wx.navigateBack({
+        delta: 1
+      });
+      return;
+    }
     wx.showModal({
       title: '通知',
       content: '是否要返回首页？（你所填写的资料将会被保存）',

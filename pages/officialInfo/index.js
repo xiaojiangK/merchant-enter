@@ -590,6 +590,13 @@ Page({
   },
   // 监听返回
   goBack() {
+    var info = this.data.basicInfo;
+    if (!info.name && !info.phone && !info.email && !info.mch_name && !info.ServicePhoneNo && info.trade_type.length == 3 && info.pay.length == 2 && info.mch_type == '03' && info.permit_type == '01' && !info.licence && !info.card_name && !info.account_bank && !info.ContactLine && !info.account_number) {
+      wx.navigateBack({
+        delta: 1
+      });
+      return;
+    }
     wx.showModal({
       title: '通知',
       content: '是否要返回首页？（你所填写的资料将会被保存）',

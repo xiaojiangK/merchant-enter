@@ -50,14 +50,8 @@ Page({
     },
     // 监听返回
     goBack() {
-      if (this.data.applyId) {
-        wx.navigateBack({
-          delta: 1
-        });
-      } else {
-        wx.navigateBack({
-          delta: 2
-        });
-      }
+      wx.redirectTo({
+        url: `/pages/apply/index?id=${this.data.id}`
+      });
     },
 });

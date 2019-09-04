@@ -40,19 +40,22 @@
                         <view class="item required">
                             <view class="label">商户类型：</view>
                             <picker bindchange="pickerChange" data-type="merchantIdx" value="{{merchantIdx}}" range="{{MerchantType}}">
-                                <view class="picker">{{MerchantType[merchantIdx]}}</view>
+                                <view class="picker" wx:if="{{MerchantType[merchantIdx]}}">{{MerchantType[merchantIdx]}}</view>
+                                <view class="picker" wx:else>请选择</view>
                             </picker>
                         </view>
                         <view class="item required">
                             <view class="label">商户经营类型：</view>
                             <picker bindchange="pickerChange" data-type="dealIdx" value="{{dealIdx}}" range="{{dealData}}">
-                                <view class="picker">{{dealData[dealIdx]}}</view>
+                                <view class="picker" wx:if="{{dealData[dealIdx]}}">{{dealData[dealIdx]}}</view>
+                                <view class="picker" wx:else>请选择</view>
                             </picker>
                         </view>
                         <view class="item required">
                             <view class="label">是否支持T+0到账：</view>
                             <picker bindchange="pickerChange" data-type="supportIdx" value="{{supportIdx}}" range="{{supportData}}">
-                                <view class="picker">{{supportData[supportIdx]}}</view>
+                                <view class="picker" wx:if="{{supportData[supportIdx]}}">{{supportData[supportIdx]}}</view>
+                                <view class="picker" wx:else>请选择</view>
                             </picker>
                         </view>
                         <view class="item required">
@@ -92,7 +95,8 @@
                         <view class="item required">
                             <view class="label">结算方式：</view>
                             <picker bindchange="pickerChange" data-type="settleIdx" value="{{settleIdx}}" range="{{settleMode}}">
-                                <view class="picker">{{settleMode[settleIdx]}}</view>
+                                <view class="picker" wx:if="{{settleMode[settleIdx]}}">{{settleMode[settleIdx]}}</view>
+                                <view class="picker" wx:else>请选择</view>
                             </picker>
                         </view>
                         <view class="item required">
@@ -102,7 +106,8 @@
                         <view class="item required">
                             <view class="label">经营类目：</view>
                             <picker bindchange="mccChange" value="{{mccIdx}}" range="{{mccData}}">
-                                <view class="picker">{{mccData[mccIdx]}}</view>
+                                <view class="picker" wx:if="{{mccData[mccIdx]}}">{{mccData[mccIdx]}}</view>
+                                <view class="picker" wx:else>请选择</view>
                             </picker>
                         </view>
                         <view class="item">
@@ -124,8 +129,13 @@
                         <view class="item required">
                             <view class="label">公众号类型：</view>
                             <picker bindchange="pickerChange" data-type="partnerIdx" value="{{partnerIdx}}" range="{{partnerType}}">
-                                <view class="picker">{{partnerType[partnerIdx]}}</view>
+                                <view class="picker" wx:if="{{partnerType[partnerIdx]}}">{{partnerType[partnerIdx]}}</view>
+                                <view class="picker" wx:else>请选择</view>
                             </picker>
+                        </view>
+                        <view class="item required" wx:if="{{basicInfo.MerchantType != '01'}}">
+                            <view class="label">营业执照注册号：</view>
+                            <input type="text" name="BussAuthNum" bindblur="inputBlur" data-id="BussAuthNum" value="{{basicInfo.BussAuthNum}}" placeholder="请填写营业执照注册号" />
                         </view>
                     </view>
                     <view class="btns btn">
@@ -140,33 +150,27 @@
                 <form bindsubmit="nextStep3">
                     <view class="title">商户信息</view>
                     <view class="main">
-                        <block wx:if="{{basicInfo.MerchantType != '01'}}">
-                            <view class="item required">
-                                <view class="label">营业执照注册号：</view>
-                                <input type="text" name="BussAuthNum" bindblur="inputBlur" data-id="BussAuthNum" value="{{basicInfo.BussAuthNum}}" placeholder="请填写营业执照注册号" />
+                        <view class="upload required" wx:if="{{basicInfo.MerchantType != '01'}}">
+                            <view class="label">
+                                <view class="helpUp License" wx:if="{{helpIdx == 0}}">{{help[helpIdx]}}</view>
+                                上传营业执照：<image src="/assets/icon-help.png" data-idx="0" bindtap="helpUp" />
                             </view>
-                            <view class="upload required">
-                                <view class="label">
-                                    <view class="helpUp License" wx:if="{{helpIdx == 0}}">{{help[helpIdx]}}</view>
-                                    上传营业执照：<image src="/assets/icon-help.png" data-idx="0" bindtap="helpUp" />
-                                </view>
-                                <view class="picture" data-type="0" bindtap="uploadLicence">
-                                    <view class="box">
-                                        <block wx:if="{{basicInfo.LicensePhoto}}">
-                                            <image src="{{baseURL + basicInfo.LicensePhoto}}" mode="aspectFit" class="img" />
-                                        </block>
-                                        <block wx:else>
-                                            <image src="/assets/business.png" class="img business" />
-                                            <image src="/assets/icon-add.png" class="icon" />
-                                        </block>
-                                    </view>
-                                </view>
-                                <view class="tip">
-                                    <text>必须为彩色图片且小于2M，</text>
-                                    <text>文件格式为bmp、png、jpeg、jpg或gif</text>
+                            <view class="picture" data-type="0" bindtap="uploadLicence">
+                                <view class="box">
+                                    <block wx:if="{{basicInfo.LicensePhoto}}">
+                                        <image src="{{baseURL + basicInfo.LicensePhoto}}" mode="aspectFit" class="img" />
+                                    </block>
+                                    <block wx:else>
+                                        <image src="/assets/business.png" class="img business" />
+                                        <image src="/assets/icon-add.png" class="icon" />
+                                    </block>
                                 </view>
                             </view>
-                        </block>
+                            <view class="tip">
+                                <text>必须为彩色图片且小于2M，</text>
+                                <text>文件格式为bmp、png、jpeg、jpg或gif</text>
+                            </view>
+                        </view>
                         <view class="upload required">
                             <view class="label">店铺招牌照片：</view>
                             <view class="picture" data-type="1" bindtap="uploadLicence">
@@ -241,13 +245,15 @@
                         <view class="item required">
                             <view class="label">开户行：</view>
                             <picker bindchange="branchChange" value="{{branchIdx}}" range="{{branchData}}">
-                                <view class="picker">{{branchData[branchIdx]}}</view>
+                                <view class="picker" wx:if="{{branchData[branchIdx]}}">{{branchData[branchIdx]}}</view>
+                                <view class="picker" wx:else>请选择</view>
                             </picker>
                         </view>
                         <view class="item required">
                             <view class="label">账户类型：</view>
                             <picker bindchange="pickerChange" data-type="accountIdx" value="{{accountIdx}}" range="{{accountType}}">
-                                <view class="picker">{{accountType[accountIdx]}}</view>
+                                <view class="picker" wx:if="{{accountType[accountIdx]}}">{{accountType[accountIdx]}}</view>
+                                <view class="picker" wx:else>请选择</view>
                             </picker>
                         </view>
                         <view class="item required">
@@ -264,14 +270,16 @@
                             <view class="label">所在支行：</view>
                             <input type="text" bindblur="bankSearch" value="{{basicInfo.bankKeyword}}" placeholder="请在此输入支行地址关键字" />
                             <picker bindchange="bankChange" value="{{bankIdx}}" range="{{bankData}}">
-                                <view class="picker">{{bankData[bankIdx]}}</view>
+                                <view class="picker" wx:if="{{bankData[bankIdx]}}">{{bankData[bankIdx]}}</view>
+                                <view class="picker" wx:else>请选择</view>
                             </picker>
                         </view>
                         <block wx:if="{{basicInfo.AccountType == '01'}}">
                             <view class="item required">
                                 <view class="label">持证人证件类型：</view>
                                 <picker bindchange="pickerChange" data-type="certIdx" value="{{certIdx}}" range="{{CertType}}">
-                                    <view class="picker">{{CertType[certIdx]}}</view>
+                                    <view class="picker" wx:if="{{CertType[certIdx]}}">{{CertType[certIdx]}}</view>
+                                    <view class="picker" wx:else>请选择</view>
                                 </picker>
                             </view>
                             <view class="item required">
@@ -362,13 +370,15 @@
                         <view class="item required">
                             <view class="label">是否申请蓝海：</view>
                             <picker bindchange="pickerChange" data-type="lanhaiIdx" value="{{lanhaiIdx}}" range="{{lanhaiData}}">
-                                <view class="picker">{{lanhaiData[lanhaiIdx]}}</view>
+                                <view class="picker" wx:if="{{lanhaiData[lanhaiIdx]}}">{{lanhaiData[lanhaiIdx]}}</view>
+                                <view class="picker" wx:else>请选择</view>
                             </picker>
                         </view>
                         <view class="item required">
                             <view class="label">手续费用类型：</view>
                             <picker bindchange="pickerChange" data-type="FeeIdx" value="{{FeeIdx}}" range="{{FeeData}}">
-                                <view class="picker">{{FeeData[FeeIdx]}}</view>
+                                <view class="picker" wx:if="{{FeeData[FeeIdx]}}">{{FeeData[FeeIdx]}}</view>
+                                <view class="picker" wx:else>请选择</view>
                             </picker>
                         </view>
                         <view class="item required">

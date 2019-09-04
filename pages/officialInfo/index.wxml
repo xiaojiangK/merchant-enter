@@ -138,7 +138,8 @@
                                 <view class="label">所在支行：</view>
                                 <input type="text" bindblur="bankSearch" value="{{basicInfo.bankKeyword}}" placeholder="请在此输入支行地址关键字" />
                                 <picker bindchange="bankChange" value="{{bankIdx}}" range="{{bankData}}">
-                                    <view class="picker">{{bankData[bankIdx]}}</view>
+                                    <view class="picker" wx:if="{{bankData[bankIdx]}}">{{bankData[bankIdx]}}</view>
+                                    <view class="picker" wx:else>请选择</view>
                                 </picker>
                             </view>
                             <view class="item required">
