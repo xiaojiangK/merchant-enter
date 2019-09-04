@@ -18,7 +18,7 @@ Page({
       email: '',
       mch_name: '',
       trade_type: ["01","02","03"],
-      pay: ["01","02"],
+      pay: [1,2],
       mch_type: "03",
       permit_type: "01",
       card_name: '',
@@ -54,11 +54,11 @@ Page({
     }],
     pay_ment: [{       // 支付渠道
       title: '微信',
-      value: '01',
+      value: 1,
       checked: true
     },{
       title: '支付宝',
-      value: '02',
+      value: 2,
       checked: true
     }],
     mch_type: [{    // 公司类型
@@ -131,9 +131,9 @@ Page({
           });
           for (let i in channels) {
             if (i == 'wx') {
-              pay.push('01');
+              pay.push(1);
             } else if (i == 'ali') {
-              pay.push('02');
+              pay.push(2);
             }
           }
           // 公司类型
