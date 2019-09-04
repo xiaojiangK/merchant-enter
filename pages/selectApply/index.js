@@ -14,7 +14,8 @@ Page({
         });
     },
     onShow() {
-        post('v1_entry/Entryroad', { id: this.data.id }, `renren ${app.globalData.user.Authorization}`).then(res => {
+        // post('v1_entry/Entryroad', { id: this.data.id }, `renren ${app.globalData.user.Authorization}`).then(res => {
+        post('v1_entry/Entryroad', { id: this.data.id }, `renren b493b80977e569f8097785a99d8b08c468d57ae8`).then(res => {
             var data = res.data;
             if (res.code == 100002) {
                 wx.showToast({
@@ -31,6 +32,7 @@ Page({
                 return;
             }
             if (res.code == 200 && data) {
+                var gfApply = false;
                 var applying = 0;   // 是否申请
                 var openType = 0;   // 开通类型
                 var channels = data.pay_ment.map((item, index) => {
@@ -38,8 +40,19 @@ Page({
                     if (isAll) {
                         applying ++;
                     }
-                    if (index == 0) {
-                        item.checked = true;
+                    if (item.wxlst != 1 && item.zfblst != 1) {
+                        if (index == 0) {
+                            openType = 0;
+                            gfApply = true;
+                            item.checked = true;
+                        } else {
+                            if (!gfApply) {
+                                openType = 1;
+                                item.checked = true;
+                            } else {
+                                item.checked = false;
+                            }
+                        }
                     }
                     return item;
                 });
