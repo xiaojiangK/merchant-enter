@@ -11,7 +11,7 @@ Page({
     id: '',
     step: 1,
     permit: 1,
-    company: 1,
+    company: 3,
     basicInfo: {
       name: '',
       phone: '',
@@ -19,7 +19,7 @@ Page({
       mch_name: '',
       trade_type: ["01","02","03"],
       pay: ["01","02"],
-      mch_type: "01",
+      mch_type: "03",
       permit_type: "01",
       card_name: '',
       account_bank: '',
@@ -63,7 +63,7 @@ Page({
     }],
     mch_type: [{    // 公司类型
       title: '企业',
-      value: '01',
+      value: '03',
       checked: true
     },{
       title: '个体户',
@@ -268,7 +268,7 @@ Page({
     }
     var permit = this.data.permit;
     var company = this.data.company;
-    if (permit == 1 && company == 1 && !info.licence) {
+    if (permit == 1 && company == 3 && !info.licence) {
       wx.showToast({
         title: '开户许可证未上传',
         icon: 'none'

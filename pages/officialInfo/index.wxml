@@ -85,7 +85,7 @@
                                 </label>
                             </checkbox-group>
                         </view>
-                        <view class="item" wx:if="{{company == '01'}}">
+                        <view class="item" wx:if="{{company == '03'}}">
                             <view class="label">
                                 开户许可证：<image src="/assets/icon-help.png" data-idx="3" bindtap="helpUp" />
                                 <view class="helpUp now4" wx:if="{{index == 3}}">{{help[index]}}</view>
@@ -96,7 +96,7 @@
                                 </label>
                             </checkbox-group>
                         </view>
-                        <view class="upload" wx:if="{{permit == '01' && company == '01'}}">
+                        <view class="upload" wx:if="{{permit == '01' && company == '03'}}">
                             <view class="picture" bindtap="uploadLicence">
                                 <view class="box">
                                     <block wx:if="{{basicInfo.licence}}">
