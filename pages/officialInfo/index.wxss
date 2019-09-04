@@ -18,10 +18,6 @@ page {
     border-top: 2rpx solid #ccc;
     border-bottom: 2rpx solid #ccc;
 }
-.form .main .item{
-    height: 88rpx;
-    line-height: 88rpx;
-}
 .form .basic .item{
     border-bottom: 2rpx solid #ccc;
 }

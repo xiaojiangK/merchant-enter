@@ -48,6 +48,19 @@ page {
   width: 20rpx;
   height: 35rpx;
 }
+.form .main .item{
+  height: 88rpx;
+  line-height: 88rpx;
+  position: relative;
+}
+.form .item .arrow{
+  top: 50%;
+  right: 6rpx;
+  width: 30rpx;
+  height: 30rpx;
+  position: absolute;
+  transform: translateY(-50%);
+}
 .form .error image{
   width: 24rpx;
   height: 24rpx;

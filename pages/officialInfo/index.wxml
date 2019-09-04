@@ -133,6 +133,7 @@
                                 <picker bindchange="regionChange" mode="region" value="{{bankRegion}}">
                                     <view class="picker">{{bankRegion[0]}} - {{bankRegion[1]}}</view>
                                 </picker>
+                                <image src="/assets/icon-arrow.png" class="arrow" />
                             </view>
                             <view class="item required searchBank">
                                 <view class="label">所在支行：</view>
@@ -141,6 +142,7 @@
                                     <view class="picker" wx:if="{{bankData[bankIdx]}}">{{bankData[bankIdx]}}</view>
                                     <view class="picker" wx:else>请选择所在支行</view>
                                 </picker>
+                                <image src="/assets/icon-arrow.png" class="arrow" />
                             </view>
                             <view class="item required">
                                 <view class="label">

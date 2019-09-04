@@ -22,8 +22,6 @@ page {
     border-bottom: 2rpx solid #ccc;
 }
 .form .main .item{
-    height: 88rpx;
-    line-height: 88rpx;
     border-bottom: 2rpx solid #ccc;
 }
 .form .main .area{
@@ -132,8 +130,11 @@ form .value{
 .form .item.auto{
     height: auto;
 }
-.form .item.auto checkbox-group{
-    vertical-align: top;
+form .item.auto .label{
+    width: 100%;
+}
+form .item.auto label{
+    margin: 0 10rpx 0 0;
 }
 .form .upload{
     margin: 40rpx 0 0;
