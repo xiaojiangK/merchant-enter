@@ -642,13 +642,24 @@ Page({
       }
     });
   },
+  bindBody(e) {
+    if (!e.target.dataset.idx) {
+      this.setData({
+        index: -1
+      });
+    }
+  },
   // 帮助弹层
   helpUp(e) {
     var index = e.target.dataset.idx;
     if (index == this.data.index) {
-      this.setData({ index: -1 });
+      this.setData({
+        index: -1
+      });
     } else {
-      this.setData({ index });
+      this.setData({
+        index
+      });
     }
   }
 });

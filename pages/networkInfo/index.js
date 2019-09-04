@@ -1013,13 +1013,24 @@ Page({
       }
     });
   },
+  bindBody(e) {
+    if (!e.target.dataset.idx) {
+      this.setData({
+        helpIdx: -1
+      });
+    }
+  },
   // 帮助弹层
   helpUp(e) {
     var helpIdx = e.target.dataset.idx;
     if (helpIdx == this.data.helpIdx) {
-      this.setData({ helpIdx: -1 });
+      this.setData({
+        helpIdx: -1
+      });
     } else {
-      this.setData({ helpIdx });
+      this.setData({
+        helpIdx
+      });
     }
   }
 });

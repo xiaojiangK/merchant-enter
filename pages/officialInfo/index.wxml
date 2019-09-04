@@ -4,7 +4,7 @@
     </view>
     <view class="title">{{navTitle}}</view>
 </view>
-<view class="wrap">
+<view class="wrap" bindtap="bindBody">
     <view class="line">
         <view class="item {{step >= 1 ? 'active' : ''}}">
             <view class="num">1</view>
