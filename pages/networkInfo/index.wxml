@@ -41,21 +41,20 @@
                             <view class="label">商户类型：</view>
                             <picker bindchange="pickerChange" data-type="merchantIdx" value="{{merchantIdx}}" range="{{MerchantType}}">
                                 <view class="picker" wx:if="{{MerchantType[merchantIdx]}}">{{MerchantType[merchantIdx]}}</view>
-                                <view class="picker" wx:else>请选择</view>
+                                <view class="picker" wx:else>请选择商户类型</view>
                             </picker>
                         </view>
                         <view class="item required">
                             <view class="label">商户经营类型：</view>
                             <picker bindchange="pickerChange" data-type="dealIdx" value="{{dealIdx}}" range="{{dealData}}">
                                 <view class="picker" wx:if="{{dealData[dealIdx]}}">{{dealData[dealIdx]}}</view>
-                                <view class="picker" wx:else>请选择</view>
+                                <view class="picker" wx:else>请选择商户经营类型</view>
                             </picker>
                         </view>
                         <view class="item required">
                             <view class="label">是否支持T+0到账：</view>
                             <picker bindchange="pickerChange" data-type="supportIdx" value="{{supportIdx}}" range="{{supportData}}">
-                                <view class="picker" wx:if="{{supportData[supportIdx]}}">{{supportData[supportIdx]}}</view>
-                                <view class="picker" wx:else>请选择</view>
+                                <view class="picker">{{supportData[supportIdx]}}</view>
                             </picker>
                         </view>
                         <view class="item required">
@@ -95,8 +94,7 @@
                         <view class="item required">
                             <view class="label">结算方式：</view>
                             <picker bindchange="pickerChange" data-type="settleIdx" value="{{settleIdx}}" range="{{settleMode}}">
-                                <view class="picker" wx:if="{{settleMode[settleIdx]}}">{{settleMode[settleIdx]}}</view>
-                                <view class="picker" wx:else>请选择</view>
+                                <view class="picker">{{settleMode[settleIdx]}}</view>
                             </picker>
                         </view>
                         <view class="item required">
@@ -107,7 +105,7 @@
                             <view class="label">经营类目：</view>
                             <picker bindchange="mccChange" value="{{mccIdx}}" range="{{mccData}}">
                                 <view class="picker" wx:if="{{mccData[mccIdx]}}">{{mccData[mccIdx]}}</view>
-                                <view class="picker" wx:else>请选择</view>
+                                <view class="picker" wx:else>请选择经营类目</view>
                             </picker>
                         </view>
                         <view class="item">
@@ -129,8 +127,7 @@
                         <view class="item required">
                             <view class="label">公众号类型：</view>
                             <picker bindchange="pickerChange" data-type="partnerIdx" value="{{partnerIdx}}" range="{{partnerType}}">
-                                <view class="picker" wx:if="{{partnerType[partnerIdx]}}">{{partnerType[partnerIdx]}}</view>
-                                <view class="picker" wx:else>请选择</view>
+                                <view class="picker">{{partnerType[partnerIdx]}}</view>
                             </picker>
                         </view>
                         <view class="item required" wx:if="{{basicInfo.MerchantType != '01'}}">
@@ -246,14 +243,14 @@
                             <view class="label">开户行：</view>
                             <picker bindchange="branchChange" value="{{branchIdx}}" range="{{branchData}}">
                                 <view class="picker" wx:if="{{branchData[branchIdx]}}">{{branchData[branchIdx]}}</view>
-                                <view class="picker" wx:else>请选择</view>
+                                <view class="picker" wx:else>请选择开户行</view>
                             </picker>
                         </view>
                         <view class="item required">
                             <view class="label">账户类型：</view>
                             <picker bindchange="pickerChange" data-type="accountIdx" value="{{accountIdx}}" range="{{accountType}}">
                                 <view class="picker" wx:if="{{accountType[accountIdx]}}">{{accountType[accountIdx]}}</view>
-                                <view class="picker" wx:else>请选择</view>
+                                <view class="picker" wx:else>请选择账户类型</view>
                             </picker>
                         </view>
                         <view class="item required">
@@ -271,15 +268,14 @@
                             <input type="text" bindblur="bankSearch" value="{{basicInfo.bankKeyword}}" placeholder="请在此输入支行地址关键字" />
                             <picker bindchange="bankChange" value="{{bankIdx}}" range="{{bankData}}">
                                 <view class="picker" wx:if="{{bankData[bankIdx]}}">{{bankData[bankIdx]}}</view>
-                                <view class="picker" wx:else>请选择</view>
+                                <view class="picker" wx:else>请选择所在支行</view>
                             </picker>
                         </view>
                         <block wx:if="{{basicInfo.AccountType == '01'}}">
                             <view class="item required">
                                 <view class="label">持证人证件类型：</view>
                                 <picker bindchange="pickerChange" data-type="certIdx" value="{{certIdx}}" range="{{CertType}}">
-                                    <view class="picker" wx:if="{{CertType[certIdx]}}">{{CertType[certIdx]}}</view>
-                                    <view class="picker" wx:else>请选择</view>
+                                    <view class="picker">{{CertType[certIdx]}}</view>
                                 </picker>
                             </view>
                             <view class="item required">
@@ -371,14 +367,13 @@
                             <view class="label">是否申请蓝海：</view>
                             <picker bindchange="pickerChange" data-type="lanhaiIdx" value="{{lanhaiIdx}}" range="{{lanhaiData}}">
                                 <view class="picker" wx:if="{{lanhaiData[lanhaiIdx]}}">{{lanhaiData[lanhaiIdx]}}</view>
-                                <view class="picker" wx:else>请选择</view>
+                                <view class="picker" wx:else>请选择是否申请蓝海</view>
                             </picker>
                         </view>
                         <view class="item required">
                             <view class="label">手续费用类型：</view>
                             <picker bindchange="pickerChange" data-type="FeeIdx" value="{{FeeIdx}}" range="{{FeeData}}">
-                                <view class="picker" wx:if="{{FeeData[FeeIdx]}}">{{FeeData[FeeIdx]}}</view>
-                                <view class="picker" wx:else>请选择</view>
+                                <view class="picker">{{FeeData[FeeIdx]}}</view>
                             </picker>
                         </view>
                         <view class="item required">
