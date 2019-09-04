@@ -49,6 +49,7 @@ Page({
                     return {
                         ...item,
                         statusText,
+                        channels: JSON.parse(item.channels),
                         url: `/pages/applyResult/index?status=${status}&type=${type}&id=${this.data.id}&applyId=${item.id}`
                     };
                 });
