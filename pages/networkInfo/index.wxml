@@ -314,11 +314,11 @@
                     <view class="main">
                         <view class="item required long" wx:if="{{basicInfo.MerchantType == '03'}}">
                             <view class="label">企业法人名称(法人)：</view>
-                            <input type="text" name="LegalPerson" bindblur="inputBlur" data-id="LegalPerson" value="{{basicInfo.LegalPerson}}" placeholder="营业执照上的公司名称，非法人代表名称" />
+                            <input type="text" name="LegalPerson" bindblur="inputBlur" data-id="LegalPerson" value="{{basicInfo.LegalPerson}}" placeholder="营业执照公司名称，非法人代表名称" />
                         </view>
                         <view class="item required long">
                             <view class="label">负责人/法人姓名：</view>
-                            <input type="text" name="PrincipalPerson" bindblur="inputBlur" data-id="PrincipalPerson" value="{{basicInfo.PrincipalPerson}}" />
+                            <input type="text" name="PrincipalPerson" bindblur="inputBlur" data-id="PrincipalPerson" value="{{basicInfo.PrincipalPerson}}" placeholder="请输入负责人/法人姓名" />
                         </view>
                         <view class="legalTip">自然人写责任人，个体户写经营者本人，企业写企业法人</view>
                         <view class="item required">
