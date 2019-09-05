@@ -81,12 +81,20 @@ Page({
                 key: 'user',
                 success: (res)=>{
                     if (res.data.is_proxy == 0) {
+                        var url = pages[0].route;
+                        if (url == 'pages/login/index') {
+                            url = pages[1].route
+                        }
                         wx.navigateTo({
-                            url: `/${pages[0].route}`
+                            url: `/${url}`
                         });
                     } else {
+                        var url = pages[1].route;
+                        if (url == 'pages/login/index') {
+                            url = pages[2].route
+                        }
                         wx.navigateTo({
-                            url: `/${pages[1].route}`
+                            url: `/${url}`
                         });
                     }
                 }
