@@ -1,3 +1,4 @@
+import { post } from '../../utils/utils.js';
 var app = getApp();
 
 Page({
@@ -33,16 +34,39 @@ Page({
                 url: '/pages/company/index'
             });
         } else if (user.is_proxy == 0) {
-            var entry = user.is_entry;
-            if (entry.gf == -1 && entry.ws == -1) {
-                wx.navigateTo({
-                    url: `/pages/selectApply/index?id=${user.uid}`
-                });
-            } else {
-                wx.navigateTo({
-                    url: `/pages/apply/index?id=${user.uid}`
-                });
-            }
+            post('v1_entry/List', { id: user.uid }, `renren ${app.globalData.user.Authorization}`).then(res => {
+                var data = res.data;
+                if (res.code == 100002) {
+                    wx.showToast({
+                        title: '授权已过期，请重新授权',
+                        icon: 'none'
+                    });
+                    wx.removeStorage({
+                        key: 'user'
+                    });
+                    app.globalData.user = {};
+                    wx.redirectTo({
+                        url: '/pages/login/index'
+                    });
+                    return;
+                }
+                if (res.code == 200) {
+                    if (data.length) {
+                        wx.navigateTo({
+                            url: `/pages/apply/index?id=${user.uid}`
+                        });
+                    } else {
+                        wx.navigateTo({
+                            url: `/pages/selectApply/index?id=${user.uid}`
+                        });
+                    }
+                } else {
+                    wx.showToast({
+                        title: res.msg,
+                        icon: 'none'
+                    });
+                }
+            });
         }
     }
 });
