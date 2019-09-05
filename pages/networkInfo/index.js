@@ -61,33 +61,33 @@ Page({
       title: '支付宝',
       value: '01',
       checked: true,
-      disabled: 0
+      disabled: true
     },{
       title: '微信',
       value: '02',
       checked: false,
-      disabled: 1
+      disabled: false
     }],
     TradeTypeList: [{       // 交易类型
       title: '正扫交易',
       value: '01',
       checked: true,
-      disabled: 1
+      disabled: true
     },{
       title: '反扫交易',
       value: '02',
       checked: true,
-      disabled: 1
+      disabled: true
     },{
       title: '退款交易',
       value: '06',
       checked: true,
-      disabled: 1
+      disabled: true
     },{
       title: '动态订单扫码(尚未开发)',
       value: '08',
       checked: true,
-      disabled: 1
+      disabled: true
     }],
     branchIdx: -1,
     branchData: [
@@ -163,7 +163,7 @@ Page({
         if (item.value == '01') {
           return {
             ...item,
-            disabled: opt.zfb
+            disabled: opt.zfb == 1 ? true : false
           }
         }
         return item;

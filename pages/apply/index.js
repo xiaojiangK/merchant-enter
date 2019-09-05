@@ -37,6 +37,7 @@ Page({
                     var type = -1;
                     var status = -1;
                     var statusText = '';
+                    var channels = JSON.parse(item.channels);
                     if (item.pay_ment == 1) {
                         type = 'official';
                     } else {
@@ -53,9 +54,9 @@ Page({
                     }
                     return {
                         ...item,
+                        channels,
                         statusText,
-                        channels: JSON.parse(item.channels),
-                        url: `/pages/applyResult/index?status=${status}&type=${type}&id=${this.data.id}&applyId=${item.id}`
+                        url: `/pages/applyResult/index?status=${status}&type=${type}&id=${this.data.id}&wx=${channels.wx}&zfb=${channels.ali}&applyId=${item.id}`
                     };
                 });
                 this.setData({ list });

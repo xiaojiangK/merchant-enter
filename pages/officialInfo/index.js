@@ -56,12 +56,12 @@ Page({
       title: '微信',
       value: 1,
       checked: true,
-      disabled: 0
+      disabled: false
     },{
       title: '支付宝',
       value: 2,
       checked: true,
-      disabled: 0
+      disabled: false
     }],
     mch_type: [{    // 公司类型
       title: '企业',
@@ -101,15 +101,15 @@ Page({
   onLoad(opt) {
     if (opt.wx && opt.zfb) {
       var pay_ment = this.data.pay_ment.map(item => {
-        if (item.value == '01') {
+        if (item.value == 1) {
           return {
             ...item,
-            disabled: opt.wx
+            disabled: opt.wx == 1 ? true : false
           }
         } else {
           return {
             ...item,
-            disabled: opt.zfb
+            disabled: opt.zfb == 1 ? true : false
           }
         }
       });
@@ -206,7 +206,7 @@ Page({
               account_bank: res.account_bank,
               account_number: res.account_number,
               ServicePhoneNo: res.tel,
-              licence: res.licence,               // 开户许可证
+              licence: res.licence ? res.licence : '',               // 开户许可证
               bus_photo: res.bus_photo,
               card_pos: res.card_pos,
               card_opp: res.card_opp,
