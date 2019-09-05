@@ -1,3 +1,7 @@
+<view class="navigator">
+    <view class="icon"> </view>
+    <view class="title">支付通道</view>
+</view>
 <view class="wrap">
     <view class="list">
         <view class="item" bindtap="next" style="background: #fff url('/assets/pay-bg.png') left top no-repeat">

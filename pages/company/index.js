@@ -34,7 +34,7 @@ Page({
                             wx.removeStorage({
                                 key: 'user'
                             });
-                            wx.navigateTo({
+                            wx.redirectTo({
                                 url: '/pages/login/index'
                             });
                         } else {
@@ -72,7 +72,7 @@ Page({
                     key: 'user'
                 });
                 app.globalData.user = {};
-                wx.navigateTo({
+                wx.redirectTo({
                     url: '/pages/login/index'
                 });
                 return;

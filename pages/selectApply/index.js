@@ -25,7 +25,7 @@ Page({
                     key: 'user'
                 });
                 app.globalData.user = {};
-                wx.navigateTo({
+                wx.redirectTo({
                     url: '/pages/login/index'
                 });
                 return;

@@ -36,7 +36,7 @@ Page({
                     data,
                     key: 'user',
                     success: () => {
-                      wx.navigateTo({
+                      wx.redirectTo({
                         url: '/pages/selection/index'
                       });
                     }
@@ -104,7 +104,7 @@ Page({
           key: 'user',
           data: res.data,
           success: () => {
-            wx.navigateTo({
+            wx.redirectTo({
               url: '/pages/selection/index'
             });
           }

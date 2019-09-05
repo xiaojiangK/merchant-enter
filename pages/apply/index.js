@@ -27,7 +27,7 @@ Page({
                     key: 'user'
                 });
                 app.globalData.user = {};
-                wx.navigateTo({
+                wx.redirectTo({
                     url: '/pages/login/index'
                 });
                 return;
@@ -81,20 +81,12 @@ Page({
                 key: 'user',
                 success: (res)=>{
                     if (res.data.is_proxy == 0) {
-                        var url = pages[0].route;
-                        if (url == 'pages/login/index') {
-                            url = pages[1].route
-                        }
-                        wx.navigateTo({
-                            url: `/${url}`
+                        wx.redirectTo({
+                            url: `/${pages[0].route}`
                         });
                     } else {
-                        var url = pages[1].route;
-                        if (url == 'pages/login/index') {
-                            url = pages[2].route
-                        }
-                        wx.navigateTo({
-                            url: `/${url}`
+                        wx.redirectTo({
+                            url: `/${pages[1].route}`
                         });
                     }
                 }
