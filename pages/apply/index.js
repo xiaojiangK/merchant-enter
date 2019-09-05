@@ -56,7 +56,7 @@ Page({
                         ...item,
                         channels,
                         statusText,
-                        url: `/pages/applyResult/index?status=${status}&type=${type}&id=${this.data.id}&wx=${channels.wx}&zfb=${channels.ali}&applyId=${item.id}`
+                        url: `/pages/applyResult/index?status=${status}&type=${type}&id=${this.data.id}&applyId=${item.id}`
                     };
                 });
                 this.setData({ list });

@@ -7,7 +7,6 @@ Page({
       type: '',
       status: 1,
       reason: '',
-      channels: {},
       navTitle: '等待审核'
     },
     onLoad(opts) {
@@ -26,10 +25,6 @@ Page({
           });
         }
         if (opts.status == 2) {
-          this.setData({
-            "channels.wx": opts.wx == 1 || opts.wx == 3 ? 1 : 0,
-            "channels.zfb": opts.zfb == 2 || opts.zfb == 4 ? 1 : 0
-          });
           get(`1/entry/info?id=${opts.applyId}`, `renren ${app.globalData.user.Authorization}`).then(res => {
             if (res.code == 200) {
               this.setData({
@@ -50,14 +45,13 @@ Page({
         });
     },
     goUpdate() {
-      var channels = this.data.channels;
       if (this.data.type == 'official') {
         wx.navigateTo({
-          url: `/pages/officialInfo/index?id=${this.data.id}&wx=${channels.wx}&zfb=${channels.zfb}&applyId=${this.data.applyId}&save=1`
+          url: `/pages/officialInfo/index?id=${this.data.id}&applyId=${this.data.applyId}&save=1`
         });
       } else {
         wx.navigateTo({
-          url: `/pages/networkInfo/index?id=${this.data.id}&wx=${channels.wx}&zfb=${channels.zfb}&applyId=${this.data.applyId}&save=1`
+          url: `/pages/networkInfo/index?id=${this.data.id}&applyId=${this.data.applyId}&save=1`
         });
       }
     },

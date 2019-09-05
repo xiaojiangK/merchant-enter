@@ -158,20 +158,47 @@ Page({
     bankKeyword: ''
   },
   onLoad(opt) {
-    if (opt.wx && opt.zfb) {
-      var PayChannel = this.data.PayChannel.map(item => {
-        if (item.value == '01') {
-          return {
-            ...item,
-            disabled: opt.zfb == 1 ? true : false
+    post('v1_entry/Entryroad', { id: opt.id }, `renren ${app.globalData.user.Authorization}`).then(res => {
+      var data = res.data;
+      if (res.code == 100002) {
+        wx.showToast({
+            title: '授权已过期，请重新授权',
+            icon: 'none'
+        });
+        wx.removeStorage({
+            key: 'user'
+        });
+        app.globalData.user = {};
+        wx.redirectTo({
+            url: '/pages/login/index'
+        });
+        return;
+      }
+      if (res.code == 200) {
+        var pay = data.pay_ment[1];
+        var PayChannel = this.data.PayChannel.map(item => {
+          if (item.value == '01') {
+            return {
+              ...item,
+              disabled: pay.zfblst == 1 ? true : false
+            }
+          } else {
+            return {
+              ...item,
+              disabled: pay.wxlst == 1 ? true : false
+            }
           }
-        }
-        return item;
-      });
-      this.setData({
-        PayChannel
-      });
-    }
+        });
+        this.setData({
+          PayChannel
+        });
+      } else {
+          wx.showToast({
+              title: res.msg,
+              icon: 'none'
+          });
+      }
+    });
     this.setData({
       id: opt.id,
       applyId: opt.applyId
