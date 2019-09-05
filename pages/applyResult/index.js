@@ -27,8 +27,8 @@ Page({
         }
         if (opts.status == 2) {
           this.setData({
-            "channels.wx": opts.wx,
-            "channels.zfb": opts.zfb
+            "channels.wx": opts.wx == 1 || opts.wx == 3 ? 1 : 0,
+            "channels.zfb": opts.zfb == 2 || opts.zfb == 4 ? 1 : 0
           });
           get(`1/entry/info?id=${opts.applyId}`, `renren ${app.globalData.user.Authorization}`).then(res => {
             if (res.code == 200) {

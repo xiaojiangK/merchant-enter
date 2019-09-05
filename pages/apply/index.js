@@ -48,9 +48,9 @@ Page({
                         statusText = '审核中';
                     } else if (item.status == 4 || item.status == 5) {
                         status = 2;
-                        statusText = '审核失败';
+                        statusText = '审核驳回';
                     } else {
-                        statusText = '审核成功';
+                        statusText = '审核通过';
                     }
                     return {
                         ...item,
