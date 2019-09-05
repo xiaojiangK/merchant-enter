@@ -382,7 +382,7 @@ Page({
         });
       } else {
         this.setData({
-          popupTitle: '提交失败，请重新尝试',
+          popupTitle: res.msg
         });
         setTimeout(() => {
           this.setData({
