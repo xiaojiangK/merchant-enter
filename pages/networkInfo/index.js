@@ -263,13 +263,13 @@ Page({
             bankRegion,
             PayChannel,
             TradeTypeList,
-            // FeeIdx: res.,
             supportIdx: res.is_account == 'N' ? 0 : 1,
             dealIdx: Number.parseInt(res.business_type) - 1,
             merchantIdx: Number.parseInt(res.mch_type) - 1,
             settleIdx: Number.parseInt(res.settlement) - 1,
             accountIdx: Number.parseInt(res.account_type) - 1,
-            lanhaiIdx: Number.parseInt(res.business_type) - 1
+            lanhaiIdx: -1,
+            FeeIdx: 0
           });
           if (this.data.bankKeyword) {
             this.bankSearch();

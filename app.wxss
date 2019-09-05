@@ -105,6 +105,7 @@ page {
   z-index: 999;
   width: 560rpx;
   position: fixed;
+  overflow: hidden;
   background: #fff;
   text-align: center;
   border-radius: 8rpx;

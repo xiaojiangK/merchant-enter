@@ -17,7 +17,7 @@ Page({
       phone: '',
       email: '',
       mch_name: '',
-      trade_type: ["01","02","03"],
+      trade_type: ["01","02","06"],
       pay: [1,2],
       mch_type: "03",
       permit_type: "01",
@@ -49,7 +49,7 @@ Page({
       checked: true
     },{
       title: '退款交易',
-      value: '03',
+      value: '06',
       checked: true
     }],
     pay_ment: [{       // 支付渠道
