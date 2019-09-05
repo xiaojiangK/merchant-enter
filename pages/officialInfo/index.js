@@ -100,7 +100,7 @@ Page({
   },
   onLoad(opt) {
     if (opt.wx && opt.zfb) {
-      var PayChannel = this.data.PayChannel.map(item => {
+      var pay_ment = this.data.pay_ment.map(item => {
         if (item.value == '01') {
           return {
             ...item,
@@ -114,12 +114,12 @@ Page({
         }
       });
       this.setData({
-        PayChannel
+        pay_ment
       });
     }
     this.setData({
       id: opt.id,
-      applyId: opt.applyId
+      applyId: opt.applyId ? opt.applyId : ''
     });
     // 需要用保存的资料
     if (opt.save == 1) {

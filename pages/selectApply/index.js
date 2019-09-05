@@ -144,7 +144,7 @@ Page({
                         }
                     });
                 } else {
-                    this.goEntry(index);
+                    this.goEntry(index, item);
                 }
             }
         });
