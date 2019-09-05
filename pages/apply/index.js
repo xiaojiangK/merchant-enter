@@ -76,29 +76,18 @@ Page({
     goBack() {
         // 是否结果页进入，需返回
         if (this.data.isBack == 1) {
+            var pages = getCurrentPages();
             wx.getStorage({
                 key: 'user',
                 success: (res)=>{
                     if (res.data.is_proxy == 0) {
-                        if (this.data.applyId) {
-                            wx.navigateBack({
-                                delta: 3
-                            });
-                        } else {
-                            wx.navigateBack({
-                                delta: 4
-                            });
-                        }
+                        wx.navigateTo({
+                            url: `/${pages[0].route}`
+                        });
                     } else {
-                        if (this.data.applyId) {
-                            wx.navigateBack({
-                                delta: 2
-                            });
-                        } else {
-                            wx.navigateBack({
-                                delta: 3
-                            });
-                        }
+                        wx.navigateTo({
+                            url: `/${pages[1].route}`
+                        });
                     }
                 }
             });

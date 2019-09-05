@@ -312,17 +312,15 @@
                 <form bindsubmit="nextStep5">
                     <view class="title">经营者信息</view>
                     <view class="main">
-                        <block wx:if="{{basicInfo.MerchantType == '03'}}">
-                            <view class="item required long">
-                                <view class="label">企业法人名称(法人)：</view>
-                                <input type="text" name="LegalPerson" bindblur="inputBlur" data-id="LegalPerson" value="{{basicInfo.LegalPerson}}" placeholder="营业执照上的公司名称，非法人代表名称" />
-                            </view>
-                            <view class="legalTip">自然人写责任人，个体户写经营者本人，企业写企业法人</view>
-                        </block>
+                        <view class="item required long" wx:if="{{basicInfo.MerchantType == '03'}}">
+                            <view class="label">企业法人名称(法人)：</view>
+                            <input type="text" name="LegalPerson" bindblur="inputBlur" data-id="LegalPerson" value="{{basicInfo.LegalPerson}}" placeholder="营业执照上的公司名称，非法人代表名称" />
+                        </view>
                         <view class="item required long">
                             <view class="label">负责人/法人姓名：</view>
-                            <input type="text" name="PrincipalPerson" bindblur="inputBlur" data-id="PrincipalPerson" value="{{basicInfo.PrincipalPerson}}" placeholder="自然人写责任人，个体户写经营者本人，企业写企业法人" />
+                            <input type="text" name="PrincipalPerson" bindblur="inputBlur" data-id="PrincipalPerson" value="{{basicInfo.PrincipalPerson}}" />
                         </view>
+                        <view class="legalTip">自然人写责任人，个体户写经营者本人，企业写企业法人</view>
                         <view class="item required">
                             <view class="label">负责人手机号：</view>
                             <input type="text" name="PrincipalMobile" maxlength="11" bindblur="inputBlur" data-id="PrincipalMobile" value="{{basicInfo.PrincipalMobile}}" placeholder="请填写负责人手机号" />
