@@ -34,7 +34,7 @@ Page({
             });
         } else if (user.is_proxy == 0) {
             var entry = user.is_entry;
-            if (entry.gf == -1 || entry.ws == -1) {
+            if (entry.gf == -1 && entry.ws == -1) {
                 wx.navigateTo({
                     url: `/pages/selectApply/index?id=${user.uid}`
                 });
