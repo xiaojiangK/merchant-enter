@@ -203,6 +203,11 @@ Page({
           if (this.data.bankKeyword) {
             this.bankSearch();
           }
+        } else {
+          wx.showToast({
+            title: res.msg,
+            icon: 'none'
+          });
         }
       });
     }
@@ -478,6 +483,11 @@ Page({
             icon: 'none'
           });
         }
+      } else {
+        wx.showToast({
+          title: res.msg,
+          icon: 'none'
+        });
       }
     });
     wx.hideLoading();
@@ -624,7 +634,7 @@ Page({
             });
           } else {
             this.setData({
-              popupTitle: '保存失败，请重新尝试',
+              popupTitle: res.msg,
             });
             setTimeout(() => {
               this.setData({

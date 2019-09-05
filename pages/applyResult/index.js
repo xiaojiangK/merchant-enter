@@ -30,6 +30,11 @@ Page({
               this.setData({
                 reason: res.data.reason
               });
+            } else {
+              wx.showToast({
+                title: res.msg,
+                icon: 'none'
+              });
             }
           });
         }

@@ -60,6 +60,11 @@ Page({
                     applying,
                     openType
                 });
+            } else {
+                wx.showToast({
+                    title: res.msg,
+                    icon: 'none'
+                });
             }
         });
     },
@@ -123,6 +128,11 @@ Page({
                             } else {
                                 post('1/entry/info', { id: item.entryid, type: 1 }, `renren ${app.globalData.user.Authorization}`).then(res => {
                                     if (res.code != 200) {
+                                        wx.showToast({
+                                            title: res.msg,
+                                            icon: 'none'
+                                        });
+                                    } else {
                                         wx.showToast({
                                             title: res.msg,
                                             icon: 'none'
