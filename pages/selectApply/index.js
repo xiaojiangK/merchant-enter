@@ -35,11 +35,16 @@ Page({
                 var applying = 0;   // 是否申请
                 var openType = 0;   // 开通类型
                 var channels = data.pay_ment.map((item, index) => {
-                    var isAll = item.wxlst == 1 && item.zfblst == 1;
+                    var isAll = false;
+                    if (index == 0 && item.wxlst == 1 && item.zfblst == 1) {
+                        isAll = true;
+                    } else if (item.zfblst == 1) {
+                        isAll = true;
+                    }
                     if (isAll) {
                         applying ++;
                     }
-                    if (item.wxlst != 1 && item.zfblst != 1) {
+                    if (item.wxlst != 1 || item.zfblst != 1) {
                         if (index == 0) {
                             openType = 0;
                             gfApply = true;
@@ -101,7 +106,13 @@ Page({
         var openType = this.data.openType;
         this.data.channels.map((item, index) => {
             if (openType == index) {
-                if (item.wxlst == 1 && item.zfblst == 1) {
+                if (index == 0 && item.wxlst == 1 && item.zfblst == 1) {
+                    wx.showToast({
+                        title: '通道已申请，请重新选择!',
+                        icon: 'none'
+                    });
+                    return;
+                } else if (item.zfblst == 1) {
                     wx.showToast({
                         title: '通道已申请，请重新选择!',
                         icon: 'none'

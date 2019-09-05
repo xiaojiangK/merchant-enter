@@ -13,8 +13,14 @@
                     </block>
                 </view>
                 <view class="right">
-                    <text wx:if="{{item.wxlst == 1 && item.zfblst == 1}}">已申请</text>
-                    <radio value="official" wx:else color="#F08300" checked="{{item.checked}}" />
+                    <block wx:if="{{index == 0}}">
+                        <text wx:if="{{item.wxlst == 1 && item.zfblst == 1}}">已申请</text>
+                        <radio value="official" wx:else color="#F08300" checked="{{item.checked}}" />
+                    </block>
+                    <block wx:else>
+                        <text wx:if="{{item.zfblst == 1}}">已申请</text>
+                        <radio value="official" wx:else color="#F08300" checked="{{item.checked}}" />
+                    </block>
                 </view>
                 <view class="icon">￥</view>
             </view>
