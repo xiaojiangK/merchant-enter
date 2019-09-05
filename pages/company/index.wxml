@@ -1,3 +1,9 @@
+<view class="navigator">
+    <view class="icon" bindtap="goBack">
+        <image src="/assets/icon-left.png" />
+    </view>
+    <view class="title">公司详情</view>
+</view>
 <view class="wrap">
     <view class="company">
         <image src="/assets/user-img.png" />

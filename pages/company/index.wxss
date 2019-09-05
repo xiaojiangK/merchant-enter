@@ -1,3 +1,16 @@
+page {
+    padding: 160rpx 0 0;
+}
+.navigator{
+    border: none;
+    background: #FFBC6B;
+}
+.navigator image{
+    width: 35rpx;
+}
+.navigator .title{
+    color: #fff;
+}
 .company{
     padding: 40rpx;
     background:linear-gradient(0deg,#F08300 0%,#FFBC6B 100%);

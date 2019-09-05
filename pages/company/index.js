@@ -113,5 +113,10 @@ Page({
             companyList: []
         });
         this.getUser();
+    },
+    goBack() {
+        wx.navigateTo({
+            url: '/pages/selection/index'
+        });
     }
 });
