@@ -38,7 +38,8 @@ Page({
                     var isAll = false;
                     if (index == 0 && item.wxlst == 1 && item.zfblst == 1) {
                         isAll = true;
-                    } else if (item.zfblst == 1) {
+                    }
+                    if (index == 1 && item.zfblst == 1) {
                         isAll = true;
                     }
                     if (isAll) {
@@ -112,7 +113,8 @@ Page({
                         icon: 'none'
                     });
                     return;
-                } else if (item.zfblst == 1) {
+                }
+                if (index == 1 && item.zfblst == 1) {
                     wx.showToast({
                         title: '通道已申请，请重新选择!',
                         icon: 'none'
