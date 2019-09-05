@@ -1,3 +1,9 @@
+<view class="navigator">
+    <view class="icon" bindtap="goBack">
+        <image src="/assets/icon-back.png" />
+    </view>
+    <view class="title">{{navTitle}}</view>
+</view>
 <view class="wrap">
     <view class="list">
         <navigator wx:for="{{list}}" wx:key="index" url="{{item.status == 1 ? '' : item.url}}" hover-class="none" class="item">

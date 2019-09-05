@@ -57,13 +57,14 @@ Page({
     },
     // 监听返回
     goBack() {
-      if (this.data.applyId) {
-        wx.navigateBack({
-          delta: 1
+      var applyId = this.data.applyId;
+      if (applyId) {
+        wx.redirectTo({
+          url: `/pages/apply/index?id=${this.data.id}&applyId=${applyId}&isBack=1`
         });
       } else {
-        wx.navigateBack({
-          delta: 2
+        wx.redirectTo({
+          url: `/pages/apply/index?id=${this.data.id}&isBack=1`
         });
       }
     },

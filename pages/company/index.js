@@ -9,6 +9,10 @@ Page({
         companyList: []
     },
     onPullDownRefresh() {
+        this.setData({
+            page: 1,
+            companyList: []
+        });
         this.getUser();
     },
     onReachBottom() {
@@ -97,6 +101,17 @@ Page({
         });
     },
     onLoad() {
+        this.setData({
+            page: 1,
+            companyList: []
+        });
+        this.getUser();
+    },
+    onShow() {
+        this.setData({
+            page: 1,
+            companyList: []
+        });
         this.getUser();
     }
 });

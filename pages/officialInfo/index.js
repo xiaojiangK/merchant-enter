@@ -104,12 +104,12 @@ Page({
         if (item.value == '01') {
           return {
             ...item,
-            disabled: opt.zfb
+            disabled: opt.wx
           }
         } else {
           return {
             ...item,
-            disabled: opt.wx
+            disabled: opt.zfb
           }
         }
       });

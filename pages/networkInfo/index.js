@@ -65,25 +65,29 @@ Page({
     },{
       title: '微信',
       value: '02',
-      checked: true,
-      disabled: 0
+      checked: false,
+      disabled: 1
     }],
     TradeTypeList: [{       // 交易类型
       title: '正扫交易',
       value: '01',
-      checked: true
+      checked: true,
+      disabled: 1
     },{
       title: '反扫交易',
       value: '02',
-      checked: true
+      checked: true,
+      disabled: 1
     },{
       title: '退款交易',
       value: '06',
-      checked: true
+      checked: true,
+      disabled: 1
     },{
       title: '动态订单扫码(尚未开发)',
       value: '08',
-      checked: true
+      checked: true,
+      disabled: 1
     }],
     branchIdx: -1,
     branchData: [
@@ -161,12 +165,8 @@ Page({
             ...item,
             disabled: opt.zfb
           }
-        } else {
-          return {
-            ...item,
-            disabled: opt.wx
-          }
         }
+        return item;
       });
       this.setData({
         PayChannel
@@ -190,7 +190,7 @@ Page({
             mchRegion.push(i.name);
           });
           // 经营类目
-          var mccIdx = 0;
+          var mccIdx = -1;
           data.mccID.map((i, j) => {
             if (i == res.mch_cate) {
               mccIdx = j;
@@ -217,7 +217,7 @@ Page({
             return i;
           });
           // 开户行
-          var branchIdx = 0;
+          var branchIdx = -1;
           data.branchData.map((i, j) => {
             if (i == res.account_name) {
               branchIdx = j;
@@ -992,7 +992,7 @@ Page({
   // 监听返回
   goBack() {
     var info = this.data.basicInfo;
-    if (!info.MerchantName && !info.Alias && !info.MerchantType && !info.DealType && !info.SupportPrepayment && !info.Address && !info.jingying && !info.ServicePhoneNo && !info.Email) {
+    if (!info.MerchantName && !info.Alias && !info.MerchantType && !info.DealType && !info.Address && !info.jingying && !info.ServicePhoneNo && !info.Email) {
       wx.navigateBack({
         delta: 1
       });

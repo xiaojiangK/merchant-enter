@@ -6,11 +6,16 @@ Page({
     data: {
         id: "",
         url: '',
-        list: []
+        list: [],
+        isBack: 0,
+        applyId: '',
+        navTitle: '审核详情'
     },
     onLoad(opt) {
         this.setData({
-            id: opt.id
+            id: opt.id,
+            isBack: opt.isBack ? opt.isBack : '',
+            applyId: opt.applyId ? opt.applyId : ''
         });
         post('v1_entry/List', { id: this.data.id }, `renren ${app.globalData.user.Authorization}`).then(res => {
             if (res.code == 100002) {
@@ -66,5 +71,41 @@ Page({
         wx.navigateTo({
             url: `/pages/selectApply/index?id=${this.data.id}`
         });
+    },
+    // 监听返回
+    goBack() {
+        // 是否结果页进入，需返回
+        if (this.data.isBack == 1) {
+            wx.getStorage({
+                key: 'user',
+                success: (res)=>{
+                    if (res.data.is_proxy == 0) {
+                        if (this.data.applyId) {
+                            wx.navigateBack({
+                                delta: 3
+                            });
+                        } else {
+                            wx.navigateBack({
+                                delta: 4
+                            });
+                        }
+                    } else {
+                        if (this.data.applyId) {
+                            wx.navigateBack({
+                                delta: 2
+                            });
+                        } else {
+                            wx.navigateBack({
+                                delta: 3
+                            });
+                        }
+                    }
+                }
+            });
+        } else {
+            wx.navigateBack({
+                delta: 1
+            });
+        }
     }
 });
