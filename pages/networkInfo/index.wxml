@@ -118,7 +118,7 @@
                             <view class="label">开通支付渠道：</view>
                             <checkbox-group name="PayChannelList" bindchange="groupChange" data-id="PayChannelList">
                                 <label class="checkbox" wx:for="{{PayChannel}}" wx:key="index">
-                                    <checkbox color="#F08300" value="{{item.value}}" checked="{{item.checked}}" />{{item.title}}
+                                    <checkbox color="#F08300" value="{{item.value}}" disabled="{{item.disabled == 1}}" checked="{{item.checked}}" />{{item.title}}
                                 </label>
                             </checkbox-group>
                         </view>

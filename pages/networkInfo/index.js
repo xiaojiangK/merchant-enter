@@ -60,11 +60,13 @@ Page({
     PayChannel: [{       // 支付渠道
       title: '支付宝',
       value: '01',
-      checked: true
+      checked: true,
+      disabled: 0
     },{
       title: '微信',
       value: '02',
-      checked: true
+      checked: true,
+      disabled: 0
     }],
     TradeTypeList: [{       // 交易类型
       title: '正扫交易',
@@ -152,6 +154,24 @@ Page({
     bankKeyword: ''
   },
   onLoad(opt) {
+    if (opt.wx && opt.zfb) {
+      var PayChannel = this.data.PayChannel.map(item => {
+        if (item.value == '01') {
+          return {
+            ...item,
+            disabled: opt.zfb
+          }
+        } else {
+          return {
+            ...item,
+            disabled: opt.wx
+          }
+        }
+      });
+      this.setData({
+        PayChannel
+      });
+    }
     this.setData({
       id: opt.id,
       applyId: opt.applyId

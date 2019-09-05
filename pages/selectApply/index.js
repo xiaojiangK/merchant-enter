@@ -86,14 +86,14 @@ Page({
             });
         }
     },
-    goEntry(index) {
+    goEntry(index, item = {wxlst: 0, zfblst: 0}) {
         if (index == 1) {
             wx.navigateTo({
-                url: `/pages/networkInfo/index?id=${this.data.id}&applyId=`
+                url: `/pages/networkInfo/index?id=${this.data.id}&wx=${item.wxlst}&zfb=${item.zfblst}&applyId=`
             });
         } else {
             wx.navigateTo({
-                url: `/pages/officialInfo/index?id=${this.data.id}&applyId=`
+                url: `/pages/officialInfo/index?id=${this.data.id}&wx=${item.wxlst}&zfb=${item.zfblst}&applyId=`
             });
         }
     },
@@ -118,11 +118,11 @@ Page({
                             if(result.confirm){
                                 if (index == 1) {
                                     wx.navigateTo({
-                                        url: `/pages/networkInfo/index?id=${this.data.id}&applyId=${item.entryid}&save=1`
+                                        url: `/pages/networkInfo/index?id=${this.data.id}&applyId=${item.entryid}&wx=${item.wxlst}&zfb=${item.zfblst}&save=1`
                                     });
                                 } else {
                                     wx.navigateTo({
-                                        url: `/pages/officialInfo/index?id=${this.data.id}&applyId=${item.entryid}&save=1`
+                                        url: `/pages/officialInfo/index?id=${this.data.id}&applyId=${item.entryid}&wx=${item.wxlst}&zfb=${item.zfblst}&save=1`
                                     });
                                 }
                             } else {
@@ -139,7 +139,7 @@ Page({
                                         });
                                     }
                                 });
-                                this.goEntry(index);
+                                this.goEntry(index, item);
                             }
                         }
                     });
