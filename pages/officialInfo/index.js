@@ -96,7 +96,8 @@ Page({
       '营业执照是工商行政管理机关发给工商企业、个体经营者的准许从事某项生产经营活动的凭证。其格式由国家工商行政管理局统一规定。',
       '公司法人身份证就是指法人本人的居民身份证。'
     ],
-    bankKeyword: ''
+    bankKeyword: '',
+    status: ''
   },
   onLoad(opt) {
     post('v1_entry/Entryroad', { id: opt.id }, `renren ${app.globalData.user.Authorization}`).then(res => {
@@ -142,6 +143,7 @@ Page({
     });
     this.setData({
       id: opt.id,
+      status: opt.status ? opt.status : '',
       applyId: opt.applyId ? opt.applyId : ''
     });
     // 需要用保存的资料
@@ -650,43 +652,50 @@ Page({
       });
       return;
     }
+    var status = this.data.status;
+    var content = '是否要返回首页？（你所填写的资料将会被保存）';
+    if (status == 2) {
+      content = '是否要返回首页？（你所填写的资料不会被保存）';
+    }
     wx.showModal({
       title: '通知',
-      content: '是否要返回首页？（你所填写的资料将会被保存）',
+      content,
       cancelText: '取消',
       confirmText: '确定',
       success: (result) => {
-        // 保存资料
-        var data = {
-          ...this.data.basicInfo,
-          type: 1,
-          mch_id: app.globalData.user.uid,
-          customer_id: this.data.id,
-          entryid: this.data.applyId
-        };
-        wx.showLoading({
-          title: '提交中...',
-          mask: true
-        });
-        // api
-        post('v1_entry/default_create', data, `renren ${app.globalData.user.Authorization}`).then(res => {
-          if (res.code == 200) {
-            wx.showToast({
-              title: res.msg,
-              icon: 'none'
-            });
-          } else {
-            this.setData({
-              popupTitle: res.msg,
-            });
-            setTimeout(() => {
-              this.setData({
-                popupTitle: ''
+        if (status != 2) {
+          // 保存资料
+          var data = {
+            ...this.data.basicInfo,
+            type: 1,
+            mch_id: app.globalData.user.uid,
+            customer_id: this.data.id,
+            entryid: this.data.applyId
+          };
+          wx.showLoading({
+            title: '提交中...',
+            mask: true
+          });
+          // api
+          post('v1_entry/default_create', data, `renren ${app.globalData.user.Authorization}`).then(res => {
+            if (res.code == 200) {
+              wx.showToast({
+                title: res.msg,
+                icon: 'none'
               });
-            }, 1500);
-          }
-          wx.hideLoading();
-        });
+            } else {
+              this.setData({
+                popupTitle: res.msg,
+              });
+              setTimeout(() => {
+                this.setData({
+                  popupTitle: ''
+                });
+              }, 1500);
+            }
+            wx.hideLoading();
+          });
+        }
         if(result.confirm){
           wx.navigateBack({
             delta: 2

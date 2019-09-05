@@ -47,11 +47,11 @@ Page({
     goUpdate() {
       if (this.data.type == 'official') {
         wx.navigateTo({
-          url: `/pages/officialInfo/index?id=${this.data.id}&applyId=${this.data.applyId}&save=1`
+          url: `/pages/officialInfo/index?id=${this.data.id}&applyId=${this.data.applyId}&status${this.data.status}&save=1`
         });
       } else {
         wx.navigateTo({
-          url: `/pages/networkInfo/index?id=${this.data.id}&applyId=${this.data.applyId}&save=1`
+          url: `/pages/networkInfo/index?id=${this.data.id}&applyId=${this.data.applyId}&status${this.data.status}&save=1`
         });
       }
     },
