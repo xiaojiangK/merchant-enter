@@ -67,7 +67,7 @@
                             </view>
                             <checkbox-group name="pay" bindchange="groupChange" data-id="pay">
                                 <label class="checkbox" wx:for="{{pay_ment}}" wx:key="index">
-                                    <checkbox color="#F08300" value="{{item.value}}" disabled="{{item.disabled}}" checked="{{item.disabled ? false : item.checked}}" />{{item.title}}
+                                    <checkbox color="#F08300" value="{{item.value}}" disabled="{{item.disabled}}" checked="{{item.disabled ? status == 2 ? item.checked : false : item.checked}}" />{{item.title}}
                                 </label>
                             </checkbox-group>
                         </view>
