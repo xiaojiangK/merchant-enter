@@ -14,7 +14,8 @@
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#ffffff",
     "navigationBarTitleText": "商户入件",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "disableSwipeBack": true
   },
   "debug": false,
   "sitemapLocation": "sitemap.json"
