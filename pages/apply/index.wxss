@@ -42,5 +42,5 @@ page {
     content: '';
 }
 .btn{
-    margin: 200rpx 0 0;
+    margin: 100rpx 0;
 }
