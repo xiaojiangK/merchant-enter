@@ -61,12 +61,12 @@ Page({
       title: '支付宝',
       value: '01',
       checked: true,
-      disabled: true
+      disabled: false
     },{
       title: '微信',
       value: '02',
       checked: false,
-      disabled: false
+      disabled: true
     }],
     TradeTypeList: [{       // 交易类型
       title: '正扫交易',
@@ -186,7 +186,8 @@ Page({
           } else {
             return {
               ...item,
-              disabled: pay.wxlst == 1 ? true : false
+              // disabled: pay.wxlst == 1 ? true : false
+              disabled: true
             }
           }
         });
