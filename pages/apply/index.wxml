@@ -6,7 +6,7 @@
 </view>
 <view class="wrap">
     <view class="list">
-        <navigator wx:for="{{list}}" wx:key="index" url="{{item.status == 1 ? '' : item.url}}" hover-class="none" class="item">
+        <view wx:for="{{list}}" bindtap="toResult" data-item="{{item}}" wx:key="index" class="item">
             <view class="title">{{item.statusText}} <text wx:if="{{item.status == 4 || item.status == 5}}">查看原因</text></view>
             <view class="content">
                 <view>姓名：{{item.use_name}}</view>
@@ -16,7 +16,7 @@
                 <view>常用邮箱：{{item.email}}</view>
                 <view>银行账户类型：{{item.account_type == "01" ? '对私账户' : '对公账户'}}</view>
             </view>
-        </navigator>
+        </view>
         <view class="btn" bindtap="toSelect">
             <button>申请审核</button>
         </view>

@@ -73,6 +73,14 @@ Page({
             url: `/pages/selectApply/index?id=${this.data.id}`
         });
     },
+    toResult(e) {
+        var item = e.currentTarget.dataset.item;
+        if (item.status != 1) {
+            wx.navigateTo({
+                url: item.url
+            });
+        }
+    },
     // 监听返回
     goBack() {
         // 是否结果页进入，需返回
