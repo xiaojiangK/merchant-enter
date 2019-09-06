@@ -16,8 +16,17 @@ page {
     font-size: 30rpx;
     padding: 25rpx 0;
     margin: 0 0 30rpx;
+    position: relative;
     text-align: center;
     border-bottom: 2rpx solid #ccc;
+}
+.list .item .title text{
+    top: 50%;
+    right: 0;
+    color: #F08300;
+    font-size: 24rpx;
+    position: absolute;
+    transform: translateY(-50%);
 }
 .list .item .content>view{
     display: block;

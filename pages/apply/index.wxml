@@ -7,7 +7,7 @@
 <view class="wrap">
     <view class="list">
         <navigator wx:for="{{list}}" wx:key="index" url="{{item.status == 1 ? '' : item.url}}" hover-class="none" class="item">
-            <view class="title">{{item.statusText}}</view>
+            <view class="title">{{item.statusText}} <text wx:if="{{item.status == 4 || item.status == 5}}">查看原因</text></view>
             <view class="content">
                 <view>姓名：{{item.use_name}}</view>
                 <view>开通通道：{{item.pay_ment == '1' ? '官方通道' : '网商通道'}} （<text class="info" wx:if="{{item.channels.wx}}">微信</text><text class="info" wx:if="{{item.channels.ali}}">支付宝</text>）</view>
