@@ -14,7 +14,7 @@
                 <view wx:if="{{item.trade_type.length}}">交易类型：<block wx:for="{{item.trade_type}}" wx:key="index"><text class="info" wx:if="{{item == '01'}}">正扫</text><text class="info" wx:if="{{item == '02'}}">反扫</text><text class="info" wx:if="{{item == '06'}}">退款</text><text class="info" wx:if="{{item == '08'}}">动态订单扫码</text></block></view>
                 <view>联系电话：{{item.phone}}</view>
                 <view>常用邮箱：{{item.email}}</view>
-                <view>银行账户类型：{{item.account_type == "01" ? '对私账户' : '对公账户'}}</view>
+                <view>银行账户类型：{{item.account_type == "01" ? '对公账户' : '对私账户'}}</view>
             </view>
         </view>
         <view class="btn" bindtap="toSelect">
