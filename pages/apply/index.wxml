@@ -18,7 +18,7 @@
             </view>
         </view>
         <view class="btn" bindtap="toSelect">
-            <button>申请审核</button>
+            <button>申请入件</button>
         </view>
     </view>
 </view>
