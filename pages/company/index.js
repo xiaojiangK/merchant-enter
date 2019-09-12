@@ -48,6 +48,18 @@ Page({
             }
         });
     },
+    goApply(e) {
+        var item = e.currentTarget.dataset.item;
+        if (item.gf == -1 && item.ws == -1) {
+            wx.navigateTo({
+                url: `/pages/selectApply/index?id=${item.id}`
+            });
+        } else {
+            wx.navigateTo({
+                url: `/pages/apply/index?id=${item.id}`
+            });
+        }
+    },
     changePass() {
         var user = this.data.userInfo;
         wx.navigateTo({
