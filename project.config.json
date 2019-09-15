@@ -1,0 +1,90 @@
+{
+	"description": "项目配置文件",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true,
+		"autoAudits": false,
+		"checkInvalidKey": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.8.2",
+	"appid": "wx625d0c7e8abbd605",
+	"projectname": "merchant-enter",
+	"debugOptions": {
+		"hidedInDevtools": []
+	},
+	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 5,
+			"list": [
+				{
+					"id": 0,
+					"name": "pages/selectApply/index",
+					"pathName": "pages/selectApply/index",
+					"query": "id=8&applyId=''",
+					"scene": null
+				},
+				{
+					"id": 1,
+					"name": "pages/networkInfo/index",
+					"pathName": "pages/networkInfo/index",
+					"query": "id=85&wx=1&zfb=1&applyId=",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "pages/officialInfo/index",
+					"pathName": "pages/officialInfo/index",
+					"query": "id=85&applyId=231&status=2&save=1",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "pages/apply/index",
+					"pathName": "pages/apply/index",
+					"query": "id=85",
+					"scene": null
+				},
+				{
+					"id": 4,
+					"name": "pages/applyResult/index",
+					"pathName": "pages/applyResult/index",
+					"query": "status=2&type=official&id=85&applyId=231",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/company/index",
+					"pathName": "pages/company/index",
+					"query": "",
+					"scene": null
+				}
+			]
+		}
+	}
+}
