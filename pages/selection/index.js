@@ -1,4 +1,5 @@
 import { post } from '../../utils/utils.js';
+const config = require('../../config/index');
 var app = getApp();
 var flag = true;
 
@@ -82,5 +83,52 @@ Page({
                 });
             }
         }
+    },
+    pay() {
+        wx.login({
+            success: (res) => {
+                if (res.code) {
+                    post('v1_sign/loginin', { code: res.code }, `renren ${app.globalData.user.Authorization}`).then(res => {
+                        wx.request({
+                            url: config.payBaseURL + '1/smallprogram/programpay',
+                            data: {
+                                total_money: 0.01,
+                                openid: res.data.openid
+                            },
+                            header: {
+                                Authorization: `renren ${app.globalData.user.Authorization}`,
+                                'content-type': 'application/x-www-form-urlencoded',
+                            },
+                            method: 'POST',
+                            success: (res)=>{
+                                var data = res.data;
+                                wx.requestPayment({
+                                    timeStamp: data.timeStamp,
+                                    nonceStr: data.nonceStr,
+                                    package: data.package,
+                                    signType: data.signType,
+                                    paySign: data.paySign,
+                                    success: (res)=>{
+                                        wx.showToast({
+                                            title: res.msg,
+                                            icon: 'none'
+                                        });
+                                    },
+                                    fail: (res)=>{
+                                        wx.showToast({
+                                            title: res.msg,
+                                            icon: 'none'
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                        // post('1/pay/programpay', { total_money: 0.01, openid: res.data.openid }, `renren ${app.globalData.user.Authorization}`).then(res => {
+
+                        // });
+                    });
+                }
+            }
+        });
     }
 });

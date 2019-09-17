@@ -13,5 +13,14 @@
                 <image src="/assets/icon-right.png" />
             </view>
         </view>
+        <view class="item" bindtap="pay" style="background: #fff url('/assets/pay-bg.png') left top no-repeat">
+            <view class="left">
+                <image src="/assets/pay.png" />
+                <text>发起支付</text>
+            </view>
+            <view class="right">
+                <image src="/assets/icon-right.png" />
+            </view>
+        </view>
     </view>
 </view>
